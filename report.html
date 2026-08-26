@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Value Chain Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151a;
+    --panel: #191d24;
+    --panel-raised: #1f242c;
+    --line: #2a3038;
+    --text: #e7e9ec;
+    --text-dim: #8b93a1;
+    --text-faint: #5b6270;
+    --amber: #e8a33d;
+    --amber-dim: #6b5228;
+    --cyan: #52b3c9;
+    --cyan-dim: #234046;
+    --red: #d1596b;
+    --red-dim: #4a2530;
+    --green: #6fae7f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', -apple-system, sans-serif;
+    padding:28px 20px 60px;
+  }
+  .wrap{max-width:980px;margin:0 auto;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  /* ---- Header ---- */
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:20px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--amber);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em;}
+  .subtitle{color:var(--text-dim);font-size:14px;margin:0;}
+  .meta-block{
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    min-width:180px;
+  }
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px 10px;
+    border-radius:3px;
+    font-size:11px;
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin-top:8px;
+  }
+  .status-pending{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber);}
+  .status-published{background:#1e3a2a;color:var(--green);border:1px solid var(--green);}
+  .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  /* ---- Thesis ---- */
+  .thesis{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:3px solid var(--amber);
+    padding:18px 20px;
+    border-radius:4px;
+    margin-bottom:28px;
+    font-size:15px;
+    line-height:1.6;
+    color:#d7dae0;
+  }
+  .thesis .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:8px;
+  }
+
+  /* ---- Pipeline rail ---- */
+  .rail-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .rail{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:8px;
+    padding:0 4px;
+  }
+  .rail::before{
+    content:'';
+    position:absolute;
+    top:34px;
+    left:6%;
+    right:6%;
+    height:1px;
+    background:repeating-linear-gradient(to right, var(--line) 0 6px, transparent 6px 11px);
+    z-index:0;
+  }
+  .node{
+    position:relative;
+    z-index:1;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor:pointer;
+    padding:0 4px;
+  }
+  .gauge-wrap{width:64px;height:40px;position:relative;}
+  .node-label{
+    margin-top:8px;
+    font-size:11.5px;
+    text-align:center;
+    color:var(--text-dim);
+    line-height:1.3;
+    font-weight:500;
+    transition:color .15s;
+  }
+  .node.active .node-label{color:var(--text);}
+  .node-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    margin-top:4px;
+    padding:1px 6px;
+    border-radius:2px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .tag-accel{color:var(--amber);background:var(--amber-dim);}
+  .tag-watch{color:var(--cyan);background:var(--cyan-dim);}
+
+  /* ---- Segment detail card ---- */
+  .detail{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:22px 24px;
+    margin:26px 0 30px;
+  }
+  .detail-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:6px;
+    flex-wrap:wrap;
+  }
+  .detail-head h2{font-size:18px;margin:0;font-weight:600;}
+  .detail-score{font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--text-dim);}
+  .detail-synthesis{color:#c9cdd4;font-size:14px;line-height:1.65;margin:10px 0 18px;}
+  .signals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .signal{
+    display:flex;
+    gap:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .signal:last-child{border-bottom:none;padding-bottom:0;}
+  .signal-marker{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--cyan);
+    margin-top:6px;
+    flex-shrink:0;
+  }
+  .signal-body p{margin:0 0 4px;font-size:13.5px;line-height:1.55;color:#d2d5db;}
+  .signal-source{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--text-faint);
+  }
+  .signal-source a{color:var(--text-faint);}
+
+  /* ---- Sentiment ---- */
+  .sentiment{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:20px 24px;
+    margin-bottom:28px;
+  }
+  .sentiment h3{
+    font-size:13px;
+    margin:0 0 14px;
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    font-weight:500;
+  }
+  .sent-bar-track{
+    height:6px;
+    border-radius:3px;
+    background:linear-gradient(to right, var(--green), var(--amber) 55%, var(--red));
+    position:relative;
+    margin-bottom:22px;
+  }
+  .sent-bar-marker{
+    position:absolute;
+    top:-5px;
+    width:2px;
+    height:16px;
+    background:var(--text);
+  }
+  .sent-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .sent-col .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:8px;
+    display:block;
+  }
+  .sent-col.bull .label{color:var(--green);}
+  .sent-col.bear .label{color:var(--red);}
+  .sent-col p{font-size:13.5px;line-height:1.6;color:#c9cdd4;margin:0;}
+
+  /* ---- Editorial gate ---- */
+  .gate{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:18px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+    background:var(--panel-raised);
+  }
+  .gate-text{font-size:13px;color:var(--text-dim);max-width:520px;line-height:1.5;}
+  .gate-actions{display:flex;gap:10px;}
+  button{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    padding:9px 16px;
+    border-radius:4px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text-dim);
+    cursor:pointer;
+    transition:all .15s;
+  }
+  button:hover{border-color:var(--text-dim);color:var(--text);}
+  button.primary{
+    background:var(--amber);
+    border-color:var(--amber);
+    color:#1a1400;
+    font-weight:600;
+  }
+  button.primary:hover{background:#f0ae4d;color:#1a1400;}
+  button.primary:disabled{
+    background:var(--amber-dim);
+    border-color:var(--amber-dim);
+    color:var(--text-faint);
+    cursor:default;
+  }
+  footer{
+    margin-top:30px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    text-align:center;
+    line-height:1.6;
+  }
+  @media (max-width:640px){
+    .rail{flex-wrap:wrap;row-gap:20px;}
+    .rail::before{display:none;}
+    .node{flex:0 0 30%;}
+    .sent-cols{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">Pilot &middot; Public Markets</div>
+      <h1>AI Value Chain Monitor</h1>
+      <p class="subtitle">Semiconductors &rarr; Cooling &rarr; Energy &rarr; Hyperscalers &rarr; Frontier Models</p>
+    </div>
+    <div class="meta-block">
+      <div>EDITION <span id="edition-date">2026-08-26</span></div>
+      <div>CADENCE weekly</div>
+      <div id="status-pill" class="status-pill status-pending"><span class="status-dot"></span><span id="status-text">Pending review</span></div>
+    </div>
+  </header>
+
+  <div class="thesis">
+    <span class="label">This week's thesis</span>
+    Momentum is accelerating at every layer of the stack at once &mdash; memory, cooling, power, hyperscale capex, and frontier model releases are all pointing the same direction. But the center of debate has shifted: it's no longer "is AI demand real," it's "who's financing it, and can the balance sheets absorb it." Power delivery, not chip supply, is now the physical bottleneck; circular financing structures, not demand softness, are the market's chief anxiety.
+  </div>
+
+  <div class="rail-label">Value chain &mdash; momentum by segment (click to expand)</div>
+  <div class="rail" id="rail"></div>
+
+  <div class="detail" id="detail"></div>
+
+  <div class="sentiment">
+    <h3>Commentary sentiment (Substack / Medium / independent research)</h3>
+    <div class="sent-bar-track"><div class="sent-bar-marker" style="left:62%;"></div></div>
+    <div class="sent-cols">
+      <div class="sent-col bull">
+        <span class="label">Bull case</span>
+        <p>AI demand is structurally real and broadening past frontier labs into enterprise adoption. Cloud backlogs are climbing into the hundreds of billions, revenue run-rates at Anthropic and OpenAI are compounding quickly, and hyperscalers argue that under-investing is the riskier position given competitive dynamics.</p>
+      </div>
+      <div class="sent-col bear">
+        <span class="label">Bear case</span>
+        <p>Independent researchers keep flagging circular financing between chipmakers, cloud providers, and AI labs, drawing explicit parallels to dot-com-era vendor financing. Free cash flow is turning negative at some hyperscalers, and off-balance-sheet AI-related liabilities reportedly grew by roughly 50% in a single quarter.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="gate-text" id="gate-text">
+      This edition was synthesized from public filings, earnings calls, and market commentary. It has not yet been reviewed by an editor and should not be treated as final until approved.
+    </div>
+    <div class="gate-actions">
+      <button id="reset-btn">Reset to draft</button>
+      <button id="approve-btn" class="primary">Approve &amp; publish</button>
+    </div>
+  </div>
+
+  <footer>
+    PILOT BUILD &middot; one report, refreshed weekly by an automated synthesis job, gated behind human approval before publish.<br/>
+    Directional signal only &mdash; not investment advice, not a substitute for primary sources.
+  </footer>
+
+</div>
+
+<script>
+const DEMO_SEGMENTS = [
+  {
+    id: "semi",
+    label: "Semiconductors\n(memory & compute)",
+    score: 90,
+    tag: "Accelerating",
+    tagClass: "tag-accel",
+    synthesis: "The memory market is the tightest link in the chain. SK Hynix now holds the majority of the global HBM market and is running near-76% operating margins on AI-driven demand, with capacity sold out well into 2026-27. That scarcity is starting to attract the same skepticism aimed at the rest of the stack: is this a durable re-rating of memory economics, or the peak of a historically cyclical business.",
+    signals: [
+      {text: "SK Hynix held roughly 56-58% global HBM market share in Q1 2026 and posted record Q2 revenue of ~$55B, up 257% year-on-year, with operating margin near 76%.", source: "SK hynix IR / The Motley Fool", url: "https://www.fool.com/investing/2026/08/06/sk-hynix-supplies-more-than-half-the-worlds-hbm-me/"},
+      {text: "SK Hynix approved roughly $38B of new fab investment that won't produce output before December 2028, signaling a multi-year bet that current demand holds.", source: "The Motley Fool", url: "https://www.fool.com/investing/2026/08/06/sk-hynix-supplies-more-than-half-the-worlds-hbm-me/"},
+      {text: "Commentary is starting to question whether record memory margins represent a new normal or the top of another boom-bust memory cycle.", source: "Yahoo Finance / Motley Fool", url: "https://finance.yahoo.com/markets/stocks/articles/did-sk-hynix-record-42-120040654.html"}
+    ]
+  },
+  {
+    id: "cooling",
+    label: "Cooling &\nfacility infra",
+    score: 85,
+    tag: "Accelerating",
+    tagClass: "tag-accel",
+    synthesis: "Liquid cooling has gone from a niche option to a design requirement in about two years. Rack power density has nearly doubled year-on-year, and the newest GPU rack architectures are liquid-cooling-mandatory by design, which is now pulling capex into cooling and electrical infrastructure as hard as it pulls into chips.",
+    signals: [
+      {text: "Goldman Sachs estimates liquid-cooled AI servers rose from ~15% of deployments in 2024 to ~54% in 2025, projected to reach ~76% in 2026.", source: "GigeNET", url: "https://www.gigenet.com/blog/ai-data-center-power-crisis/"},
+      {text: "Average AI rack density rose from roughly 16kW in 2025 to 27kW in 2026, while only about one in five operators say they're prepared for the 50-70kW racks now common in AI deployments.", source: "Schneider Electric blog", url: "https://blog.se.com/datacenter/2026/07/28/data-center-power-density-planning-liquid-cooled-ai-data-centers-around-grid-and-power-constraints/"},
+      {text: "Nvidia's GB200 NVL72 rack-scale design is liquid-cooling-mandatory, and new regulations like Germany's 2026 Energy Efficiency Act are starting to mandate cooling efficiency thresholds for new builds.", source: "Adam Silva Consulting", url: "https://www.adamsilvaconsulting.com/insights/data-center-cooling-economics-2026"}
+    ]
+  },
+  {
+    id: "energy",
+    label: "Energy &\npower",
+    score: 72,
+    tag: "Constrained",
+    tagClass: "tag-watch",
+    synthesis: "Power, not chips, is now the binding constraint on how fast this build-out can move. Hyperscalers have committed nearly 10 gigawatts of nuclear capacity in the last year alone, but grid interconnection queues have swelled to roughly 2,600 gigawatts of pending projects with multi-year wait times, so the physical bottleneck has shifted upstream of the data center.",
+    signals: [
+      {text: "Across 13 tracked deals, the major US hyperscalers had committed over 9.8 GW of nuclear capacity to AI data centers as of mid-2026, led by Meta's up-to-6.6 GW across Vistra, TerraPower, Oklo and Constellation.", source: "Axis Intelligence Research", url: "https://axis-intelligence.com/nuclear-energy-for-data-centers/"},
+      {text: "US grid interconnection queues have grown to roughly 2,600 GW of pending projects, with average wait times around five years and high withdrawal rates.", source: "Informed Clearly", url: "https://informedclearly.com/en/ai/53909/ai-data-centers-nuclear-power-2026"},
+      {text: "Roughly 40% of announced AI data center projects reportedly face delays tied to power infrastructure rather than chip supply.", source: "NextWaves Insight", url: "https://nextwavesinsight.com/hyperscaler-ai-capex-microsoft-google-amazon-meta-2026/"}
+    ]
+  },
+  {
+    id: "hyperscale",
+    label: "Hyperscaler\ncapex",
+    score: 88,
+    tag: "Accelerating",
+    tagClass: "tag-accel",
+    synthesis: "Combined 2026 capex guidance from the largest hyperscalers is converging around $700-725B, up roughly 77% year-on-year. The spending itself is not in question; what's changed is that it's now visibly straining free cash flow at some of these companies, which is where the market's attention has moved.",
+    signals: [
+      {text: "The four largest US hyperscalers are guiding to a combined ~$725B in 2026 capital expenditure, up about 77% from ~$410B in 2025, with several raising guidance more than once this year.", source: "ValueAddVC capex tracker", url: "https://valueaddvc.com/ai-spending"},
+      {text: "Alphabet's AI-related purchase commitments reportedly jumped from $332B to $811B in a single quarter, with full-year capex guided to $195-205B and management flagging negative free cash flow.", source: "Matterfact newsletter", url: "https://www.matterfact.com/newsletter/2026-08-22-semiconductor-briefing-financing-machine"},
+      {text: "Off-balance-sheet AI-related liabilities across hyperscalers reportedly grew from roughly $1T to $1.5T in a single quarter.", source: "Matterfact newsletter", url: "https://www.matterfact.com/newsletter/2026-08-22-semiconductor-briefing-financing-machine"}
+    ]
+  },
+  {
+    id: "llm",
+    label: "Frontier models\n/ LLM layer",
+    score: 82,
+    tag: "Accelerating",
+    tagClass: "tag-accel",
+    synthesis: "The labs themselves are now the ones straining to secure compute rather than waiting for it. Anthropic and OpenAI are both signing multi-gigawatt, multibillion-dollar-a-year compute deals directly, and Q3 2026 is shaping up to be the heaviest frontier model release window on record - but revenue, while growing fast, still trails the scale of the compute commitments by a wide margin.",
+    signals: [
+      {text: "Anthropic has agreed to rent xAI's entire ~300,000 H100e Colossus 1 data center plus part of Colossus 2, reportedly paying up to $15B per year, alongside multi-gigawatt compute expansions with Amazon and Google.", source: "Epoch AI", url: "https://epoch.ai/gradient-updates/frontier-labs-dont-use-most-ai-compute"},
+      {text: "Q3 2026 is forecast to be the heaviest frontier model release window of the year, with roughly three of five candidate launches from OpenAI, Anthropic, Google, xAI and DeepSeek expected in a six-week window from mid-August to late September.", source: "Digital Applied", url: "https://www.digitalapplied.com/blog/frontier-model-q3-2026-release-forecast-roadmap-analysis"},
+      {text: "Anthropic's annualized revenue run rate reportedly reached roughly $65B in July 2026, growing quickly but still far below the scale of compute commitments being made across the industry.", source: "Forbes", url: "https://www.forbes.com/sites/paulocarvao/2026/08/19/the-ai-bubble-and-the-us-economy/"}
+    ]
+  }
+];
+
+const rail = document.getElementById('rail');
+const detail = document.getElementById('detail');
+
+let SEGMENTS = DEMO_SEGMENTS;
+
+function tagClassForScore(score){
+  return score >= 80 ? 'tag-accel' : 'tag-watch';
+}
+
+function gaugeSVG(score){
+  const angle = -90 + (score/100)*180;
+  const rad = angle * Math.PI/180;
+  const cx=32, cy=34, r=26;
+  const x = cx + r*Math.cos(rad);
+  const y = cy + r*Math.sin(rad);
+  const color = score>=80 ? 'var(--amber)' : score>=60 ? 'var(--cyan)' : 'var(--red)';
+  return `<svg width="64" height="40" viewBox="0 0 64 40">
+    <path d="M 6 34 A 26 26 0 0 1 58 34" fill="none" stroke="#2a3038" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 6 34 A 26 26 0 0 1 58 34" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round"
+      stroke-dasharray="${(score/100)*81.7} 200"/>
+    <line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="2.5" fill="${color}"/>
+  </svg>`;
+}
+
+function renderRail(activeId){
+  rail.innerHTML = SEGMENTS.map(s => `
+    <div class="node ${s.id===activeId?'active':''}" data-id="${s.id}">
+      <div class="gauge-wrap">${gaugeSVG(s.score)}</div>
+      <div class="node-label">${s.label.replace('\n','<br/>')}</div>
+      <div class="node-tag ${s.tagClass}">${s.tag}</div>
+    </div>
+  `).join('');
+  rail.querySelectorAll('.node').forEach(el=>{
+    el.addEventListener('click', ()=> showDetail(el.dataset.id));
+  });
+}
+
+function showDetail(id){
+  const s = SEGMENTS.find(x=>x.id===id);
+  renderRail(id);
+  detail.innerHTML = `
+    <div class="detail-head">
+      <h2>${s.label.replace('\n',' ')}</h2>
+      <span class="detail-score mono">MOMENTUM ${s.score}/100 &middot; ${s.tag}</span>
+    </div>
+    <p class="detail-synthesis">${s.synthesis}</p>
+    <ul class="signals">
+      ${s.signals.map(sig => `
+        <li class="signal">
+          <div class="signal-marker"></div>
+          <div class="signal-body">
+            <p>${sig.text}</p>
+            <div class="signal-source">${sig.source} &middot; <a href="${sig.url}" target="_blank" rel="noopener">source</a></div>
+          </div>
+        </li>
+      `).join('')}
+    </ul>
+  `;
+}
+
+async function loadSegments(){
+  try{
+    const res = await fetch('report_data.json');
+    if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
+    const data = await res.json();
+    if(Array.isArray(data.segments) && data.segments.length){
+      SEGMENTS = data.segments.map(s => ({
+        ...s,
+        tagClass: s.tagClass || tagClassForScore(s.score)
+      }));
+    }
+  }catch(e){
+    // No server (e.g. opened as a local file) or no report_data.json yet -- use embedded demo data.
+    SEGMENTS = DEMO_SEGMENTS;
+  }
+  renderRail(null);
+  showDetail(SEGMENTS[0].id);
+}
+
+loadSegments();
+
+// ---- Editorial gate (persisted via window.storage, personal to this user) ----
+const EDITION_KEY = 'edition-status:2026-08-26';
+const statusPill = document.getElementById('status-pill');
+const statusText = document.getElementById('status-text');
+const gateText = document.getElementById('gate-text');
+const approveBtn = document.getElementById('approve-btn');
+const resetBtn = document.getElementById('reset-btn');
+
+function setUIStatus(status, approvedAt){
+  if(status === 'published'){
+    statusPill.className = 'status-pill status-published';
+    statusText.textContent = 'Published';
+    gateText.textContent = `Approved and published${approvedAt ? ' on ' + new Date(approvedAt).toLocaleString() : ''}. This is the version readers see.`;
+    approveBtn.disabled = true;
+    approveBtn.textContent = 'Published';
+  } else {
+    statusPill.className = 'status-pill status-pending';
+    statusText.textContent = 'Pending review';
+    gateText.textContent = 'This edition was synthesized from public filings, earnings calls, and market commentary. It has not yet been reviewed by an editor and should not be treated as final until approved.';
+    approveBtn.disabled = false;
+    approveBtn.textContent = 'Approve & publish';
+  }
+}
+
+async function loadStatus(){
+  try{
+    const res = await window.storage.get(EDITION_KEY, false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      setUIStatus(parsed.status, parsed.approvedAt);
+      return;
+    }
+  }catch(e){ /* no saved status yet */ }
+  setUIStatus('pending', null);
+}
+
+async function saveStatus(status){
+  const payload = { status, approvedAt: status==='published' ? Date.now() : null };
+  try{
+    await window.storage.set(EDITION_KEY, JSON.stringify(payload), false);
+  }catch(e){ console.error('Storage error', e); }
+  setUIStatus(payload.status, payload.approvedAt);
+}
+
+approveBtn.addEventListener('click', ()=> saveStatus('published'));
+resetBtn.addEventListener('click', ()=> saveStatus('pending'));
+loadStatus();
+</script>
+</body>
+</html>
