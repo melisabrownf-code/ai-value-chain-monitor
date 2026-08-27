@@ -133,14 +133,7 @@
   .signal-source{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);}
   .signal-source a{color:var(--text-faint);}
 
-  .sentiment{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px 24px;margin-bottom:26px;}
-  .sentiment h3{
-    font-size:13px;margin:0 0 14px;font-family:'IBM Plex Mono', monospace;letter-spacing:0.1em;
-    text-transform:uppercase;color:var(--text-faint);font-weight:500;
-  }
-  .sent-bar-track{height:6px;border-radius:3px;background:linear-gradient(to right, var(--green), var(--amber) 55%, var(--red));position:relative;margin-bottom:22px;}
-  .sent-bar-marker{position:absolute;top:-5px;width:2px;height:16px;background:var(--text);}
-  .sent-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .sent-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:8px;}
   .sent-col .label{font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;display:block;}
   .sent-col.bull .label{color:var(--green);}
   .sent-col.bear .label{color:var(--red);}
@@ -194,21 +187,6 @@
   <div class="tab-bar" id="tab-bar"></div>
   <div class="panel" id="panel"></div>
 
-  <div class="sentiment">
-    <h3>Commentary sentiment (Substack / Medium / independent research)</h3>
-    <div class="sent-bar-track"><div class="sent-bar-marker" style="left:62%;"></div></div>
-    <div class="sent-cols">
-      <div class="sent-col bull">
-        <span class="label">Bull case</span>
-        <p>AI demand is structurally real and broadening past frontier labs into enterprise adoption. Cloud backlogs are climbing into the hundreds of billions, revenue run-rates at Anthropic and OpenAI are compounding quickly, and hyperscalers argue that under-investing is the riskier position given competitive dynamics.</p>
-      </div>
-      <div class="sent-col bear">
-        <span class="label">Bear case</span>
-        <p>Independent researchers keep flagging circular financing between chipmakers, cloud providers, and AI labs, drawing explicit parallels to dot-com-era vendor financing. Free cash flow is turning negative at some hyperscalers, and off-balance-sheet AI-related liabilities reportedly grew by roughly 50% in a single quarter.</p>
-      </div>
-    </div>
-  </div>
-
   <div class="gate">
     <div class="gate-text" id="gate-text">
       This edition was synthesized from public filings, earnings calls, and market commentary. It has not yet been reviewed by an editor and should not be treated as final until approved.
@@ -231,6 +209,10 @@ const DEMO_SEGMENTS = [
   {
     id: "energy", label: "Energy", score: 76, tag: "Constrained", tagClass: "tag-watch",
     synthesis: "Renewables remain the workhorse bridge supply, but the real story is how far out firm, always-on capacity sits. Existing-plant nuclear restarts are already contracted; small modular reactors and fusion are both aiming for first commercial delivery around 2028, with broader scale not expected until 2030.",
+    outlook2030: {
+      bull: "By 2030, diversified firm power — restarted nuclear plants, a first wave of commercial SMRs, and early fusion delivery — meaningfully expands always-on supply, easing the constraint that gated the 2026 buildout.",
+      bear: "SMR and fusion delivery slip further, as nuclear megaprojects historically do, leaving renewables and gas as the only real bridge supply and keeping energy the binding constraint on AI buildout well past 2030."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -248,6 +230,10 @@ const DEMO_SEGMENTS = [
   {
     id: "cooling", label: "Cooling", score: 85, tag: "Accelerating", tagClass: "tag-accel",
     synthesis: "Liquid cooling has gone from a niche option to a design requirement in about two years. The remaining question isn't whether liquid cooling wins — it already has for new AI-purpose builds — but how fast immersion cooling takes share at the very top of the density curve.",
+    outlook2030: {
+      bull: "Liquid cooling (direct-to-chip and immersion) is fully standardized and commoditized across new builds by 2030, no longer a margin constraint or supply bottleneck anywhere in the stack.",
+      bear: "Rack density keeps outpacing even liquid cooling's headroom, forcing costly facility retrofits or capping deployable density well below what compute roadmaps actually want."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -265,6 +251,10 @@ const DEMO_SEGMENTS = [
   {
     id: "power", label: "Power (Grid/UPS)", score: 68, tag: "Constrained", tagClass: "tag-watch",
     synthesis: "This is the layer furthest from being solved. Switchgear and transformer lead times are a multi-year bottleneck independent of chip supply, and the fix arriving from the silicon side — backside power delivery — doesn't reach volume production until 2027-28.",
+    outlook2030: {
+      bull: "Backside power delivery silicon matures alongside expanded grid and UPS manufacturing capacity, closing today's multi-year lead-time gap and removing power delivery as a distinct bottleneck from chip supply.",
+      bear: "Switchgear and transformer capacity additions lag chip-side innovation, and grid interconnection remains the dominant constraint on how fast new AI capacity can actually come online through 2030."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -281,6 +271,10 @@ const DEMO_SEGMENTS = [
   {
     id: "silicon", label: "Silicon (Fabs/Memory)", score: 90, tag: "Accelerating", tagClass: "tag-accel",
     synthesis: "Leading-edge fabs and memory makers are both running flat out. TSMC's roadmap is now the pacing item for the whole GPU ecosystem — Nvidia's next architecture and reportedly even OpenAI's in-house silicon are keyed to the same A16/A14 node transition.",
+    outlook2030: {
+      bull: "TSMC's node roadmap and continued HBM capacity expansion keep compute and memory supply scaling roughly in line with demand, sustaining record margins without a boom-bust snap-back.",
+      bear: "Capital intensity — A16 wafer costs, multi-year fab lead times — outruns even hyperscaler balance sheets, and a memory/foundry correction hits once today's sold-out backlogs finally clear."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -316,6 +310,10 @@ const DEMO_SEGMENTS = [
   {
     id: "compute", label: "Compute (GPU/ASIC)", score: 86, tag: "Accelerating", tagClass: "tag-accel",
     synthesis: "Merchant GPUs still dominate, but the center of gravity is shifting toward co-designed silicon. Every major hyperscaler now has a custom accelerator program, and even the largest model developers are reportedly moving toward their own chips.",
+    outlook2030: {
+      bull: "Custom ASICs (TPU, Trainium, Maia, MTIA) reach meaningful share alongside merchant GPUs by 2030, diversifying compute supply and pricing power away from any single vendor.",
+      bear: "Merchant GPU dependence persists longer than expected, in-house co-design programs underdeliver on cost or performance, and compute remains a single-vendor bottleneck deep into the next decade."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -332,6 +330,10 @@ const DEMO_SEGMENTS = [
   {
     id: "networking", label: "Networking", score: 72, tag: "Constrained", tagClass: "tag-watch",
     synthesis: "Pluggable optics still carry the overwhelming majority of data center traffic today. Co-packaged optics is the clear direction of travel, but nearly every serious industry forecast places large-scale deployment in the 2028-2030 window, not before.",
+    outlook2030: {
+      bull: "Co-packaged optics reaches the 10-20% share of high-speed optics that forecasters project by 2030, materially cutting interconnect power draw and cost at the largest scale-out clusters.",
+      bear: "CPO reliability and manufacturability issues keep it niche past 2030, pluggable optics remain dominant by default, and networking-layer efficiency gains stay capped well below what dense compute clusters need."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -349,6 +351,10 @@ const DEMO_SEGMENTS = [
   {
     id: "serversdc", label: "Servers / DC", score: 82, tag: "Accelerating", tagClass: "tag-accel",
     synthesis: "Power, not land, is now the primary site-selection criterion, which is reshaping who builds where. Geography is rotating away from saturated primary markets toward Texas and secondary metros with available power, and OEM server lineups are being redesigned around liquid cooling as a baseline requirement.",
+    outlook2030: {
+      bull: "Power-first site selection and modular, liquid-cooled designs let developers add capacity faster than today's multi-year build cycles, resolving the site-availability constraint that defines the sector in 2026.",
+      bear: "Consolidation favors only the best-capitalized developers with secured power, and smaller or Tier-2 builders are squeezed out or left holding capacity they can't actually power or deliver."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -376,6 +382,10 @@ const DEMO_SEGMENTS = [
   {
     id: "cloud", label: "Cloud", score: 88, tag: "Accelerating", tagClass: "tag-accel",
     synthesis: "Hyperscaler capex is compounding faster than revenue in some cases, which is exactly where market anxiety has concentrated. AI-native neoclouds are growing quickly by reselling GPU capacity, but their durability depends on the same power access that constrains everyone else.",
+    outlook2030: {
+      bull: "Hyperscaler capex growth moderates as revenue catches up, and neoclouds consolidate around durable, well-financed players — the financing-structure anxiety of 2026 resolves without a real credit event.",
+      bear: "Circular financing and off-balance-sheet liabilities catch up with the sector, triggering a capex pullback or credit stress event before 2030 that ripples through the entire value chain."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -392,6 +402,10 @@ const DEMO_SEGMENTS = [
   {
     id: "applications", label: "Applications", score: 82, tag: "Accelerating", tagClass: "tag-accel",
     synthesis: "The labs themselves are now straining to secure compute rather than waiting for it, enterprise AI tools are moving from pilot to core workflow, and consumer AI apps have reached mainstream usage. Revenue is growing quickly across all three tiers but still trails the scale of compute commitments being made.",
+    outlook2030: {
+      bull: "Enterprise and consumer AI monetization catches up to compute spend by 2030, closing the revenue-to-commitment gap that worries the market today and validating the scale of infrastructure investment.",
+      bear: "Monetization stays structurally behind compute commitments, model differentiation compresses toward commodity, and applications-layer margins get squeezed by rising infrastructure costs passed through from below."
+    },
     timeline: {
       columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
       rows: [
@@ -434,6 +448,25 @@ function gaugeSVG(score, size){
     <line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="1.75" stroke-linecap="round"/>
     <circle cx="${cx}" cy="${cy}" r="1.75" fill="${color}"/>
   </svg>`;
+}
+
+function renderOutlook2030(outlook){
+  if(!outlook) return '';
+  return `
+    <div class="table-label-row">
+      <div class="table-label">2030 outlook</div>
+    </div>
+    <div class="sent-cols">
+      <div class="sent-col bull">
+        <span class="label">Bull case</span>
+        <p>${outlook.bull}</p>
+      </div>
+      <div class="sent-col bear">
+        <span class="label">Bear case</span>
+        <p>${outlook.bear}</p>
+      </div>
+    </div>
+  `;
 }
 
 function trendChip(trend){
@@ -534,6 +567,8 @@ function showPanel(id){
         </li>
       `).join('')}
     </ul>
+
+    ${renderOutlook2030(s.outlook2030)}
   `;
 }
 

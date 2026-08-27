@@ -5,9 +5,11 @@ What this does:
 1. Calls Claude (with web search enabled) once per value-chain layer (9 layers,
    matching the full stack from energy through applications).
 2. Asks it to return ONLY structured JSON: a momentum score, a one-line tag,
-   a deployment timeline (today / ~2yr / ~4yr per sub-category), and sourced signals.
-3. Assembles all layers plus an overall thesis and bull/bear sentiment
-   into report_data.json.
+   a deployment timeline (today / ~2yr / ~4yr per sub-category), a 2030 bull/bear
+   outlook specific to that layer, and sourced signals.
+3. Assembles all layers plus an overall thesis into report_data.json. (Bull/bear
+   used to be a single sector-wide "commentary sentiment" block; it's now per-layer
+   and forward-looking to 2030 instead of a snapshot of current commentary.)
 4. Writes a timestamped snapshot into /history so you have a version trail.
 
 This script is meant to be run on a schedule (see .github/workflows/biweekly-report.yml)
@@ -64,6 +66,10 @@ Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
       ... 2-4 rows covering the main sub-categories in this layer
     ]
   },
+  "outlook2030": {
+    "bull": "<2-3 sentences: the bull case for specifically where THIS layer could be by 2030 -- not general AI optimism, argue the case for this layer clearing its current constraint or bottleneck>",
+    "bear": "<2-3 sentences: the bear case / key risk for specifically where THIS layer could be by 2030 -- what has to go wrong, slip, or fail to scale for this layer to disappoint>"
+  },
   "signals": [
     {"text": "<one sentence, your own words, a specific fact/figure/announcement>", "source": "<publication name>", "url": "<source url>"},
     ... 2 to 3 of these, most recent and most consequential first
@@ -76,10 +82,12 @@ Rules:
 - Never quote source text directly; state facts and figures in your own words.
 - Prefer primary sources (company filings, earnings calls, government data, official roadmap announcements) and
   reputable outlets over aggregators. Note real uncertainty rather than inventing precision, especially for the
-  further-out timeline columns.
+  further-out timeline columns and the 2030 outlook.
 - Public companies only in signals and timeline cells — do not include private/venture-stage companies by name
   unless they are the subject of a specific, sourced, publicly reported deal (e.g. a named PPA or funding round).
 - "Trend" tag must be exactly one of: Accelerating, Constrained, Steady.
+- outlook2030 must be specific to this layer's own dynamics (its own bottleneck, technology transition, or
+  financing structure), not a restatement of generic AI-market bullishness or skepticism.
 """
 
 # Static reference tables don't need re-generation every cycle — the underlying technology
@@ -109,15 +117,10 @@ STATIC_TABLES = {
 }
 
 THESIS_SCHEMA_INSTRUCTIONS = """
-You will be given the five segment synopses already generated for this edition. Return ONLY
+You will be given the nine segment synopses already generated for this edition. Return ONLY
 valid JSON matching this shape:
 {
-  "thesis": "<3-4 sentences synthesizing the whole value chain this week: what's accelerating, what's constrained, and what the market is actually arguing about right now>",
-  "sentiment": {
-    "position": <integer 0-100, 0 = fully bullish commentary, 100 = fully bearish commentary>,
-    "bull": "<2-3 sentences summarizing the strongest bull-case commentary you found, in your own words>",
-    "bear": "<2-3 sentences summarizing the strongest bear-case/skeptical commentary you found, in your own words, drawing on independent research, Substack, or Medium-style commentary if available>"
-  }
+  "thesis": "<3-4 sentences synthesizing the whole value chain this week: what's accelerating, what's constrained, and what the market is actually arguing about right now>"
 }
 """
 
@@ -201,7 +204,7 @@ def generate_segment(client, seg):
 
 def generate_thesis(client, segments):
     system = (
-        "You are the editor synthesizing five segment reports into one weekly thesis "
+        "You are the editor synthesizing nine segment reports into one weekly thesis "
         "for a public-markets research tool covering the AI value chain. "
         + THESIS_SCHEMA_INSTRUCTIONS
     )
@@ -226,14 +229,13 @@ def main():
         print(f"  - {seg['label']}")
         segments.append(generate_segment(client, seg))
 
-    print("Synthesizing overall thesis + sentiment...")
+    print("Synthesizing overall thesis...")
     thesis_block = generate_thesis(client, segments)
 
     edition = {
         "editionDate": datetime.date.today().isoformat(),
         "status": "pending_review",  # a human must flip this before it's treated as published
         "thesis": thesis_block["thesis"],
-        "sentiment": thesis_block["sentiment"],
         "segments": segments,
         "generatedAt": datetime.datetime.utcnow().isoformat() + "Z",
     }
