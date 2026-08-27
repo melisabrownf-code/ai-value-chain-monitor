@@ -139,7 +139,12 @@ def call_claude(client, system, user_content):
         raw = raw.split("\n", 1)[1] if "\n" in raw else raw
         if raw.endswith("json"):
             raw = raw[:-4]
-    return json.loads(raw)
+    # Parse only the leading JSON object and ignore anything after it -- with the
+    # web_search tool enabled, the model sometimes appends trailing commentary
+    # (e.g. a closing remark or citation note) after an otherwise well-formed
+    # JSON object, which a strict json.loads() rejects as "Extra data".
+    raw = raw.strip()
+    return json.JSONDecoder().raw_decode(raw)[0]
 
 
 def generate_segment(client, seg):
