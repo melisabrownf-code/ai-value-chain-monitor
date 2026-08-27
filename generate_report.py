@@ -125,7 +125,7 @@ valid JSON matching this shape:
 def call_claude(client, system, user_content):
     resp = client.messages.create(
         model=MODEL,
-        max_tokens=4096,
+        max_tokens=8192,
         system=system,
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
         messages=[{"role": "user", "content": user_content}],
