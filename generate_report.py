@@ -122,33 +122,55 @@ valid JSON matching this shape:
 """
 
 
+MAX_CLAUDE_ATTEMPTS = 3
+
+
 def call_claude(client, system, user_content):
-    resp = client.messages.create(
-        model=MODEL,
-        max_tokens=8192,
-        system=system,
-        tools=[{"type": "web_search_20250305", "name": "web_search"}],
-        messages=[{"role": "user", "content": user_content}],
-    )
-    # Concatenate all text blocks (web search may interleave tool_use/tool_result blocks)
-    text_parts = [b.text for b in resp.content if getattr(b, "type", None) == "text"]
-    raw = "\n".join(text_parts).strip()
-    # Defensive cleanup in case the model wraps JSON in a code fence anyway
-    if raw.startswith("```"):
-        raw = raw.strip("`")
-        raw = raw.split("\n", 1)[1] if "\n" in raw else raw
-        if raw.endswith("json"):
-            raw = raw[:-4]
-    # Parse only the leading JSON object and ignore anything after it -- with the
-    # web_search tool enabled, the model sometimes appends trailing commentary
-    # (e.g. a closing remark or citation note) after an otherwise well-formed
-    # JSON object, which a strict json.loads() rejects as "Extra data". Also use
-    # strict=False, since the model occasionally emits literal newlines inside a
-    # JSON string value (e.g. a multi-line synthesis) instead of escaping them,
-    # which Python's default strict JSON parser rejects as an "Invalid control
-    # character".
-    raw = raw.strip()
-    return json.JSONDecoder(strict=False).raw_decode(raw)[0]
+    last_error = None
+    for attempt in range(1, MAX_CLAUDE_ATTEMPTS + 1):
+        resp = client.messages.create(
+            model=MODEL,
+            max_tokens=8192,
+            system=system,
+            tools=[{"type": "web_search_20250305", "name": "web_search"}],
+            messages=[{"role": "user", "content": user_content}],
+        )
+        # Concatenate all text blocks (web search may interleave tool_use/tool_result blocks)
+        text_parts = [b.text for b in resp.content if getattr(b, "type", None) == "text"]
+        raw = "\n".join(text_parts).strip()
+        # Defensive cleanup in case the model wraps JSON in a code fence anyway
+        if raw.startswith("```"):
+            raw = raw.strip("`")
+            raw = raw.split("\n", 1)[1] if "\n" in raw else raw
+            if raw.endswith("json"):
+                raw = raw[:-4]
+        raw = raw.strip()
+        try:
+            # Parse only the leading JSON object and ignore anything after it --
+            # with the web_search tool enabled, the model sometimes appends
+            # trailing commentary (e.g. a closing remark or citation note) after
+            # an otherwise well-formed JSON object, which a strict json.loads()
+            # rejects as "Extra data". Also use strict=False, since the model
+            # occasionally emits literal newlines inside a JSON string value
+            # (e.g. a multi-line synthesis) instead of escaping them, which
+            # Python's default strict JSON parser rejects as an "Invalid control
+            # character".
+            return json.JSONDecoder(strict=False).raw_decode(raw)[0]
+        except json.JSONDecodeError as e:
+            last_error = e
+            # Empirically, a fraction of web_search-enabled calls come back with
+            # no usable text at all (the model spends its whole turn on search
+            # round-trips and stop_reason cuts it off before any final text),
+            # regardless of how high max_tokens is set. Retrying the same
+            # request is cheap relative to losing an entire report run to one
+            # unlucky segment.
+            print(
+                f"    (attempt {attempt}/{MAX_CLAUDE_ATTEMPTS}: "
+                f"failed to parse response as JSON -- {e}; retrying)"
+                if attempt < MAX_CLAUDE_ATTEMPTS
+                else f"    (attempt {attempt}/{MAX_CLAUDE_ATTEMPTS}: giving up -- {e})"
+            )
+    raise last_error
 
 
 def generate_segment(client, seg):
