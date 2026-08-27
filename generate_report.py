@@ -125,7 +125,7 @@ valid JSON matching this shape:
 """
 
 
-MAX_CLAUDE_ATTEMPTS = 3
+MAX_CLAUDE_ATTEMPTS = 5
 
 
 def call_claude(client, system, user_content):
