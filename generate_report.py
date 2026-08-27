@@ -1,15 +1,16 @@
 """
-Weekly synthesis job for the AI Value Chain Monitor.
+Biweekly synthesis job for the AI Value Chain Monitor.
 
 What this does:
-1. Calls Claude (with web search enabled) once per value-chain segment.
+1. Calls Claude (with web search enabled) once per value-chain layer (9 layers,
+   matching the full stack from energy through applications).
 2. Asks it to return ONLY structured JSON: a momentum score, a one-line tag,
-   a short synthesis paragraph, and 2-3 sourced signals.
-3. Assembles all segments plus an overall thesis and bull/bear sentiment
+   a deployment timeline (today / ~2yr / ~4yr per sub-category), and sourced signals.
+3. Assembles all layers plus an overall thesis and bull/bear sentiment
    into report_data.json.
 4. Writes a timestamped snapshot into /history so you have a version trail.
 
-This script is meant to be run on a schedule (see .github/workflows/weekly-report.yml)
+This script is meant to be run on a schedule (see .github/workflows/biweekly-report.yml)
 by a runner that has ANTHROPIC_API_KEY set as a secret. It does NOT publish anything
 by itself -- report_data.json always lands in a "pending_review" state, and a human
 has to flip it to "published" (currently done in report.html's editorial gate; wiring
@@ -26,58 +27,86 @@ from anthropic import Anthropic
 MODEL = "claude-sonnet-5"
 
 SEGMENTS = [
-    {
-        "id": "semi",
-        "label": "Semiconductors (memory & compute)",
-        "prompt_focus": "memory chip makers (SK Hynix, Micron, Samsung), HBM supply/demand, "
-                         "GPU/ASIC processor announcements (Nvidia, AMD, custom silicon), "
-                         "and infrastructure software for AI compute clusters",
-    },
-    {
-        "id": "cooling",
-        "label": "Cooling & facility infrastructure",
-        "prompt_focus": "data center liquid cooling adoption, rack power density trends, "
-                         "and facility design constraints for AI-scale deployments",
-    },
-    {
-        "id": "energy",
-        "label": "Energy & power",
-        "prompt_focus": "power purchase agreements, nuclear/SMR deals, grid interconnection "
-                         "queues, and energy availability as a constraint on AI data center buildout",
-    },
-    {
-        "id": "hyperscale",
-        "label": "Hyperscaler capex",
-        "prompt_focus": "capital expenditure guidance and results from Microsoft, Amazon, "
-                         "Google/Alphabet, Meta and Oracle, and any commentary on free cash flow "
-                         "or financing strain tied to that spending",
-    },
-    {
-        "id": "llm",
-        "label": "Frontier models / LLM layer",
-        "prompt_focus": "compute deals and capacity commitments from frontier AI labs "
-                         "(OpenAI, Anthropic, Google DeepMind, xAI), model release cadence, "
-                         "and revenue run-rate disclosures",
-    },
+    {"id": "energy", "label": "Energy", "prompt_focus": "renewables (NextEra, Duke, Enphase), nuclear restarts and PPAs, "
+                     "small modular reactors (NuScale, Oklo, X-energy, Kairos, GE Vernova), fusion (Helion), "
+                     "and grid-scale storage (Form Energy, 4th Power) for AI data centers"},
+    {"id": "cooling", "label": "Cooling", "prompt_focus": "air/RDHX cooling (Vertiv, Schneider, Siemens), direct-to-chip "
+                     "liquid cooling (JetCool, CoolIT), and immersion cooling (Iceotope, LiquidStack, Submer) adoption"},
+    {"id": "power", "label": "Power (Grid/UPS)", "prompt_focus": "grid and UPS equipment (ABB, Eaton, Siemens, Schneider), "
+                     "switchgear/transformer lead times, and on-board power delivery silicon (Vicor, AmberSemi, "
+                     "backside power delivery nodes)"},
+    {"id": "silicon", "label": "Silicon (Fabs/Memory)", "prompt_focus": "leading-edge fabs (TSMC, Samsung, Intel Foundry) "
+                     "and memory makers (SK Hynix, Samsung, Micron), process node roadmaps, and HBM supply/demand"},
+    {"id": "compute", "label": "Compute (GPU/ASIC)", "prompt_focus": "merchant GPUs (Nvidia, AMD), custom ASICs "
+                     "(Google TPU, AWS Trainium, Microsoft Maia, Meta MTIA, Groq), and co-design partners "
+                     "(Broadcom, Marvell, EnCharge AI)"},
+    {"id": "networking", "label": "Networking", "prompt_focus": "optical transceivers (Lumentum, Coherent, InnoLight), "
+                     "co-packaged optics (Lightmatter, Ayar Labs), switches (Arista, Cisco), and "
+                     "edge/quantum compute (SEEQC, Cerebras)"},
+    {"id": "serversdc", "label": "Servers / DC", "prompt_focus": "OEM server makers (Dell EMC, Supermicro, HPE) and "
+                     "data center operators/developers (Equinix, Vantage, QTS, Compass, STACK, Aligned)"},
+    {"id": "cloud", "label": "Cloud", "prompt_focus": "hyperscaler cloud capex and results (AWS, Azure, Google Cloud, "
+                     "Oracle) and AI-native neoclouds (CoreWeave, Lambda, Crusoe)"},
+    {"id": "applications", "label": "Applications", "prompt_focus": "frontier labs (OpenAI, Anthropic, Google DeepMind, "
+                     "xAI, Meta AI), enterprise AI tools (Copilot, Glean, Harvey), and consumer AI apps "
+                     "(Perplexity, Midjourney)"},
 ]
 
 SEGMENT_SCHEMA_INSTRUCTIONS = """
 Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
 {
   "score": <integer 0-100, momentum: 0=cooling sharply, 50=steady, 100=accelerating fast>,
-  "tag": "<one or two words, e.g. 'Accelerating', 'Steady', 'Constrained', 'Cooling'>",
+  "tag": "<one or two words, e.g. 'Accelerating', 'Constrained', 'Steady'>",
   "synthesis": "<2-3 sentences in your own words explaining what's shifting and why it matters, no direct quotes>",
+  "timeline": {
+    "rows": [
+      ["<sub-category / layer name>", "<status deployed TODAY, i.e. roughly this year>", "<status/expectation ~2 years out>", "<status/expectation ~4 years out>"],
+      ... 2-4 rows covering the main sub-categories in this layer
+    ]
+  },
   "signals": [
     {"text": "<one sentence, your own words, a specific fact/figure/announcement>", "source": "<publication name>", "url": "<source url>"},
     ... 2 to 3 of these, most recent and most consequential first
   ]
 }
 Rules:
-- Use web search to find developments from roughly the last 7-14 days where possible.
+- Use web search to find developments from roughly the last 14 days where possible (this job runs biweekly),
+  AND to verify/update any forward-looking timeline dates (commercial operation dates, roadmap milestones) that
+  may have shifted since your training data.
 - Never quote source text directly; state facts and figures in your own words.
-- Prefer primary sources (company filings, earnings calls, government data) and reputable
-  outlets over aggregators. Note real uncertainty rather than inventing precision.
+- Prefer primary sources (company filings, earnings calls, government data, official roadmap announcements) and
+  reputable outlets over aggregators. Note real uncertainty rather than inventing precision, especially for the
+  further-out timeline columns.
+- Public companies only in signals and timeline cells — do not include private/venture-stage companies by name
+  unless they are the subject of a specific, sourced, publicly reported deal (e.g. a named PPA or funding round).
+- "Trend" tag must be exactly one of: Accelerating, Constrained, Steady.
 """
+
+# Static reference tables don't need re-generation every cycle — the underlying technology
+# characteristics don't shift biweekly the way company-specific signals do. Maintained by hand;
+# revisit occasionally (e.g. when a new memory type matures or maturity status changes).
+STATIC_TABLES = {
+    "silicon": [
+        {
+            "title": "Memory technology comparison (vs. DRAM baseline)",
+            "refreshed": "static",
+            "trendColumn": False,
+            "note": "Technology characteristics, not company-specific — this reference table doesn't need to move every cycle the way the timeline does.",
+            "columns": ["Memory type", "Speed", "Density", "Power efficiency", "Endurance", "Cost vs. DRAM", "Maturity"],
+            "rows": [
+                ["DRAM", "Med", "High", "Med", "Med", "Baseline", "Mainstream / production"],
+                ["HBM (stacked DRAM)", "High", "High", "Med", "Med", "Premium", "Mainstream, scaling fast"],
+                ["SRAM", "High", "Low", "Low", "Med", "Premium", "Mainstream, confined to on-chip cache"],
+                ["MRAM", "Med", "Med", "High", "High", "Premium", "Early testing"],
+                ["ReRAM", "High", "High", "High", "Med", "Targeting parity", "Emerging; noise/integration challenges remain"],
+                ["PCM (phase-change)", "Med", "Med", "Med", "High", "Targeting parity", "Niche / emerging"],
+                ["FeRAM", "Med", "Low", "High", "High", "Targeting parity (higher mfg cost)", "Niche — embedded/industrial use"],
+                ["Optical / photonic memory", "High", "Med", "High", "High", "Premium", "Early R&D"],
+                ["Memristors / synaptic RAM", "High", "High", "High", "High", "Low (in theory)", "Early R&D — neuromorphic angle"],
+            ],
+        }
+    ]
+}
 
 THESIS_SCHEMA_INSTRUCTIONS = """
 You will be given the five segment synopses already generated for this edition. Return ONLY
@@ -127,6 +156,15 @@ def generate_segment(client, seg):
     data = call_claude(client, system, user_content)
     data["id"] = seg["id"]
     data["label"] = seg["label"]
+
+    timeline = data.pop("timeline", None)
+    if timeline:
+        timeline.setdefault(
+            "columns", ["Layer", "2026 — Deployed today", "2028", "2030"]
+        )
+    data["timeline"] = timeline
+    data["tables"] = STATIC_TABLES.get(seg["id"], [])
+
     return data
 
 

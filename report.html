@@ -22,281 +22,150 @@
     --red: #d1596b;
     --red-dim: #4a2530;
     --green: #6fae7f;
+    --green-dim: #1e3a2a;
   }
   *{box-sizing:border-box;}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'IBM Plex Sans', -apple-system, sans-serif;
-    padding:28px 20px 60px;
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'IBM Plex Sans', -apple-system, sans-serif;padding:28px 20px 60px;
   }
-  .wrap{max-width:980px;margin:0 auto;}
+  .wrap{max-width:1100px;margin:0 auto;}
   .mono{font-family:'IBM Plex Mono', monospace;}
 
-  /* ---- Header ---- */
   header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:20px;
-    border-bottom:1px solid var(--line);
-    padding-bottom:20px;
-    margin-bottom:22px;
-    flex-wrap:wrap;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+    border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:22px;flex-wrap:wrap;
   }
   .title-block .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.14em;
-    color:var(--amber);
-    text-transform:uppercase;
-    margin-bottom:6px;
+    font-family:'IBM Plex Mono', monospace;font-size:11px;letter-spacing:0.14em;
+    color:var(--amber);text-transform:uppercase;margin-bottom:6px;
   }
   h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em;}
-  .subtitle{color:var(--text-dim);font-size:14px;margin:0;}
-  .meta-block{
-    text-align:right;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--text-dim);
-    min-width:180px;
-  }
+  .subtitle{color:var(--text-dim);font-size:13px;margin:0;max-width:640px;line-height:1.5;}
+  .meta-block{text-align:right;font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--text-dim);min-width:180px;}
   .status-pill{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:4px 10px;
-    border-radius:3px;
-    font-size:11px;
-    font-family:'IBM Plex Mono', monospace;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    margin-top:8px;
+    display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:3px;
+    font-size:11px;font-family:'IBM Plex Mono', monospace;letter-spacing:0.06em;text-transform:uppercase;margin-top:8px;
   }
   .status-pending{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber);}
-  .status-published{background:#1e3a2a;color:var(--green);border:1px solid var(--green);}
+  .status-published{background:var(--green-dim);color:var(--green);border:1px solid var(--green);}
   .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
 
-  /* ---- Thesis ---- */
   .thesis{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-left:3px solid var(--amber);
-    padding:18px 20px;
-    border-radius:4px;
-    margin-bottom:28px;
-    font-size:15px;
-    line-height:1.6;
-    color:#d7dae0;
+    background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);
+    padding:18px 20px;border-radius:4px;margin-bottom:24px;font-size:15px;line-height:1.6;color:#d7dae0;
   }
   .thesis .label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:0.14em;
-    color:var(--text-faint);
-    text-transform:uppercase;
-    display:block;
-    margin-bottom:8px;
+    font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.14em;
+    color:var(--text-faint);text-transform:uppercase;display:block;margin-bottom:8px;
   }
 
-  /* ---- Pipeline rail ---- */
-  .rail-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:0.14em;
-    color:var(--text-faint);
-    text-transform:uppercase;
-    margin-bottom:10px;
+  /* ---- Tabs ---- */
+  .tab-bar{display:flex;border-bottom:1px solid var(--line);gap:2px;overflow-x:auto;}
+  .tab{
+    position:relative;flex:1;min-width:100px;padding:12px 8px 14px;background:var(--panel);
+    border:1px solid var(--line);border-bottom:none;border-radius:6px 6px 0 0;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--text-dim);
+    transition:background .15s, color .15s;
   }
-  .rail{
-    position:relative;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:8px;
-    padding:0 4px;
-  }
-  .rail::before{
-    content:'';
-    position:absolute;
-    top:34px;
-    left:6%;
-    right:6%;
-    height:1px;
-    background:repeating-linear-gradient(to right, var(--line) 0 6px, transparent 6px 11px);
-    z-index:0;
-  }
-  .node{
-    position:relative;
-    z-index:1;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    cursor:pointer;
-    padding:0 4px;
-  }
-  .gauge-wrap{width:64px;height:40px;position:relative;}
-  .node-label{
-    margin-top:8px;
-    font-size:11.5px;
-    text-align:center;
-    color:var(--text-dim);
-    line-height:1.3;
-    font-weight:500;
-    transition:color .15s;
-  }
-  .node.active .node-label{color:var(--text);}
-  .node-tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:9.5px;
-    margin-top:4px;
-    padding:1px 6px;
-    border-radius:2px;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
+  .tab:hover{background:var(--panel-raised);color:var(--text);}
+  .tab.active{background:var(--panel-raised);color:var(--text);}
+  .tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--amber);}
+  .tab-label{font-size:11.5px;font-weight:500;text-align:center;line-height:1.25;}
+  .tab-gauge{width:38px;height:24px;}
+  .tab-tag{
+    font-family:'IBM Plex Mono', monospace;font-size:8.5px;letter-spacing:0.04em;
+    text-transform:uppercase;padding:1px 5px;border-radius:2px;
   }
   .tag-accel{color:var(--amber);background:var(--amber-dim);}
   .tag-watch{color:var(--cyan);background:var(--cyan-dim);}
 
-  /* ---- Segment detail card ---- */
-  .detail{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:22px 24px;
-    margin:26px 0 30px;
+  .panel{
+    background:var(--panel-raised);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 6px 6px;padding:24px 26px;margin-bottom:26px;
   }
-  .detail-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:12px;
-    margin-bottom:6px;
-    flex-wrap:wrap;
+  .panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+  .panel-head h2{font-size:19px;margin:0;font-weight:600;}
+  .panel-score{font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--text-dim);}
+  .panel-synthesis{color:#c9cdd4;font-size:14px;line-height:1.65;margin:10px 0 22px;}
+
+  .table-label{
+    font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--text-faint);
   }
-  .detail-head h2{font-size:18px;margin:0;font-weight:600;}
-  .detail-score{font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--text-dim);}
-  .detail-synthesis{color:#c9cdd4;font-size:14px;line-height:1.65;margin:10px 0 18px;}
+  .table-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;margin-top:26px;gap:12px;flex-wrap:wrap;}
+  .table-label-row:first-of-type{margin-top:0;}
+  .refresh-badge{
+    font-family:'IBM Plex Mono', monospace;font-size:9.5px;letter-spacing:0.05em;
+    text-transform:uppercase;padding:2px 8px;border-radius:3px;white-space:nowrap;
+  }
+  .badge-dynamic{color:var(--cyan);background:var(--cyan-dim);}
+  .badge-static{color:var(--text-faint);background:#262b33;}
+  .table-note{font-size:12px;color:var(--text-faint);line-height:1.5;margin:0 0 12px;font-style:italic;}
+
+  table.comp{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px;}
+  table.comp th{
+    text-align:left;font-family:'IBM Plex Mono', monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--text-faint);font-weight:500;padding:8px 12px;border-bottom:1px solid var(--line);
+  }
+  table.comp td{padding:11px 12px;border-bottom:1px solid var(--line);color:#d2d5db;line-height:1.5;vertical-align:top;}
+  table.comp tr:last-child td{border-bottom:none;}
+  table.comp td.cat{color:var(--text);font-weight:600;white-space:nowrap;}
+  .trend-chip{
+    display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:10px;letter-spacing:0.04em;
+    text-transform:uppercase;padding:2px 8px;border-radius:3px;white-space:nowrap;
+  }
+  .trend-accel{color:var(--amber);background:var(--amber-dim);}
+  .trend-watch{color:var(--cyan);background:var(--cyan-dim);}
+  .trend-steady{color:var(--text-dim);background:#262b33;}
+
+  /* Timeline table — column header accent by horizon */
+  table.timeline th.h2026{border-top:2px solid var(--green);}
+  table.timeline th.h2028{border-top:2px solid var(--amber);}
+  table.timeline th.h2030{border-top:2px solid var(--cyan);}
+  table.timeline td{font-size:12.5px;}
+
   .signals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
-  .signal{
-    display:flex;
-    gap:12px;
-    padding-bottom:12px;
-    border-bottom:1px solid var(--line);
-  }
+  .signal{display:flex;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);}
   .signal:last-child{border-bottom:none;padding-bottom:0;}
-  .signal-marker{
-    width:6px;height:6px;border-radius:50%;
-    background:var(--cyan);
-    margin-top:6px;
-    flex-shrink:0;
-  }
+  .signal-marker{width:6px;height:6px;border-radius:50%;background:var(--cyan);margin-top:6px;flex-shrink:0;}
   .signal-body p{margin:0 0 4px;font-size:13.5px;line-height:1.55;color:#d2d5db;}
-  .signal-source{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--text-faint);
-  }
+  .signal-source{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);}
   .signal-source a{color:var(--text-faint);}
 
-  /* ---- Sentiment ---- */
-  .sentiment{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:20px 24px;
-    margin-bottom:28px;
-  }
+  .sentiment{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px 24px;margin-bottom:26px;}
   .sentiment h3{
-    font-size:13px;
-    margin:0 0 14px;
-    font-family:'IBM Plex Mono', monospace;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    font-weight:500;
+    font-size:13px;margin:0 0 14px;font-family:'IBM Plex Mono', monospace;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--text-faint);font-weight:500;
   }
-  .sent-bar-track{
-    height:6px;
-    border-radius:3px;
-    background:linear-gradient(to right, var(--green), var(--amber) 55%, var(--red));
-    position:relative;
-    margin-bottom:22px;
-  }
-  .sent-bar-marker{
-    position:absolute;
-    top:-5px;
-    width:2px;
-    height:16px;
-    background:var(--text);
-  }
+  .sent-bar-track{height:6px;border-radius:3px;background:linear-gradient(to right, var(--green), var(--amber) 55%, var(--red));position:relative;margin-bottom:22px;}
+  .sent-bar-marker{position:absolute;top:-5px;width:2px;height:16px;background:var(--text);}
   .sent-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  .sent-col .label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    margin-bottom:8px;
-    display:block;
-  }
+  .sent-col .label{font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;display:block;}
   .sent-col.bull .label{color:var(--green);}
   .sent-col.bear .label{color:var(--red);}
   .sent-col p{font-size:13.5px;line-height:1.6;color:#c9cdd4;margin:0;}
 
-  /* ---- Editorial gate ---- */
   .gate{
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:18px 22px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:16px;
-    flex-wrap:wrap;
-    background:var(--panel-raised);
+    border:1px solid var(--line);border-radius:6px;padding:18px 22px;display:flex;
+    justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:var(--panel-raised);
   }
   .gate-text{font-size:13px;color:var(--text-dim);max-width:520px;line-height:1.5;}
   .gate-actions{display:flex;gap:10px;}
   button{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.04em;
-    padding:9px 16px;
-    border-radius:4px;
-    border:1px solid var(--line);
-    background:transparent;
-    color:var(--text-dim);
-    cursor:pointer;
-    transition:all .15s;
+    font-family:'IBM Plex Mono', monospace;font-size:12px;letter-spacing:0.04em;padding:9px 16px;
+    border-radius:4px;border:1px solid var(--line);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;
   }
   button:hover{border-color:var(--text-dim);color:var(--text);}
-  button.primary{
-    background:var(--amber);
-    border-color:var(--amber);
-    color:#1a1400;
-    font-weight:600;
-  }
+  button.primary{background:var(--amber);border-color:var(--amber);color:#1a1400;font-weight:600;}
   button.primary:hover{background:#f0ae4d;color:#1a1400;}
-  button.primary:disabled{
-    background:var(--amber-dim);
-    border-color:var(--amber-dim);
-    color:var(--text-faint);
-    cursor:default;
-  }
-  footer{
-    margin-top:30px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--text-faint);
-    text-align:center;
-    line-height:1.6;
-  }
-  @media (max-width:640px){
-    .rail{flex-wrap:wrap;row-gap:20px;}
-    .rail::before{display:none;}
-    .node{flex:0 0 30%;}
+  button.primary:disabled{background:var(--amber-dim);border-color:var(--amber-dim);color:var(--text-faint);cursor:default;}
+  footer{margin-top:30px;font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);text-align:center;line-height:1.6;}
+
+  @media (max-width:900px){
+    .tab-bar{flex-wrap:nowrap;}
+    .tab{min-width:88px;}
+    table.comp{font-size:11.5px;}
     .sent-cols{grid-template-columns:1fr;}
   }
 </style>
@@ -308,24 +177,22 @@
     <div class="title-block">
       <div class="eyebrow">Pilot &middot; Public Markets</div>
       <h1>AI Value Chain Monitor</h1>
-      <p class="subtitle">Semiconductors &rarr; Cooling &rarr; Energy &rarr; Hyperscalers &rarr; Frontier Models</p>
+      <p class="subtitle">Energy &rarr; Cooling &rarr; Power &rarr; Silicon &rarr; Compute &rarr; Networking &rarr; Servers/DC &rarr; Cloud &rarr; Applications</p>
     </div>
     <div class="meta-block">
-      <div>EDITION <span id="edition-date">2026-08-26</span></div>
-      <div>CADENCE weekly</div>
+      <div>EDITION <span id="edition-date">2026-08-27</span></div>
+      <div>CADENCE biweekly</div>
       <div id="status-pill" class="status-pill status-pending"><span class="status-dot"></span><span id="status-text">Pending review</span></div>
     </div>
   </header>
 
   <div class="thesis">
     <span class="label">This week's thesis</span>
-    Momentum is accelerating at every layer of the stack at once &mdash; memory, cooling, power, hyperscale capex, and frontier model releases are all pointing the same direction. But the center of debate has shifted: it's no longer "is AI demand real," it's "who's financing it, and can the balance sheets absorb it." Power delivery, not chip supply, is now the physical bottleneck; circular financing structures, not demand softness, are the market's chief anxiety.
+    Momentum is accelerating at nearly every layer of the stack, but the layers are moving on very different clocks. Cooling, silicon, and cloud capex are compounding now. Power delivery &mdash; both the grid-interconnection queue and the physical switchgear supply chain &mdash; is the layer stretching furthest into the future, with the first new-build nuclear and fusion capacity not arriving until 2028 at the earliest and meaningful scale not until 2030. Reading the value chain as a single timeline rather than nine separate stories is the point of this tool.
   </div>
 
-  <div class="rail-label">Value chain &mdash; momentum by segment (click to expand)</div>
-  <div class="rail" id="rail"></div>
-
-  <div class="detail" id="detail"></div>
+  <div class="tab-bar" id="tab-bar"></div>
+  <div class="panel" id="panel"></div>
 
   <div class="sentiment">
     <h3>Commentary sentiment (Substack / Medium / independent research)</h3>
@@ -353,7 +220,7 @@
   </div>
 
   <footer>
-    PILOT BUILD &middot; one report, refreshed weekly by an automated synthesis job, gated behind human approval before publish.<br/>
+    PILOT BUILD &middot; one report, refreshed every two weeks by an automated synthesis job, gated behind human approval before publish.<br/>
     Directional signal only &mdash; not investment advice, not a substitute for primary sources.
   </footer>
 
@@ -362,51 +229,160 @@
 <script>
 const DEMO_SEGMENTS = [
   {
-    id: "semi",
-    label: "Semiconductors\n(memory & compute)",
-    score: 90,
-    tag: "Accelerating",
-    tagClass: "tag-accel",
-    synthesis: "The memory market is the tightest link in the chain. SK Hynix now holds the majority of the global HBM market and is running near-76% operating margins on AI-driven demand, with capacity sold out well into 2026-27. That scarcity is starting to attract the same skepticism aimed at the rest of the stack: is this a durable re-rating of memory economics, or the peak of a historically cyclical business.",
+    id: "energy", label: "Energy", score: 76, tag: "Constrained", tagClass: "tag-watch",
+    synthesis: "Renewables remain the workhorse bridge supply, but the real story is how far out firm, always-on capacity sits. Existing-plant nuclear restarts are already contracted; small modular reactors and fusion are both aiming for first commercial delivery around 2028, with broader scale not expected until 2030.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Renewables (NextEra, Duke, Enphase)", "Mainstream; largest existing capacity base and primary bridge supply", "Continued build-out, increasingly paired with storage", "Standard baseload complement alongside a maturing nuclear/SMR fleet"],
+        ["Nuclear & SMR (GE Vernova, NuScale, Helion)", "Existing-plant restarts contracted (Constellation/Three Mile Island, Talen/Susquehanna); SMRs in construction or permitting with no Western commercial unit yet operating; Helion's fusion prototype in testing", "Three Mile Island Unit 1 targeted back online (~837MW); Oklo and GE Vernova/OPG's BWRX-300 targeting first commercial operation; Helion's Orion fusion plant targeted online for Microsoft at 50MW", "Google/Kairos targeting its first SMR unit online, with full 500MW deployment by 2035; broader commercial SMR fleet still early-scale"],
+        ["Storage (Form Energy, 4th Power, Tesla)", "Early commercial deployments, niche relative to total grid storage", "Broader grid-scale iron-air and thermal storage projects online", "Standard complement to intermittent renewables at data-center campus scale"]
+      ]
+    },
     signals: [
-      {text: "SK Hynix held roughly 56-58% global HBM market share in Q1 2026 and posted record Q2 revenue of ~$55B, up 257% year-on-year, with operating margin near 76%.", source: "SK hynix IR / The Motley Fool", url: "https://www.fool.com/investing/2026/08/06/sk-hynix-supplies-more-than-half-the-worlds-hbm-me/"},
-      {text: "SK Hynix approved roughly $38B of new fab investment that won't produce output before December 2028, signaling a multi-year bet that current demand holds.", source: "The Motley Fool", url: "https://www.fool.com/investing/2026/08/06/sk-hynix-supplies-more-than-half-the-worlds-hbm-me/"},
-      {text: "Commentary is starting to question whether record memory margins represent a new normal or the top of another boom-bust memory cycle.", source: "Yahoo Finance / Motley Fool", url: "https://finance.yahoo.com/markets/stocks/articles/did-sk-hynix-record-42-120040654.html"}
+      {text: "Across 13 tracked deals, major US hyperscalers had committed over 9.8 GW of nuclear capacity to AI data centers as of mid-2026, led by Meta's up-to-6.6 GW across Vistra, TerraPower, Oklo and Constellation.", source: "Axis Intelligence Research", url: "https://axis-intelligence.com/nuclear-energy-for-data-centers/"},
+      {text: "Helion's Orion plant broke ground in mid-2025 and remains targeted to deliver at least 50MW of fusion power to Microsoft starting in 2028 — the first commercial-scale fusion power purchase agreement.", source: "S&P Global", url: "https://www.spglobal.com/energy/en/news-research/latest-news/electric-power/073025-helion-energy-breaks-ground-on-fusion-power-plant-slated-to-be-online-in-2028"},
+      {text: "Google's 2024 agreement with Kairos Power targets its first small modular reactor online by 2030, with full deployment across 6-7 molten salt reactors (500MW) by 2035.", source: "Introl", url: "https://introl.com/blog/smr-nuclear-power-ai-data-centers-2025"}
     ]
   },
   {
-    id: "cooling",
-    label: "Cooling &\nfacility infra",
-    score: 85,
-    tag: "Accelerating",
-    tagClass: "tag-accel",
-    synthesis: "Liquid cooling has gone from a niche option to a design requirement in about two years. Rack power density has nearly doubled year-on-year, and the newest GPU rack architectures are liquid-cooling-mandatory by design, which is now pulling capex into cooling and electrical infrastructure as hard as it pulls into chips.",
+    id: "cooling", label: "Cooling", score: 85, tag: "Accelerating", tagClass: "tag-accel",
+    synthesis: "Liquid cooling has gone from a niche option to a design requirement in about two years. The remaining question isn't whether liquid cooling wins — it already has for new AI-purpose builds — but how fast immersion cooling takes share at the very top of the density curve.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Air / RDHX (Vertiv, Schneider, Siemens)", "Declining share, still viable for legacy and lower-density facilities", "Reserved almost entirely for non-AI or legacy workloads", "Marginal share of new AI-purpose builds"],
+        ["Direct-to-chip liquid (JetCool, CoolIT)", "~54-76% adoption; mandatory by design on Nvidia's GB200 NVL72", "Default architecture across nearly all new hyperscale AI racks", "Fully standardized and commoditized"],
+        ["Immersion (Iceotope, LiquidStack, Submer)", "Niche, reserved for the highest-density training clusters", "Growing share for extreme-density (150kW+) racks", "Meaningful share of top-tier training infrastructure"]
+      ]
+    },
     signals: [
       {text: "Goldman Sachs estimates liquid-cooled AI servers rose from ~15% of deployments in 2024 to ~54% in 2025, projected to reach ~76% in 2026.", source: "GigeNET", url: "https://www.gigenet.com/blog/ai-data-center-power-crisis/"},
       {text: "Average AI rack density rose from roughly 16kW in 2025 to 27kW in 2026, while only about one in five operators say they're prepared for the 50-70kW racks now common in AI deployments.", source: "Schneider Electric blog", url: "https://blog.se.com/datacenter/2026/07/28/data-center-power-density-planning-liquid-cooled-ai-data-centers-around-grid-and-power-constraints/"},
-      {text: "Nvidia's GB200 NVL72 rack-scale design is liquid-cooling-mandatory, and new regulations like Germany's 2026 Energy Efficiency Act are starting to mandate cooling efficiency thresholds for new builds.", source: "Adam Silva Consulting", url: "https://www.adamsilvaconsulting.com/insights/data-center-cooling-economics-2026"}
+      {text: "New regulations such as Germany's 2026 Energy Efficiency Act are starting to mandate cooling efficiency thresholds (PUE <=1.3) for new data center builds.", source: "Adam Silva Consulting", url: "https://www.adamsilvaconsulting.com/insights/data-center-cooling-economics-2026"}
     ]
   },
   {
-    id: "energy",
-    label: "Energy &\npower",
-    score: 72,
-    tag: "Constrained",
-    tagClass: "tag-watch",
-    synthesis: "Power, not chips, is now the binding constraint on how fast this build-out can move. Hyperscalers have committed nearly 10 gigawatts of nuclear capacity in the last year alone, but grid interconnection queues have swelled to roughly 2,600 gigawatts of pending projects with multi-year wait times, so the physical bottleneck has shifted upstream of the data center.",
+    id: "power", label: "Power (Grid/UPS)", score: 68, tag: "Constrained", tagClass: "tag-watch",
+    synthesis: "This is the layer furthest from being solved. Switchgear and transformer lead times are a multi-year bottleneck independent of chip supply, and the fix arriving from the silicon side — backside power delivery — doesn't reach volume production until 2027-28.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Grid / UPS equipment (ABB, Eaton, Siemens, Schneider)", "Multi-year lead times (18-24+ months) on switchgear and transformers remain a binding constraint separate from chip supply", "New manufacturing capacity coming online, though lead times persist as a bottleneck", "Backlog eases somewhat as capacity investments mature"],
+        ["On-board power delivery (Vicor, AmberSemi, Monolithic Power)", "Supporting current-generation GPU racks on existing architectures", "Redesigned around backside power delivery silicon as it enters volume", "Standardized around backside-power silicon across leading vendors"]
+      ]
+    },
     signals: [
-      {text: "Across 13 tracked deals, the major US hyperscalers had committed over 9.8 GW of nuclear capacity to AI data centers as of mid-2026, led by Meta's up-to-6.6 GW across Vistra, TerraPower, Oklo and Constellation.", source: "Axis Intelligence Research", url: "https://axis-intelligence.com/nuclear-energy-for-data-centers/"},
-      {text: "US grid interconnection queues have grown to roughly 2,600 GW of pending projects, with average wait times around five years and high withdrawal rates.", source: "Informed Clearly", url: "https://informedclearly.com/en/ai/53909/ai-data-centers-nuclear-power-2026"},
+      {text: "TSMC's A16 node — which introduces backside power delivery (\"Super Power Rail\") — is planned for mass production in Q4 2026, with actual products expected in the 2027-2028 window.", source: "Digital Citizen", url: "https://www.digitalcitizen.life/tsmcs-a16-node-brings-backside-power-to-its-angstrom-era-chips/"},
+      {text: "A16 wafers are estimated to cost between $45,000 and $50,000 each, reflecting the capital intensity of scaling advanced power delivery alongside compute density.", source: "FinancialContent", url: "https://markets.financialcontent.com/wedbush/article/tokenring-2026-1-21-the-angstrom-era-arrives-tsmc-enters-2nm-mass-production-and-unveils-16nm-roadmap"},
       {text: "Roughly 40% of announced AI data center projects reportedly face delays tied to power infrastructure rather than chip supply.", source: "NextWaves Insight", url: "https://nextwavesinsight.com/hyperscaler-ai-capex-microsoft-google-amazon-meta-2026/"}
     ]
   },
   {
-    id: "hyperscale",
-    label: "Hyperscaler\ncapex",
-    score: 88,
-    tag: "Accelerating",
-    tagClass: "tag-accel",
-    synthesis: "Combined 2026 capex guidance from the largest hyperscalers is converging around $700-725B, up roughly 77% year-on-year. The spending itself is not in question; what's changed is that it's now visibly straining free cash flow at some of these companies, which is where the market's attention has moved.",
+    id: "silicon", label: "Silicon (Fabs/Memory)", score: 90, tag: "Accelerating", tagClass: "tag-accel",
+    synthesis: "Leading-edge fabs and memory makers are both running flat out. TSMC's roadmap is now the pacing item for the whole GPU ecosystem — Nvidia's next architecture and reportedly even OpenAI's in-house silicon are keyed to the same A16/A14 node transition.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Fabs (TSMC, Samsung, Intel Foundry)", "TSMC's N2 (2nm) node in mass production; Samsung and Intel racing to close the gap", "TSMC's A16 (1.6nm) in volume production with backside power delivery; A14 node introduced", "A14 matures; A13/A12 optical shrinks ship; early work begins on A10 (1nm)"],
+        ["Memory (SK Hynix, Samsung, Micron)", "HBM reportedly sold out into 2026-27; SK Hynix holds ~56-58% of global HBM share at record margins", "Next-generation HBM tied to new GPU architectures built on A16", "Exotic memory types (MRAM, ReRAM) reach select production use cases alongside HBM"]
+      ]
+    },
+    tables: [
+      {
+        title: "Memory technology comparison (vs. DRAM baseline)",
+        refreshed: "static", trendColumn: false,
+        note: "Technology characteristics, not company-specific — this reference table doesn't need to move every cycle the way the timeline above does.",
+        columns: ["Memory type", "Speed", "Density", "Power efficiency", "Endurance", "Cost vs. DRAM", "Maturity"],
+        rows: [
+          ["DRAM", "Med", "High", "Med", "Med", "Baseline", "Mainstream / production"],
+          ["HBM (stacked DRAM)", "High", "High", "Med", "Med", "Premium", "Mainstream, scaling fast"],
+          ["SRAM", "High", "Low", "Low", "Med", "Premium", "Mainstream, confined to on-chip cache"],
+          ["MRAM", "Med", "Med", "High", "High", "Premium", "Early testing"],
+          ["ReRAM", "High", "High", "High", "Med", "Targeting parity", "Emerging; noise/integration challenges remain"],
+          ["PCM (phase-change)", "Med", "Med", "Med", "High", "Targeting parity", "Niche / emerging"],
+          ["FeRAM", "Med", "Low", "High", "High", "Targeting parity (higher mfg cost)", "Niche — embedded/industrial use"],
+          ["Optical / photonic memory", "High", "Med", "High", "High", "Premium", "Early R&D"],
+          ["Memristors / synaptic RAM", "High", "High", "High", "High", "Low (in theory)", "Early R&D — neuromorphic angle"]
+        ]
+      }
+    ],
+    signals: [
+      {text: "SK Hynix held roughly 56-58% global HBM market share in Q1 2026 and posted record Q2 revenue of ~$55B, up 257% year-on-year, with operating margin near 76%.", source: "The Motley Fool", url: "https://www.fool.com/investing/2026/08/06/sk-hynix-supplies-more-than-half-the-worlds-hbm-me/"},
+      {text: "SK Hynix approved roughly $38B of new fab investment that won't produce output before December 2028, signaling a multi-year bet that current demand holds.", source: "The Motley Fool", url: "https://www.fool.com/investing/2026/08/06/sk-hynix-supplies-more-than-half-the-worlds-hbm-me/"},
+      {text: "Nvidia has reportedly secured early access to TSMC's A16 capacity for its 2027 'Feynman' architecture, while OpenAI is reported to be developing its own custom silicon with Broadcom and Marvell on the same node.", source: "FinancialContent", url: "https://markets.financialcontent.com/wral/article/tokenring-2025-12-31-tsmcs-a16-roadmap-the-angstrom-era-and-the-breakthrough-of-super-power-rail-technology"}
+    ]
+  },
+  {
+    id: "compute", label: "Compute (GPU/ASIC)", score: 86, tag: "Accelerating", tagClass: "tag-accel",
+    synthesis: "Merchant GPUs still dominate, but the center of gravity is shifting toward co-designed silicon. Every major hyperscaler now has a custom accelerator program, and even the largest model developers are reportedly moving toward their own chips.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Merchant GPU (Nvidia, AMD)", "Blackwell-generation GPUs dominant; Nvidia data center revenue running near $62B/quarter", "Nvidia's next-generation \"Feynman\" architecture, built on TSMC's A16 node", "Following architecture generation, with deeper co-packaged-optics integration"],
+        ["Custom ASIC (Google TPU, AWS Trainium, Meta MTIA, Groq)", "Hyperscalers scaling custom silicon to reduce dependence on merchant GPUs", "OpenAI's own custom silicon (developed with Broadcom/Marvell) targeted for this window", "Custom silicon a meaningful share of total hyperscaler compute"],
+        ["Co-design (Broadcom, EnCharge AI, Marvell)", "Broadcom and Marvell co-designing ASICs directly with hyperscalers; EnCharge AI in early edge engagements", "Co-designed silicon reaches a broader share of total AI compute", "Analog in-memory compute reaches data-center relevance if efficiency gains hold at scale"]
+      ]
+    },
+    signals: [
+      {text: "Nvidia's data center revenue reached roughly $62.3B in its most recent quarter, up about 75% year-on-year, with networking revenue up over 260%.", source: "Yahoo Finance", url: "https://finance.yahoo.com/sectors/technology/articles/hyperscalers-hit-700-billion-2026-111243744.html"},
+      {text: "Nvidia's roadmap includes the 'Feynman' rack platform, targeted for 2028, which is expected to incorporate co-packaged-optics-based scale-up connectivity between accelerators within a rack.", source: "MapYourTech", url: "https://mapyourtech.com/co-packaged-optics-architecture-status-and-the-path-to-1-6t-switches/"}
+    ]
+  },
+  {
+    id: "networking", label: "Networking", score: 72, tag: "Constrained", tagClass: "tag-watch",
+    synthesis: "Pluggable optics still carry the overwhelming majority of data center traffic today. Co-packaged optics is the clear direction of travel, but nearly every serious industry forecast places large-scale deployment in the 2028-2030 window, not before.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Pluggable transceivers (Lumentum, Coherent, InnoLight)", "Dominant majority of optical links in data centers today", "Still the majority of links, but share steadily eroding to CPO", "CPO reaches an estimated 10-20% of the high-speed optics market"],
+        ["CPO / ELS & switches (Lightmatter, Ayar Labs, Arista, Cisco)", "CPO scale-out switches just reaching commercial availability (Broadcom Tomahawk 6, Nvidia's first CPO switches)", "Broad scale-up CPO adoption expected as supply chains and standards mature", "Large-scale CPO deployment considered mainstream by industry watchers (Yole Group)"],
+        ["Edge / QPU (SEEQC, Cerebras)", "Early-stage; wafer-scale and quantum approaches remain niche", "Possible early hybrid quantum-classical pilots", "Still pre-commercial for mainstream AI workloads at this horizon"]
+      ]
+    },
+    signals: [
+      {text: "Industry watchers including Yole Group place large-scale co-packaged optics deployment in the 2028-2030 window, while pluggable modules remain the majority of data center optical links through the rest of the decade.", source: "EDN", url: "https://www.edn.com/where-co-packaged-optics-cpo-technology-stands-in-2026/"},
+      {text: "Cignal AI estimates large-scale CPO deployment is still 3-5 years away as of 2026, with real deployment at scale more likely to arrive in 2027-28 or later, particularly for hyperscaler scale-out networks.", source: "Cignal AI", url: "https://cignal.ai/2025/02/co-packaged-optics-market-and-technology-update/"},
+      {text: "LightCounting forecasts co-packaged optics could capture 10-20% of the high-speed optics market by 2030.", source: "LINK-PP", url: "https://www.link-pp.com/knowledge/co-packaged-optics-cpo-definition-technology-market-trends.html"}
+    ]
+  },
+  {
+    id: "serversdc", label: "Servers / DC", score: 82, tag: "Accelerating", tagClass: "tag-accel",
+    synthesis: "Power, not land, is now the primary site-selection criterion, which is reshaping who builds where. Geography is rotating away from saturated primary markets toward Texas and secondary metros with available power, and OEM server lineups are being redesigned around liquid cooling as a baseline requirement.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["OEM servers (Dell EMC, Supermicro, HPE)", "Retrofitting server lineups for liquid cooling as a standard requirement", "Liquid-cooled architectures standard across major OEM lineups", "Further modularity and density standardization across vendors"],
+        ["DC operators (Equinix, Vantage, QTS)", "Power, not land, is the binding site-selection constraint; geography rotating toward Texas and secondary markets", "Operators increasingly differentiated by speed-to-power and liquid-cooling readiness", "Consolidation likely around operators with secured long-term power access"]
+      ]
+    },
+    tables: [
+      {
+        title: "Builder archetypes",
+        refreshed: "dynamic",
+        columns: ["Archetype", "Examples", "2026 posture", "Trend"],
+        rows: [
+          ["Hyperscaler self-build", "AWS, Microsoft, Google, Meta", "Largest customers of third-party developers and the largest builders in their own right; increasingly vertically integrated into power and silicon", "accel"],
+          ["Public colocation REITs", "Equinix, Digital Realty", "Retrofitting legacy footprints for liquid cooling and higher density", "steady"],
+          ["Private hyperscale developers", "Compass, STACK, Vantage, Aligned, CyrusOne, QTS", "Backed by infrastructure PE and sovereign capital; competing on speed-to-power", "accel"],
+          ["Power-first Tier 2 developers", "Emerging, founder-led (incl. former crypto miners)", "Building in secondary markets where power, not land, is available", "watch"]
+        ]
+      }
+    ],
+    signals: [
+      {text: "Roughly 40% of announced AI data center projects reportedly face delays tied to power infrastructure rather than chip supply.", source: "NextWaves Insight", url: "https://nextwavesinsight.com/hyperscaler-ai-capex-microsoft-google-amazon-meta-2026/"}
+    ]
+  },
+  {
+    id: "cloud", label: "Cloud", score: 88, tag: "Accelerating", tagClass: "tag-accel",
+    synthesis: "Hyperscaler capex is compounding faster than revenue in some cases, which is exactly where market anxiety has concentrated. AI-native neoclouds are growing quickly by reselling GPU capacity, but their durability depends on the same power access that constrains everyone else.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Hyperscaler cloud (AWS, Azure, Google Cloud, Oracle)", "~$725B combined 2026 capex guidance, up ~77% year-on-year", "Continued high capex; financing structure (circular deals, off-balance-sheet liabilities) under increasing scrutiny", "Capex growth likely moderates as the buildout matures relative to demand"],
+        ["AI-native neoclouds (CoreWeave, Lambda, Crusoe)", "Reselling GPU capacity directly to frontier labs", "Differentiating on power access and long-term contracts", "Consolidation likely among neoclouds lacking secured power or financing"]
+      ]
+    },
     signals: [
       {text: "The four largest US hyperscalers are guiding to a combined ~$725B in 2026 capital expenditure, up about 77% from ~$410B in 2025, with several raising guidance more than once this year.", source: "ValueAddVC capex tracker", url: "https://valueaddvc.com/ai-spending"},
       {text: "Alphabet's AI-related purchase commitments reportedly jumped from $332B to $811B in a single quarter, with full-year capex guided to $195-205B and management flagging negative free cash flow.", source: "Matterfact newsletter", url: "https://www.matterfact.com/newsletter/2026-08-22-semiconductor-briefing-financing-machine"},
@@ -414,12 +390,16 @@ const DEMO_SEGMENTS = [
     ]
   },
   {
-    id: "llm",
-    label: "Frontier models\n/ LLM layer",
-    score: 82,
-    tag: "Accelerating",
-    tagClass: "tag-accel",
-    synthesis: "The labs themselves are now the ones straining to secure compute rather than waiting for it. Anthropic and OpenAI are both signing multi-gigawatt, multibillion-dollar-a-year compute deals directly, and Q3 2026 is shaping up to be the heaviest frontier model release window on record - but revenue, while growing fast, still trails the scale of the compute commitments by a wide margin.",
+    id: "applications", label: "Applications", score: 82, tag: "Accelerating", tagClass: "tag-accel",
+    synthesis: "The labs themselves are now straining to secure compute rather than waiting for it, enterprise AI tools are moving from pilot to core workflow, and consumer AI apps have reached mainstream usage. Revenue is growing quickly across all three tiers but still trails the scale of compute commitments being made.",
+    timeline: {
+      columns: ["Layer", "2026 — Deployed today", "2028", "2030"],
+      rows: [
+        ["Frontier models (OpenAI, Anthropic, Google, Meta AI)", "Q3 2026 shaping up as the heaviest frontier model release window on record", "Compute-to-revenue gap narrows if current growth trajectories hold", "Longer horizon; both capability trajectory and monetization model remain uncertain"],
+        ["Enterprise apps (Copilot, Glean, Harvey)", "Rapid enterprise adoption underway across knowledge work", "Deep integration into core enterprise workflows", "AI-native workflows standard across enterprise software categories"],
+        ["Consumer apps (Perplexity, Midjourney)", "Mainstream usage growing; search and creative categories most mature", "Broader monetization models mature (subscriptions, ads, agentic commerce)", "Consumer AI a standard layer of the internet stack"]
+      ]
+    },
     signals: [
       {text: "Anthropic has agreed to rent xAI's entire ~300,000 H100e Colossus 1 data center plus part of Colossus 2, reportedly paying up to $15B per year, alongside multi-gigawatt compute expansions with Amazon and Google.", source: "Epoch AI", url: "https://epoch.ai/gradient-updates/frontier-labs-dont-use-most-ai-compute"},
       {text: "Q3 2026 is forecast to be the heaviest frontier model release window of the year, with roughly three of five candidate launches from OpenAI, Anthropic, Google, xAI and DeepSeek expected in a six-week window from mid-August to late September.", source: "Digital Applied", url: "https://www.digitalapplied.com/blog/frontier-model-q3-2026-release-forecast-roadmap-analysis"},
@@ -428,8 +408,8 @@ const DEMO_SEGMENTS = [
   }
 ];
 
-const rail = document.getElementById('rail');
-const detail = document.getElementById('detail');
+const tabBar = document.getElementById('tab-bar');
+const panel = document.getElementById('panel');
 
 let SEGMENTS = DEMO_SEGMENTS;
 
@@ -437,44 +417,112 @@ function tagClassForScore(score){
   return score >= 80 ? 'tag-accel' : 'tag-watch';
 }
 
-function gaugeSVG(score){
+function gaugeSVG(score, size){
+  const s = size || 64;
+  const h = s * 0.63;
   const angle = -90 + (score/100)*180;
   const rad = angle * Math.PI/180;
-  const cx=32, cy=34, r=26;
+  const cx=s/2, cy=h-5, r=s*0.4;
   const x = cx + r*Math.cos(rad);
   const y = cy + r*Math.sin(rad);
   const color = score>=80 ? 'var(--amber)' : score>=60 ? 'var(--cyan)' : 'var(--red)';
-  return `<svg width="64" height="40" viewBox="0 0 64 40">
-    <path d="M 6 34 A 26 26 0 0 1 58 34" fill="none" stroke="#2a3038" stroke-width="4" stroke-linecap="round"/>
-    <path d="M 6 34 A 26 26 0 0 1 58 34" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round"
-      stroke-dasharray="${(score/100)*81.7} 200"/>
-    <line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="${cx}" cy="${cy}" r="2.5" fill="${color}"/>
+  const circ = Math.PI * r;
+  return `<svg width="${s}" height="${h}" viewBox="0 0 ${s} ${h}">
+    <path d="M ${s*0.09} ${h-5} A ${r} ${r} 0 0 1 ${s*0.91} ${h-5}" fill="none" stroke="#2a3038" stroke-width="3" stroke-linecap="round"/>
+    <path d="M ${s*0.09} ${h-5} A ${r} ${r} 0 0 1 ${s*0.91} ${h-5}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round"
+      stroke-dasharray="${(score/100)*circ} 999"/>
+    <line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="1.75" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="1.75" fill="${color}"/>
   </svg>`;
 }
 
-function renderRail(activeId){
-  rail.innerHTML = SEGMENTS.map(s => `
-    <div class="node ${s.id===activeId?'active':''}" data-id="${s.id}">
-      <div class="gauge-wrap">${gaugeSVG(s.score)}</div>
-      <div class="node-label">${s.label.replace('\n','<br/>')}</div>
-      <div class="node-tag ${s.tagClass}">${s.tag}</div>
+function trendChip(trend){
+  const map = {accel: ['trend-accel','Accelerating'], watch: ['trend-watch','Constrained'], steady: ['trend-steady','Steady']};
+  const [cls, label] = map[trend] || map.steady;
+  return `<span class="trend-chip ${cls}">${label}</span>`;
+}
+
+function renderTimeline(timeline){
+  return `
+    <div class="table-label-row">
+      <div class="table-label">Deployment timeline</div>
+      <span class="refresh-badge badge-dynamic">Refreshed biweekly</span>
+    </div>
+    <table class="comp timeline">
+      <thead><tr>
+        <th>${timeline.columns[0]}</th>
+        <th class="h2026">${timeline.columns[1]}</th>
+        <th class="h2028">${timeline.columns[2]}</th>
+        <th class="h2030">${timeline.columns[3]}</th>
+      </tr></thead>
+      <tbody>
+        ${timeline.rows.map(row => `
+          <tr>
+            <td class="cat">${row[0]}</td>
+            <td>${row[1]}</td>
+            <td>${row[2]}</td>
+            <td>${row[3]}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderTable(table){
+  const lastCol = table.columns.length - 1;
+  const hasTrend = table.trendColumn !== false;
+  const badge = table.refreshed === 'static'
+    ? `<span class="refresh-badge badge-static">Static reference</span>`
+    : `<span class="refresh-badge badge-dynamic">Refreshed biweekly</span>`;
+  return `
+    <div class="table-label-row">
+      <div class="table-label">${table.title}</div>
+      ${badge}
+    </div>
+    ${table.note ? `<p class="table-note">${table.note}</p>` : ''}
+    <table class="comp">
+      <thead><tr>${table.columns.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${table.rows.map(row => `
+          <tr>
+            <td class="cat">${row[0]}</td>
+            ${hasTrend ? row.slice(1, lastCol).map(cell => `<td>${cell}</td>`).join('') : row.slice(1).map(cell => `<td>${cell}</td>`).join('')}
+            ${hasTrend ? `<td>${trendChip(row[lastCol])}</td>` : ''}
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderTabs(activeId){
+  tabBar.innerHTML = SEGMENTS.map(s => `
+    <div class="tab ${s.id===activeId?'active':''}" data-id="${s.id}">
+      <div class="tab-gauge">${gaugeSVG(s.score, 38)}</div>
+      <div class="tab-label">${s.label}</div>
+      <div class="tab-tag ${s.tagClass}">${s.tag}</div>
     </div>
   `).join('');
-  rail.querySelectorAll('.node').forEach(el=>{
-    el.addEventListener('click', ()=> showDetail(el.dataset.id));
+  tabBar.querySelectorAll('.tab').forEach(el=>{
+    el.addEventListener('click', ()=> showPanel(el.dataset.id));
   });
 }
 
-function showDetail(id){
+function showPanel(id){
   const s = SEGMENTS.find(x=>x.id===id);
-  renderRail(id);
-  detail.innerHTML = `
-    <div class="detail-head">
-      <h2>${s.label.replace('\n',' ')}</h2>
-      <span class="detail-score mono">MOMENTUM ${s.score}/100 &middot; ${s.tag}</span>
+  renderTabs(id);
+  panel.innerHTML = `
+    <div class="panel-head">
+      <h2>${s.label}</h2>
+      <span class="panel-score mono">MOMENTUM ${s.score}/100 &middot; ${s.tag}</span>
     </div>
-    <p class="detail-synthesis">${s.synthesis}</p>
+    <p class="panel-synthesis">${s.synthesis}</p>
+
+    ${renderTimeline(s.timeline)}
+    ${(s.tables || []).map(renderTable).join('')}
+
+    <div class="table-label" style="margin-top:26px; margin-bottom:10px;">This edition's signals</div>
     <ul class="signals">
       ${s.signals.map(sig => `
         <li class="signal">
@@ -504,14 +552,14 @@ async function loadSegments(){
     // No server (e.g. opened as a local file) or no report_data.json yet -- use embedded demo data.
     SEGMENTS = DEMO_SEGMENTS;
   }
-  renderRail(null);
-  showDetail(SEGMENTS[0].id);
+  renderTabs(null);
+  showPanel(SEGMENTS[0].id);
 }
 
 loadSegments();
 
 // ---- Editorial gate (persisted via window.storage, personal to this user) ----
-const EDITION_KEY = 'edition-status:2026-08-26';
+const EDITION_KEY = 'edition-status:2026-08-27-v2';
 const statusPill = document.getElementById('status-pill');
 const statusText = document.getElementById('status-text');
 const gateText = document.getElementById('gate-text');
