@@ -119,7 +119,6 @@
   }
   .badge-dynamic{color:var(--cyan);background:var(--cyan-dim);}
   .badge-static{color:var(--text-faint);background:#262b33;}
-  .badge-feature{color:var(--violet);background:var(--violet-dim);}
   .table-note{font-size:12px;color:var(--text-faint);line-height:1.5;margin:0 0 12px;font-style:italic;}
 
   table.comp{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px;}
@@ -203,16 +202,20 @@
   }
   .combo-col p{font-size:13.5px;line-height:1.6;color:#c9cdd4;margin:0 0 6px;}
 
-  /* ---- Log ---- */
-  .log-entry{border-left:2px solid var(--line);padding:2px 0 24px 20px;margin-bottom:2px;position:relative;}
-  .log-entry::before{content:'';position:absolute;left:-5px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--amber);}
-  .log-entry.refresh::before{background:var(--cyan);}
-  .log-entry:last-child{border-left-color:transparent;padding-bottom:0;}
-  .log-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-  .log-date{font-size:12.5px;color:var(--text-dim);}
-  .log-bullets{margin:0 0 10px;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
-  .log-bullets li{font-size:13.5px;line-height:1.6;color:#c9cdd4;}
-  .log-goals{font-size:12.5px;line-height:1.55;color:var(--text-faint);font-style:italic;margin:0;}
+  /* ---- Log (biweekly news digest, per layer) ---- */
+  .log-edition{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:28px;}
+  .log-edition:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .log-edition-date{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.04em;color:var(--text);
+    background:var(--panel-raised);display:inline-block;padding:4px 12px;border-radius:4px;margin-bottom:20px;
+  }
+  .log-categories{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;}
+  .log-category-label{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:8px;
+  }
+  .log-bullets{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+  .log-bullets li{font-size:13px;line-height:1.55;color:#c9cdd4;}
 
   footer{margin-top:30px;font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);text-align:center;line-height:1.6;}
 
@@ -222,6 +225,7 @@
     table.comp{font-size:11.5px;}
     .sent-cols{grid-template-columns:1fr;}
     .combo-cols{grid-template-columns:1fr;}
+    .log-categories{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -289,7 +293,7 @@
 
   <section class="view" id="view-log" hidden>
     <div class="view-head"><h2>Log</h2></div>
-    <p class="view-intro">A running, bullet-point account of what changed each cycle &mdash; feature work plus automated refreshes &mdash; so anyone can follow how the tool evolved without re-reading the whole app. Each feature entry checks back against the goal: does this move the app closer to a real-time market map with a defensible private layer, or add complexity without adding to either?</p>
+    <p class="view-intro">A biweekly digest of the most important public-markets news per layer over the prior two weeks &mdash; the same sourced signals behind Public Markets, reused here as a fast-read archive. Refreshed automatically every cycle.</p>
     <div id="log-entries"></div>
   </section>
 
@@ -795,68 +799,75 @@ function renderCombinedLayers(){
   }).join('');
 }
 
-// ---- Log (feature changes + automated refreshes) ----
-const DEMO_LOG_ENTRIES = [
-  {
-    date: "2026-08-26", type: "feature",
-    summary: [
-      "Stood up the pilot: GitHub repo, Pages hosting, weekly GitHub Actions workflow, and the ANTHROPIC_API_KEY secret.",
-      "Wired report.html to fetch report_data.json at load with a fallback to embedded demo data.",
-      "Ran the pipeline end-to-end for the first time: Claude + web search generating a structured edition, gated behind pending_review."
-    ],
-    goalsCheck: "Establishes the automated Public Markets tab end-to-end for the first time — the foundation everything else builds on."
-  },
-  { date: "2026-08-26", type: "refresh", summary: ["Public Markets edition refreshed — 5 layers, status: pending_review."] },
-  {
-    date: "2026-08-27", type: "feature",
-    summary: [
-      "Redesigned Public Markets from 5 segments to the full 9-layer value chain (Energy through Applications), matching the market map already built.",
-      "Added a 2026 / 2028 / 2030 deployment timeline per layer.",
-      "Fixed three distinct bugs surfaced by live runs: token-budget starving the JSON response, trailing text after the JSON object, and unescaped control characters breaking strict parsing. Added retry logic (up to 5 attempts) since the failure was genuinely intermittent per layer, not fixed by a bigger token ceiling alone."
-    ],
-    goalsCheck: "Matches the tool to the value chain already mapped — real progress toward the automated layer, no new scope added."
-  },
-  { date: "2026-08-27", type: "refresh", summary: ["Public Markets edition refreshed — 9 layers, status: pending_review."] },
-  {
-    date: "2026-08-27", type: "feature",
-    summary: [
-      "Replaced the single sector-wide Commentary Sentiment bull/bear module with a per-layer 2030 Outlook — a bull case and bear case specific to each layer's own bottleneck, not generic AI-market sentiment."
-    ],
-    goalsCheck: "Sharpens the existing Public Markets tab rather than adding scope — momentum tracking gets more specific without adding a new surface."
-  },
-  { date: "2026-08-27", type: "refresh", summary: ["Public Markets edition refreshed — 9 layers with 2030 outlook, status: pending_review."] },
-  {
-    date: "2026-09-03", type: "feature",
-    summary: [
-      "Added the tabbed architecture: Public Markets, Private Markets, Combined / Value Chain, and this Log.",
-      "Public Markets is now explicitly labeled as the automated tab; Private Markets ships as a manual template, seeded with placeholder rows per layer.",
-      "Combined / Value Chain pairs each layer's Public Markets synthesis with its Private Markets entries (currently templates)."
-    ],
-    goalsCheck: "Moves toward a real-time market map with a defensible private layer — but the private layer itself is still empty. The next real step is populating it from actual diligence, not more structure."
-  }
-];
+// ---- Log (biweekly news digest, 5 bullets per layer -- no app updates here) ----
+const DEMO_LOG = {
+  editions: [
+    {
+      date: "2026-08-27",
+      categories: {
+        energy: [
+          "Form Energy raised $750M to expand iron-air battery manufacturing, citing AI data-center demand as a driver.",
+          "Duke Energy flagged $5-10B of incremental capex upside tied to data-center load, with signed agreements totaling 7.8 GW."
+        ],
+        cooling: [
+          "Ecolab completed its ~$4.75B acquisition of CoolIT Systems after CoolIT's sales grew over 100% on AI demand.",
+          "Vertiv raised full-year guidance to ~$14B in net sales, citing a backlog exceeding $15B."
+        ],
+        power: [
+          "Transformer and switchgear shortages, not GPU supply, now described as the hard ceiling on data-center energization.",
+          "Vicor's backlog surged to $380M, up 145% year-over-year, on demand for its power-delivery modules."
+        ],
+        silicon: [
+          "Samsung's HBM4 yield climbed from under 60% to ~80% by August 2026.",
+          "TSMC confirmed its A16 (backside power delivery) node remains on track for Q4 2026 mass production."
+        ],
+        compute: [
+          "Nvidia's data-center revenue rose 18% sequentially to $89B, guiding Q3 to $108B.",
+          "Marvell disclosed an expanded custom AI chip partnership with Google."
+        ],
+        networking: [
+          "Cisco's AI infrastructure orders from hyperscalers surged ~4.5x year-over-year to $9.3B.",
+          "Cerebras introduced its CS-4 rack-scale accelerator, claiming up to 10x throughput per watt."
+        ],
+        serversdc: [
+          "Supermicro's order backlog exceeded $60B, with Q1 FY2027 guidance well above consensus.",
+          "New York paused permits for data centers over 50MW pending grid-cost and water-use rules."
+        ],
+        cloud: [
+          "CoreWeave's revenue jumped 112% year-over-year, with backlog reaching $104B.",
+          "AWS revenue reaccelerated to 37% year-over-year growth, its fastest pace in 18 quarters."
+        ],
+        applications: [
+          "Anthropic's annualized revenue reached ~$47B, overtaking OpenAI's ~$25B.",
+          "Legal AI startup Harvey is in talks to raise at a $15.5B valuation, revenue up over 80%."
+        ]
+      }
+    }
+  ]
+};
 
-let LOG_ENTRIES = DEMO_LOG_ENTRIES;
-
-function typeBadge(type){
-  return type === 'feature'
-    ? `<span class="refresh-badge badge-feature">Feature</span>`
-    : `<span class="refresh-badge badge-dynamic">Refresh</span>`;
-}
+let LOG_DATA = DEMO_LOG;
 
 function renderLog(){
   const container = document.getElementById('log-entries');
-  const entries = LOG_ENTRIES.slice().reverse();
-  container.innerHTML = entries.map(e => `
-    <div class="log-entry ${e.type === 'refresh' ? 'refresh' : ''}">
-      <div class="log-head">
-        <span class="log-date mono">${e.date}</span>
-        ${typeBadge(e.type)}
+  const editions = (LOG_DATA.editions || []).slice().reverse();
+  container.innerHTML = editions.map(ed => `
+    <div class="log-edition">
+      <div class="log-edition-date">${ed.date}</div>
+      <div class="log-categories">
+        ${LAYER_ORDER.map(id => {
+          const bullets = (ed.categories && ed.categories[id]) || [];
+          if(!bullets.length) return '';
+          return `
+            <div class="log-category">
+              <div class="log-category-label">${LAYER_LABELS[id]}</div>
+              <ul class="log-bullets">
+                ${bullets.map(line => `<li>${line}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        }).join('')}
       </div>
-      <ul class="log-bullets">
-        ${e.summary.map(line => `<li>${line}</li>`).join('')}
-      </ul>
-      ${e.goalsCheck ? `<p class="log-goals">${e.goalsCheck}</p>` : ''}
     </div>
   `).join('');
 }
@@ -866,9 +877,9 @@ async function loadLog(){
     const res = await fetch('log.json');
     if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
     const data = await res.json();
-    if(Array.isArray(data.entries) && data.entries.length) LOG_ENTRIES = data.entries;
+    if(Array.isArray(data.editions) && data.editions.length) LOG_DATA = data;
   }catch(e){
-    LOG_ENTRIES = DEMO_LOG_ENTRIES;
+    LOG_DATA = DEMO_LOG;
   }
   renderLog();
 }
