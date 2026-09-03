@@ -215,6 +215,34 @@ def generate_thesis(client, segments):
     return call_claude(client, system, segment_summary)
 
 
+def append_log_entry(edition):
+    """Append a 'refresh' entry to log.json for this cycle's automated run.
+
+    Feature-level entries (app/UI changes) are written by hand elsewhere; this
+    only records that the automated Public Markets pipeline ran and what it
+    produced, so the Log tab has a complete history without duplicating what's
+    already visible in report_data.json / history/.
+    """
+    log_path = "log.json"
+    try:
+        with open(log_path) as f:
+            log = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        log = {"entries": []}
+
+    log.setdefault("entries", []).append({
+        "date": edition["editionDate"],
+        "type": "refresh",
+        "summary": [
+            f"Public Markets edition refreshed — {len(edition['segments'])} layers, "
+            f"status: {edition['status']}."
+        ],
+    })
+
+    with open(log_path, "w") as f:
+        json.dump(log, f, indent=2)
+
+
 def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
@@ -248,7 +276,9 @@ def main():
     with open(history_path, "w") as f:
         json.dump(edition, f, indent=2)
 
-    print(f"Wrote report_data.json and {history_path}")
+    append_log_entry(edition)
+
+    print(f"Wrote report_data.json, {history_path}, and appended to log.json")
 
 
 if __name__ == "__main__":

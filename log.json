@@ -1,0 +1,58 @@
+{
+  "entries": [
+    {
+      "date": "2026-08-26",
+      "type": "feature",
+      "summary": [
+        "Stood up the pilot: GitHub repo, Pages hosting, weekly GitHub Actions workflow, and the ANTHROPIC_API_KEY secret.",
+        "Wired report.html to fetch report_data.json at load with a fallback to embedded demo data.",
+        "Ran the pipeline end-to-end for the first time: Claude + web search generating a structured edition, gated behind pending_review."
+      ],
+      "goalsCheck": "Establishes the automated Public Markets tab end-to-end for the first time — the foundation everything else builds on."
+    },
+    {
+      "date": "2026-08-26",
+      "type": "refresh",
+      "summary": ["Public Markets edition refreshed — 5 layers, status: pending_review."]
+    },
+    {
+      "date": "2026-08-27",
+      "type": "feature",
+      "summary": [
+        "Redesigned Public Markets from 5 segments to the full 9-layer value chain (Energy through Applications), matching the market map already built.",
+        "Added a 2026 / 2028 / 2030 deployment timeline per layer.",
+        "Fixed three distinct bugs surfaced by live runs: token-budget starving the JSON response, trailing text after the JSON object, and unescaped control characters breaking strict parsing. Added retry logic (up to 5 attempts) since the failure was genuinely intermittent per layer, not fixed by a bigger token ceiling alone."
+      ],
+      "goalsCheck": "Matches the tool to the value chain already mapped — real progress toward the automated layer, no new scope added."
+    },
+    {
+      "date": "2026-08-27",
+      "type": "refresh",
+      "summary": ["Public Markets edition refreshed — 9 layers, status: pending_review."]
+    },
+    {
+      "date": "2026-08-27",
+      "type": "feature",
+      "summary": [
+        "Replaced the single sector-wide Commentary Sentiment bull/bear module with a per-layer 2030 Outlook — a bull case and bear case specific to each layer's own bottleneck, not generic AI-market sentiment."
+      ],
+      "goalsCheck": "Sharpens the existing Public Markets tab rather than adding scope — momentum tracking gets more specific without adding a new surface."
+    },
+    {
+      "date": "2026-08-27",
+      "type": "refresh",
+      "summary": ["Public Markets edition refreshed — 9 layers with 2030 outlook, status: pending_review."]
+    },
+    {
+      "date": "2026-09-03",
+      "type": "feature",
+      "summary": [
+        "Added the tabbed architecture: Public Markets, Private Markets, Combined / Value Chain, and this Log.",
+        "Public Markets is now explicitly labeled as the automated tab; Private Markets ships as a manual template, seeded with placeholder rows per layer.",
+        "Combined / Value Chain pairs each layer's Public Markets synthesis with its Private Markets entries (currently templates).",
+        "Fixed the editorial gate's persistence: it was calling a non-existent window.storage API and silently failing on every real page load, so Approve & Publish never actually stuck. Switched to localStorage."
+      ],
+      "goalsCheck": "Moves toward a real-time market map with a defensible private layer — but the private layer itself is still empty. The next real step is populating it from actual diligence, not more structure."
+    }
+  ]
+}

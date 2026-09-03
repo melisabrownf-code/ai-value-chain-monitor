@@ -23,6 +23,8 @@
     --red-dim: #4a2530;
     --green: #6fae7f;
     --green-dim: #1e3a2a;
+    --violet: #a68bd6;
+    --violet-dim: #332c47;
   }
   *{box-sizing:border-box;}
   body{
@@ -34,7 +36,7 @@
 
   header{
     display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
-    border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:22px;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:8px;flex-wrap:wrap;
   }
   .title-block .eyebrow{
     font-family:'IBM Plex Mono', monospace;font-size:11px;letter-spacing:0.14em;
@@ -42,6 +44,22 @@
   }
   h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em;}
   .subtitle{color:var(--text-dim);font-size:13px;margin:0;max-width:640px;line-height:1.5;}
+
+  /* ---- Main nav (Public / Private / Combined / Log) ---- */
+  .main-nav{display:flex;gap:0;margin:18px 0 26px;border-bottom:1px solid var(--line);overflow-x:auto;}
+  .main-tab{
+    font-family:'IBM Plex Mono', monospace;font-size:12.5px;letter-spacing:0.03em;
+    background:transparent;border:none;color:var(--text-dim);padding:10px 2px 13px;
+    cursor:pointer;position:relative;white-space:nowrap;transition:color .15s;
+  }
+  .main-tab + .main-tab{margin-left:26px;}
+  .main-tab:hover{color:var(--text);}
+  .main-tab.active{color:var(--text);font-weight:600;}
+  .main-tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--amber);}
+  .view[hidden]{display:none;}
+
+  .view-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+  .view-head h2{font-size:19px;margin:0;font-weight:600;}
   .meta-block{text-align:right;font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--text-dim);min-width:180px;}
   .status-pill{
     display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:3px;
@@ -60,7 +78,7 @@
     color:var(--text-faint);text-transform:uppercase;display:block;margin-bottom:8px;
   }
 
-  /* ---- Tabs ---- */
+  /* ---- Layer tabs (within Public Markets) ---- */
   .tab-bar{display:flex;border-bottom:1px solid var(--line);gap:2px;overflow-x:auto;}
   .tab{
     position:relative;flex:1;min-width:100px;padding:12px 8px 14px;background:var(--panel);
@@ -101,6 +119,7 @@
   }
   .badge-dynamic{color:var(--cyan);background:var(--cyan-dim);}
   .badge-static{color:var(--text-faint);background:#262b33;}
+  .badge-feature{color:var(--violet);background:var(--violet-dim);}
   .table-note{font-size:12px;color:var(--text-faint);line-height:1.5;margin:0 0 12px;font-style:italic;}
 
   table.comp{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px;}
@@ -153,6 +172,48 @@
   button.primary{background:var(--amber);border-color:var(--amber);color:#1a1400;font-weight:600;}
   button.primary:hover{background:#f0ae4d;color:#1a1400;}
   button.primary:disabled{background:var(--amber-dim);border-color:var(--amber-dim);color:var(--text-faint);cursor:default;}
+
+  /* ---- Private Markets ---- */
+  .manual-notice{
+    background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:16px 20px;border-radius:4px;margin-bottom:26px;
+  }
+  .manual-notice .label{
+    font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--violet);display:block;margin-bottom:8px;
+  }
+  .manual-notice p{font-size:13.5px;line-height:1.6;color:var(--text-dim);margin:0;}
+  .manual-notice code{font-family:'IBM Plex Mono',monospace;color:var(--text);background:var(--panel-raised);padding:1px 5px;border-radius:3px;font-size:12.5px;}
+  .pm-layer{margin-bottom:28px;}
+  .template-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--violet);background:var(--violet-dim);padding:1px 6px;border-radius:3px;margin-left:6px;white-space:nowrap;
+  }
+  .empty-note{color:var(--text-faint);font-style:italic;font-size:13px;}
+
+  /* ---- Combined / Value Chain ---- */
+  .view-intro{font-size:14px;color:var(--text-dim);line-height:1.6;margin:0 0 24px;max-width:70ch;}
+  .combo-row{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px 22px;margin-bottom:16px;}
+  .combo-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .combo-head h3{font-size:15.5px;margin:0;font-weight:600;}
+  .combo-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .combo-col .label{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--text-faint);display:block;margin-bottom:8px;
+  }
+  .combo-col p{font-size:13.5px;line-height:1.6;color:#c9cdd4;margin:0 0 6px;}
+
+  /* ---- Log ---- */
+  .log-entry{border-left:2px solid var(--line);padding:2px 0 24px 20px;margin-bottom:2px;position:relative;}
+  .log-entry::before{content:'';position:absolute;left:-5px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--amber);}
+  .log-entry.refresh::before{background:var(--cyan);}
+  .log-entry:last-child{border-left-color:transparent;padding-bottom:0;}
+  .log-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .log-date{font-size:12.5px;color:var(--text-dim);}
+  .log-bullets{margin:0 0 10px;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+  .log-bullets li{font-size:13.5px;line-height:1.6;color:#c9cdd4;}
+  .log-goals{font-size:12.5px;line-height:1.55;color:var(--text-faint);font-style:italic;margin:0;}
+
   footer{margin-top:30px;font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);text-align:center;line-height:1.6;}
 
   @media (max-width:900px){
@@ -160,6 +221,7 @@
     .tab{min-width:88px;}
     table.comp{font-size:11.5px;}
     .sent-cols{grid-template-columns:1fr;}
+    .combo-cols{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -168,43 +230,84 @@
 
   <header>
     <div class="title-block">
-      <div class="eyebrow">Pilot &middot; Public Markets</div>
+      <div class="eyebrow">Pilot</div>
       <h1>AI Value Chain Monitor</h1>
       <p class="subtitle">Energy &rarr; Cooling &rarr; Power &rarr; Silicon &rarr; Compute &rarr; Networking &rarr; Servers/DC &rarr; Cloud &rarr; Applications</p>
     </div>
-    <div class="meta-block">
-      <div>EDITION <span id="edition-date">2026-08-27</span></div>
-      <div>CADENCE biweekly</div>
-      <div id="status-pill" class="status-pill status-pending"><span class="status-dot"></span><span id="status-text">Pending review</span></div>
-    </div>
   </header>
 
-  <div class="thesis">
-    <span class="label">This week's thesis</span>
-    Momentum is accelerating at nearly every layer of the stack, but the layers are moving on very different clocks. Cooling, silicon, and cloud capex are compounding now. Power delivery &mdash; both the grid-interconnection queue and the physical switchgear supply chain &mdash; is the layer stretching furthest into the future, with the first new-build nuclear and fusion capacity not arriving until 2028 at the earliest and meaningful scale not until 2030. Reading the value chain as a single timeline rather than nine separate stories is the point of this tool.
-  </div>
+  <nav class="main-nav" id="main-nav">
+    <button class="main-tab active" data-view="public">Public Markets</button>
+    <button class="main-tab" data-view="private">Private Markets</button>
+    <button class="main-tab" data-view="combined">Combined / Value Chain</button>
+    <button class="main-tab" data-view="log">Log</button>
+  </nav>
 
-  <div class="tab-bar" id="tab-bar"></div>
-  <div class="panel" id="panel"></div>
+  <section class="view" id="view-public">
+    <div class="view-head">
+      <h2>Public Markets</h2>
+      <div class="meta-block">
+        <div>EDITION <span id="edition-date">2026-08-27</span></div>
+        <div>CADENCE biweekly &middot; automated</div>
+        <div id="status-pill" class="status-pill status-pending"><span class="status-dot"></span><span id="status-text">Pending review</span></div>
+      </div>
+    </div>
 
-  <div class="gate">
-    <div class="gate-text" id="gate-text">
-      This edition was synthesized from public filings, earnings calls, and market commentary. It has not yet been reviewed by an editor and should not be treated as final until approved.
+    <div class="thesis">
+      <span class="label">This week's thesis</span>
+      Momentum is accelerating at nearly every layer of the stack, but the layers are moving on very different clocks. Cooling, silicon, and cloud capex are compounding now. Power delivery &mdash; both the grid-interconnection queue and the physical switchgear supply chain &mdash; is the layer stretching furthest into the future, with the first new-build nuclear and fusion capacity not arriving until 2028 at the earliest and meaningful scale not until 2030. Reading the value chain as a single timeline rather than nine separate stories is the point of this tool.
     </div>
-    <div class="gate-actions">
-      <button id="reset-btn">Reset to draft</button>
-      <button id="approve-btn" class="primary">Approve &amp; publish</button>
+
+    <div class="tab-bar" id="tab-bar"></div>
+    <div class="panel" id="panel"></div>
+
+    <div class="gate">
+      <div class="gate-text" id="gate-text">
+        This edition was synthesized from public filings, earnings calls, and market commentary. It has not yet been reviewed by an editor and should not be treated as final until approved.
+      </div>
+      <div class="gate-actions">
+        <button id="reset-btn">Reset to draft</button>
+        <button id="approve-btn" class="primary">Approve &amp; publish</button>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="view" id="view-private" hidden>
+    <div class="view-head"><h2>Private Markets</h2></div>
+    <div class="manual-notice">
+      <span class="label">Manual &middot; not automated</span>
+      <p>Seeded by hand from our own diligence calls and internal discussion &mdash; tuned to what we find meaningful in a given sector, not pulled from a generic company database. The rows below are placeholder templates; replace them with real entries in <code>private_markets.json</code>, one per layer, as diligence flow warrants.</p>
+    </div>
+    <div id="private-layers"></div>
+  </section>
+
+  <section class="view" id="view-combined" hidden>
+    <div class="view-head"><h2>Combined / Value Chain</h2></div>
+    <p class="view-intro">Pairs each layer's automated Public Markets read with what we know privately, so you can see who the public leaders are and who they're actually working with. The public side is drawn straight from the Public Markets tab; the private side is manual and currently template-only until diligence entries are added.</p>
+    <div id="combined-layers"></div>
+  </section>
+
+  <section class="view" id="view-log" hidden>
+    <div class="view-head"><h2>Log</h2></div>
+    <p class="view-intro">A running, bullet-point account of what changed each cycle &mdash; feature work plus automated refreshes &mdash; so anyone can follow how the tool evolved without re-reading the whole app. Each feature entry checks back against the goal: does this move the app closer to a real-time market map with a defensible private layer, or add complexity without adding to either?</p>
+    <div id="log-entries"></div>
+  </section>
 
   <footer>
-    PILOT BUILD &middot; one report, refreshed every two weeks by an automated synthesis job, gated behind human approval before publish.<br/>
+    PILOT BUILD &middot; Public Markets refreshes automatically every two weeks, gated behind human approval before publish. Private Markets is maintained by hand.<br/>
     Directional signal only &mdash; not investment advice, not a substitute for primary sources.
   </footer>
 
 </div>
 
 <script>
+const LAYER_ORDER = ["energy","cooling","power","silicon","compute","networking","serversdc","cloud","applications"];
+const LAYER_LABELS = {
+  energy: "Energy", cooling: "Cooling", power: "Power (Grid/UPS)", silicon: "Silicon (Fabs/Memory)",
+  compute: "Compute (GPU/ASIC)", networking: "Networking", serversdc: "Servers / DC",
+  cloud: "Cloud", applications: "Applications"
+};
+
 const DEMO_SEGMENTS = [
   {
     id: "energy", label: "Energy", score: 76, tag: "Constrained", tagClass: "tag-watch",
@@ -589,11 +692,192 @@ async function loadSegments(){
   }
   renderTabs(null);
   showPanel(SEGMENTS[0].id);
+  renderCombinedLayers();
+}
+
+// ---- Main nav (Public Markets / Private Markets / Combined / Log) ----
+const mainNav = document.getElementById('main-nav');
+const VIEWS = {
+  public: document.getElementById('view-public'),
+  private: document.getElementById('view-private'),
+  combined: document.getElementById('view-combined'),
+  log: document.getElementById('view-log')
+};
+
+function showView(name){
+  Object.entries(VIEWS).forEach(([key, el]) => { el.hidden = key !== name; });
+  mainNav.querySelectorAll('.main-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.view === name));
+}
+
+mainNav.querySelectorAll('.main-tab').forEach(btn => {
+  btn.addEventListener('click', () => showView(btn.dataset.view));
+});
+
+// ---- Private Markets (manual -- not part of the automated pipeline) ----
+const DEMO_PRIVATE_MARKETS = {
+  status: "manual",
+  layers: Object.fromEntries(LAYER_ORDER.map(id => [id, [
+    {
+      company: "— add private company —",
+      notes: "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+      template: true
+    }
+  ]]))
+};
+
+let PRIVATE_MARKETS = DEMO_PRIVATE_MARKETS;
+
+function renderPrivateLayers(){
+  const container = document.getElementById('private-layers');
+  container.innerHTML = LAYER_ORDER.map(id => {
+    const rows = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || [];
+    return `
+      <div class="pm-layer">
+        <div class="table-label-row">
+          <div class="table-label">${LAYER_LABELS[id]}</div>
+        </div>
+        <table class="comp">
+          <thead><tr><th>Company</th><th>Notes</th></tr></thead>
+          <tbody>
+            ${rows.length ? rows.map(row => `
+              <tr>
+                <td class="cat">${row.company}${row.template ? '<span class="template-badge">template</span>' : ''}</td>
+                <td>${row.notes}</td>
+              </tr>
+            `).join('') : `<tr><td colspan="2" class="empty-note">No entries yet.</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }).join('');
+}
+
+async function loadPrivateMarkets(){
+  try{
+    const res = await fetch('private_markets.json');
+    if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
+    const data = await res.json();
+    if(data && data.layers) PRIVATE_MARKETS = data;
+  }catch(e){
+    PRIVATE_MARKETS = DEMO_PRIVATE_MARKETS;
+  }
+  renderPrivateLayers();
+  renderCombinedLayers();
+}
+
+// ---- Combined / Value Chain (public leaders + private companies, per layer) ----
+function renderCombinedLayers(){
+  const container = document.getElementById('combined-layers');
+  if(!container) return;
+  container.innerHTML = LAYER_ORDER.map(id => {
+    const seg = SEGMENTS.find(s => s.id === id);
+    const privRows = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || [];
+    return `
+      <div class="combo-row">
+        <div class="combo-head">
+          ${seg ? `<span class="tab-tag ${seg.tagClass}">${seg.tag}</span>` : ''}
+          <h3>${LAYER_LABELS[id]}</h3>
+        </div>
+        <div class="combo-cols">
+          <div class="combo-col public">
+            <span class="label">Public &middot; automated</span>
+            <p>${seg ? seg.synthesis : 'Not loaded yet.'}</p>
+          </div>
+          <div class="combo-col private">
+            <span class="label">Private &middot; manual</span>
+            ${privRows.length ? privRows.map(row => `
+              <p><strong>${row.company}</strong>${row.template ? '<span class="template-badge">template</span>' : ''} &mdash; ${row.notes}</p>
+            `).join('') : '<p class="empty-note">No entries yet.</p>'}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ---- Log (feature changes + automated refreshes) ----
+const DEMO_LOG_ENTRIES = [
+  {
+    date: "2026-08-26", type: "feature",
+    summary: [
+      "Stood up the pilot: GitHub repo, Pages hosting, weekly GitHub Actions workflow, and the ANTHROPIC_API_KEY secret.",
+      "Wired report.html to fetch report_data.json at load with a fallback to embedded demo data.",
+      "Ran the pipeline end-to-end for the first time: Claude + web search generating a structured edition, gated behind pending_review."
+    ],
+    goalsCheck: "Establishes the automated Public Markets tab end-to-end for the first time — the foundation everything else builds on."
+  },
+  { date: "2026-08-26", type: "refresh", summary: ["Public Markets edition refreshed — 5 layers, status: pending_review."] },
+  {
+    date: "2026-08-27", type: "feature",
+    summary: [
+      "Redesigned Public Markets from 5 segments to the full 9-layer value chain (Energy through Applications), matching the market map already built.",
+      "Added a 2026 / 2028 / 2030 deployment timeline per layer.",
+      "Fixed three distinct bugs surfaced by live runs: token-budget starving the JSON response, trailing text after the JSON object, and unescaped control characters breaking strict parsing. Added retry logic (up to 5 attempts) since the failure was genuinely intermittent per layer, not fixed by a bigger token ceiling alone."
+    ],
+    goalsCheck: "Matches the tool to the value chain already mapped — real progress toward the automated layer, no new scope added."
+  },
+  { date: "2026-08-27", type: "refresh", summary: ["Public Markets edition refreshed — 9 layers, status: pending_review."] },
+  {
+    date: "2026-08-27", type: "feature",
+    summary: [
+      "Replaced the single sector-wide Commentary Sentiment bull/bear module with a per-layer 2030 Outlook — a bull case and bear case specific to each layer's own bottleneck, not generic AI-market sentiment."
+    ],
+    goalsCheck: "Sharpens the existing Public Markets tab rather than adding scope — momentum tracking gets more specific without adding a new surface."
+  },
+  { date: "2026-08-27", type: "refresh", summary: ["Public Markets edition refreshed — 9 layers with 2030 outlook, status: pending_review."] },
+  {
+    date: "2026-09-03", type: "feature",
+    summary: [
+      "Added the tabbed architecture: Public Markets, Private Markets, Combined / Value Chain, and this Log.",
+      "Public Markets is now explicitly labeled as the automated tab; Private Markets ships as a manual template, seeded with placeholder rows per layer.",
+      "Combined / Value Chain pairs each layer's Public Markets synthesis with its Private Markets entries (currently templates)."
+    ],
+    goalsCheck: "Moves toward a real-time market map with a defensible private layer — but the private layer itself is still empty. The next real step is populating it from actual diligence, not more structure."
+  }
+];
+
+let LOG_ENTRIES = DEMO_LOG_ENTRIES;
+
+function typeBadge(type){
+  return type === 'feature'
+    ? `<span class="refresh-badge badge-feature">Feature</span>`
+    : `<span class="refresh-badge badge-dynamic">Refresh</span>`;
+}
+
+function renderLog(){
+  const container = document.getElementById('log-entries');
+  const entries = LOG_ENTRIES.slice().reverse();
+  container.innerHTML = entries.map(e => `
+    <div class="log-entry ${e.type === 'refresh' ? 'refresh' : ''}">
+      <div class="log-head">
+        <span class="log-date mono">${e.date}</span>
+        ${typeBadge(e.type)}
+      </div>
+      <ul class="log-bullets">
+        ${e.summary.map(line => `<li>${line}</li>`).join('')}
+      </ul>
+      ${e.goalsCheck ? `<p class="log-goals">${e.goalsCheck}</p>` : ''}
+    </div>
+  `).join('');
+}
+
+async function loadLog(){
+  try{
+    const res = await fetch('log.json');
+    if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
+    const data = await res.json();
+    if(Array.isArray(data.entries) && data.entries.length) LOG_ENTRIES = data.entries;
+  }catch(e){
+    LOG_ENTRIES = DEMO_LOG_ENTRIES;
+  }
+  renderLog();
 }
 
 loadSegments();
+loadPrivateMarkets();
+loadLog();
 
-// ---- Editorial gate (persisted via window.storage, personal to this user) ----
+// ---- Editorial gate (persisted in this browser's localStorage) ----
 const EDITION_KEY = 'edition-status:2026-08-27-v2';
 const statusPill = document.getElementById('status-pill');
 const statusText = document.getElementById('status-text');
@@ -617,22 +901,22 @@ function setUIStatus(status, approvedAt){
   }
 }
 
-async function loadStatus(){
+function loadStatus(){
   try{
-    const res = await window.storage.get(EDITION_KEY, false);
-    if(res && res.value){
-      const parsed = JSON.parse(res.value);
+    const raw = localStorage.getItem(EDITION_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
       setUIStatus(parsed.status, parsed.approvedAt);
       return;
     }
-  }catch(e){ /* no saved status yet */ }
+  }catch(e){ /* no saved status yet, or storage unavailable */ }
   setUIStatus('pending', null);
 }
 
-async function saveStatus(status){
+function saveStatus(status){
   const payload = { status, approvedAt: status==='published' ? Date.now() : null };
   try{
-    await window.storage.set(EDITION_KEY, JSON.stringify(payload), false);
+    localStorage.setItem(EDITION_KEY, JSON.stringify(payload));
   }catch(e){ console.error('Storage error', e); }
   setUIStatus(payload.status, payload.approvedAt);
 }

@@ -1,0 +1,70 @@
+{
+  "status": "manual",
+  "note": "Maintained by hand from diligence calls and internal discussion, not automated. Replace each layer's template row with real entries as diligence flow warrants.",
+  "lastUpdated": "2026-09-03",
+  "layers": {
+    "energy": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "cooling": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "power": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "silicon": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "compute": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "networking": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "serversdc": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "cloud": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ],
+    "applications": [
+      {
+        "company": "— add private company —",
+        "notes": "Replace with real diligence: what they do, why they matter here, and how they connect to the public players in this layer.",
+        "template": true
+      }
+    ]
+  }
+}
