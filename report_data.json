@@ -130,7 +130,7 @@
           [
             "Immersion cooling (Iceotope, LiquidStack/Trane, Submer, GRC)",
             "Niche but growing beyond HPC/crypto roots into specialized AI and edge deployments; still a small minority of overall liquid-cooling installs",
-            "Hyperscale pilots expand via OEM tie-ups (LG/SK Enmove/GRC, Submer/Inspur) though adoption still trails direct-to-chip",
+            "Hyperscale pilots expand via OEM tie-ups (LG/SK Enmove/GRC, Submer) though adoption still trails direct-to-chip",
             "Two-phase and chassis-level immersion carve out a durable niche for ultra-high-density or water-constrained sites, coexisting with D2C in hybrid facility designs"
           ]
         ],

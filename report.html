@@ -306,7 +306,7 @@
 
     <div class="thesis">
       <span class="label">This week's thesis</span>
-      Momentum is accelerating at nearly every layer of the stack, but the layers are moving on very different clocks. Cooling, silicon, and cloud capex are compounding now. Power delivery &mdash; both the grid-interconnection queue and the physical switchgear supply chain &mdash; is the layer stretching furthest into the future, with the first new-build nuclear and fusion capacity not arriving until 2028 at the earliest and meaningful scale not until 2030. Reading the value chain as a single timeline rather than nine separate stories is the point of this tool.
+      <span id="thesis-text">Momentum is accelerating at nearly every layer of the stack, but the layers are moving on very different clocks. Cooling, silicon, and cloud capex are compounding now. Power delivery &mdash; both the grid-interconnection queue and the physical switchgear supply chain &mdash; is the layer stretching furthest into the future, with the first new-build nuclear and fusion capacity not arriving until 2028 at the earliest and meaningful scale not until 2030. Reading the value chain as a single timeline rather than nine separate stories is the point of this tool.</span>
     </div>
 
     <div class="tab-bar" id="tab-bar"></div>
@@ -742,6 +742,7 @@ function showPanel(id){
 }
 
 async function loadSegments(){
+  let editionDate = null, thesis = null;
   try{
     const res = await fetch('report_data.json');
     if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
@@ -752,13 +753,23 @@ async function loadSegments(){
         tagClass: s.tagClass || tagClassForScore(s.score)
       }));
     }
+    editionDate = data.editionDate;
+    thesis = data.thesis;
   }catch(e){
     // No server (e.g. opened as a local file) or no report_data.json yet -- use embedded demo data.
     SEGMENTS = DEMO_SEGMENTS;
   }
+  const editionDateEl = document.getElementById('edition-date');
+  if(editionDateEl && editionDate) editionDateEl.textContent = editionDate;
+  const thesisEl = document.getElementById('thesis-text');
+  if(thesisEl && thesis) thesisEl.textContent = thesis;
   renderTabs(null);
   showPanel(SEGMENTS[0].id);
   renderCombinedLayers();
+  // The editorial gate's approve/pending state is keyed by edition date (see below) so a
+  // reviewer's past approval of an older edition can't be mistaken for approval of a new,
+  // never-reviewed one -- initialize it here once the real edition date is known.
+  initEditorialGate(editionDate);
 }
 
 // ---- Main nav (Public Markets / Private Markets / Combined / Newsletter) ----
@@ -1313,12 +1324,19 @@ loadPublicMarketMap();
 loadNewsletter();
 
 // ---- Editorial gate (persisted in this browser's localStorage) ----
-const EDITION_KEY = 'edition-status:2026-08-27-v2';
+// Keyed by edition date (set in initEditorialGate, called from loadSegments once the real
+// edition date is known) so approving one edition never carries over as approval of the next.
+let EDITION_KEY = 'edition-status:unknown-v2';
 const statusPill = document.getElementById('status-pill');
 const statusText = document.getElementById('status-text');
 const gateText = document.getElementById('gate-text');
 const approveBtn = document.getElementById('approve-btn');
 const resetBtn = document.getElementById('reset-btn');
+
+function initEditorialGate(editionDate){
+  EDITION_KEY = `edition-status:${editionDate || 'unknown'}-v2`;
+  loadStatus();
+}
 
 function setUIStatus(status, approvedAt){
   if(status === 'published'){
@@ -1358,7 +1376,9 @@ function saveStatus(status){
 
 approveBtn.addEventListener('click', ()=> saveStatus('published'));
 resetBtn.addEventListener('click', ()=> saveStatus('pending'));
-loadStatus();
+// Initial gate state now comes from initEditorialGate(), called by loadSegments() once the
+// real edition date is known -- this leaves the button/pill in their static-HTML "pending"
+// default until then, rather than briefly showing a synchronous loadStatus() using a fake key.
 </script>
 </body>
 </html>

@@ -170,9 +170,11 @@ Rules:
 - "Trend" tag must be exactly one of: Accelerating, Constrained, Steady.
 - outlook2030 must be specific to this layer's own dynamics (its own bottleneck, technology transition, or
   financing structure), not a restatement of generic AI-market bullishness or skepticism.
-- Exclude mainland-China-headquartered or mainland-China-controlled companies entirely -- don't name one in
-  `signals`, `privateLandscape`, `collaborationSignals`, or as a timeline sub-category example (e.g. no
-  Alibaba, Tencent, Baidu, Huawei, SMIC, ZTE, Inspur, Lenovo, JCET, YMTC, CXMT, or similar). Taiwan-based
+- Exclude mainland-China-headquartered or mainland-China-controlled companies entirely -- don't name one
+  ANYWHERE in the response, including `signals`, `privateLandscape`, `collaborationSignals`, `synthesis`,
+  `outlook2030`, or any timeline cell (the sub-category label AND the status/description text in every
+  column -- e.g. no "...via OEM tie-ups with Inspur" buried in a status cell either) (e.g. no Alibaba,
+  Tencent, Baidu, Huawei, SMIC, ZTE, Inspur, Lenovo, JCET, YMTC, CXMT, or similar). Taiwan-based
   companies (TSMC, Foxconn, Quanta, MediaTek, UMC, etc.) are NOT covered by this exclusion and should be
   included normally.
 """
@@ -393,6 +395,22 @@ def generate_segment(client, seg):
     data = call_claude(client, system, user_content, cache_system=True)
     data["id"] = seg["id"]
     data["label"] = seg["label"]
+
+    # Free-text fields (synthesis, timeline cells, outlook2030) aren't run through
+    # is_excluded_china_company() the way structured company lists are -- safely
+    # stripping a name out of prose without mangling the sentence isn't reliable
+    # to automate. This just logs a warning if the prompt rule above got ignored,
+    # so it's visible in the run log instead of silently shipping (found via the
+    # 2026-09-05 run, which named Inspur in a timeline status cell).
+    free_text = " ".join([
+        data.get("synthesis", ""),
+        data.get("outlook2030", {}).get("bull", ""),
+        data.get("outlook2030", {}).get("bear", ""),
+        *[cell for row in data.get("timeline", {}).get("rows", []) for cell in row],
+    ])
+    for term in EXCLUDED_CHINA_COMPANIES:
+        if term in free_text.lower():
+            print(f"    WARNING: excluded China company '{term}' appeared in free text for {seg['label']} -- check manually")
 
     timeline = data.pop("timeline", None)
     if timeline:
