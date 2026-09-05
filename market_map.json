@@ -1,10 +1,10 @@
 {
-  "status": "imported from AI_Infrastructure_Market_Map_1.xlsx (8 of 9 layers; Applications not covered by that source) + automated refresh + manual diligence overlay",
+  "status": "derived from Public Markets' own timeline data (not a separate pull) + manual review overlay",
   "note": "Public-side companies for Energy, Power, Cooling, Silicon, Compute, Networking, Servers/DC, and Cloud were imported from a user-provided market map spreadsheet (AI_Infrastructure_Market_Map_1.xlsx) and marked diligenced: true, since that's real curated data, not an automated guess -- the biweekly pull will never overwrite these entries. Applications wasn't covered by that source and is left as whatever this file already had. New companies the biweekly pull discovers going forward are added alongside these, starting as diligenced: false.",
   "lastUpdated": "2026-09-05",
   "layers": {
     "energy": {
-      "overview": "Public utility incumbents (NextEra, Duke, Constellation, Iberdrola, Enel, Orsted, Southern Co) dominate investor-grade baseload and renewable generation.",
+      "overview": "Nuclear is the dominant story: restart projects (Crane/Three Mile Island, Duane Arnold) are running ahead of schedule while SMR developers rack up federal funding, IPOs, and mega-scale utility deals (TVA-ENTRA1's prospective 6-8 GW), even as pre-revenue SMR stocks have sold off sharply this year on execution-risk concerns. Long-duration storage (Form Energy, Antora) and utility M&A (NextEra-Dominion) show capital continuing to flood toward firm, always-on power for data centers, but grid interconnection queues and first-of-a-kind cost risk remain the binding constraints on how fast any of this actually reaches AI campuses.",
       "categories": [
         {
           "category": "Baseload & renewable generation",
@@ -59,11 +59,75 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Nuclear Restarts & Large-Reactor PPAs",
+          "companies": [
+            {
+              "company": "Talen",
+              "notes": "Public company operating in Nuclear Restarts & Large-Reactor PPAs for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Vistra",
+              "notes": "Public company operating in Nuclear Restarts & Large-Reactor PPAs for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "SMRs & Advanced Fission",
+          "companies": [
+            {
+              "company": "NuScale",
+              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Oklo",
+              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "X-energy",
+              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "GE Vernova",
+              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Grid-Scale Storage & Renewables Baseload Complement",
+          "companies": [
+            {
+              "company": "Enphase",
+              "notes": "Public company operating in Grid-Scale Storage & Renewables Baseload Complement for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "cooling": {
-      "overview": "Thermal management leaders overlap with power-delivery incumbents (Vertiv, Schneider Electric) plus public Nordic specialist Munters.",
+      "overview": "Cooling has flipped from a supporting infrastructure line to the AI buildout's central bottleneck, evidenced by a wave of multibillion-dollar strategic consolidation (Ecolab-CoolIT, Eaton-Boyd Thermal, Trane-LiquidStack) and record public-company results at Vertiv, Schneider Electric and Modine. Single-phase direct-to-chip cooling has become the default architecture for new AI clusters while air cooling is pushed into a hybrid, supporting role, and two-phase/immersion technologies are racing to prove themselves for the next density tier above 200kW racks.",
       "categories": [
         {
           "category": "Thermal management",
@@ -90,11 +154,47 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Air & RDHX cooling",
+          "companies": [
+            {
+              "company": "Siemens",
+              "notes": "Public company operating in Air & RDHX cooling for Cooling.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Direct-to-chip liquid cooling",
+          "companies": [
+            {
+              "company": "JetCool/Flex",
+              "notes": "Public company operating in Direct-to-chip liquid cooling for Cooling.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Immersion cooling",
+          "companies": [
+            {
+              "company": "LiquidStack/Trane",
+              "notes": "Public company operating in Immersion cooling for Cooling.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "power": {
-      "overview": "Power delivery and backup equipment is concentrated among a handful of large public industrial suppliers (Vertiv, Schneider Electric, Eaton, Delta, Legrand).",
+      "overview": "Order books and backlogs at the major electrical-equipment OEMs are expanding at a pace few industrials have ever seen -- GE Vernova's backlog hit $176B and Siemens Energy's grid unit hit a record \u20ac51B backlog -- but physical throughput hasn't caught up, with switchgear and large power transformers still quoting multi-year lead times. That mismatch is pushing power delivery further downstream into silicon (Vicor's vertical power delivery, AmberSemi's backside PowerTile) and into software that squeezes more out of the existing grid (Emerald AI, Verrus, Amperon), rather than waiting for new copper and steel capacity. Net effect: demand-side momentum is accelerating even as the physical bottleneck keeps a lid on how fast gigawatts actually get energized.",
       "categories": [
         {
           "category": "Power delivery & backup",
@@ -135,11 +235,68 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Switchgear & Large Power Transformers",
+          "companies": [
+            {
+              "company": "Siemens Energy",
+              "notes": "Public company operating in Switchgear & Large Power Transformers for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Hitachi Energy",
+              "notes": "Public company operating in Switchgear & Large Power Transformers for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "GE Vernova/Prolec",
+              "notes": "Public company operating in Switchgear & Large Power Transformers for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "UPS & Rack/Row Power Architecture",
+          "companies": [
+            {
+              "company": "ABB",
+              "notes": "Public company operating in UPS & Rack/Row Power Architecture for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "On-board / Backside Power Delivery Silicon",
+          "companies": [
+            {
+              "company": "Vicor",
+              "notes": "Public company operating in On-board / Backside Power Delivery Silicon for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "TSMC/Intel backside PDN nodes",
+              "notes": "Public company operating in On-board / Backside Power Delivery Silicon for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "silicon": {
-      "overview": "The most structurally complex layer in the value chain, spanning chip design, foundry, wafer fab equipment, materials, EDA/IP, advanced packaging, and OSAT -- public incumbents dominate the capital-intensive fabrication and equipment sub-verticals (TSMC, ASML, Applied Materials, Samsung, Synopsys, Cadence).",
+      "overview": "The leading-edge fab and memory layer is in the middle of a structural supercycle: TSMC is pulling further ahead on 2nm yield and share while pouring another $100B into Arizona, and HBM/DRAM capacity is sold out for years as AI accelerators eat an ever-larger share of every wafer. Samsung and Intel are showing real technical progress (Samsung's HBM4 recovery, Intel's 18A-P risk production) but remain structurally behind, while SK Hynix and Micron are converting scarcity into record profits, buybacks, and a possible Solidigm IPO. The main tension for the next few years is whether the wave of new fabs (TSMC Arizona, Micron New York, SK Hynix Indiana, Rapidus) arrives fast enough to cool prices, or whether the memory shortage genuinely persists toward 2030 as SK Hynix's own CEO now warns.",
       "categories": [
         {
           "category": "Chip design (overall)",
@@ -861,11 +1018,35 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Leading-edge Logic Foundries",
+          "companies": []
+        },
+        {
+          "category": "HBM & AI DRAM",
+          "companies": []
+        },
+        {
+          "category": "Enterprise NAND/SSD",
+          "companies": [
+            {
+              "company": "SanDisk",
+              "notes": "Public company operating in Enterprise NAND/SSD for Silicon (Fabs/Memory).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Advanced Packaging & Lithography Ecosystem",
+          "companies": []
         }
       ]
     },
     "compute": {
-      "overview": "AI accelerator supply is led by public merchant silicon (Nvidia, AMD, Intel, Broadcom, ARM) and hyperscaler cloud platforms (AWS, Azure, Google Cloud) reselling GPU-as-a-service.",
+      "overview": "Compute demand keeps outrunning supply: Nvidia and Broadcom both just posted record AI quarters (Nvidia's data center revenue hit $89B, Broadcom's AI semiconductor revenue jumped 221% YoY) while Marvell's expanded Google custom-silicon warrant deal shows hyperscalers actively diversifying their ASIC supply base beyond any single vendor. The binding constraint has shifted from GPU/ASIC design itself to the memory and packaging supply chain \u2014 an HBM/DRAM shortage severe enough that Nvidia delayed its next gaming GPU generation to protect AI-chip memory allocation \u2014 even as inference-focused challengers (Groq, SambaNova) reshuffle their business models and capital structures to chase the same compute crunch.",
       "categories": [
         {
           "category": "GPU/CPU/ASSP/ASIC (AI accelerators)",
@@ -967,11 +1148,60 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Merchant GPUs",
+          "companies": []
+        },
+        {
+          "category": "Hyperscaler Custom ASICs",
+          "companies": [
+            {
+              "company": "Google TPU",
+              "notes": "Public company operating in Hyperscaler Custom ASICs for Compute (GPU/ASIC).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Microsoft Maia",
+              "notes": "Public company operating in Hyperscaler Custom ASICs for Compute (GPU/ASIC).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Meta MTIA",
+              "notes": "Public company operating in Hyperscaler Custom ASICs for Compute (GPU/ASIC).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Frontier-Lab Co-design & ASIC Enablers",
+          "companies": [
+            {
+              "company": "Marvell",
+              "notes": "Public company operating in Frontier-Lab Co-design & ASIC Enablers for Compute (GPU/ASIC).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "OpenAI/Jalape\u00f1o",
+              "notes": "Public company operating in Frontier-Lab Co-design & ASIC Enablers for Compute (GPU/ASIC).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "networking": {
-      "overview": "Telecom infrastructure and network/application security are almost entirely public-company territory (Ericsson, Nokia, Cisco, Arista, Cloudflare, Akamai, Palo Alto).",
+      "overview": "Every layer of the AI networking stack is re-rating upward simultaneously: transceiver makers are raising guidance mid-quarter on 1.6T ramp demand, co-packaged optics has crossed from demo to shipping product on Broadcom and Nvidia platforms, and switch vendors are posting record quarters as Ethernet displaces InfiniBand in AI back-ends. The key structural shift is that networking capex is increasingly gating AI buildouts as much as GPU supply, pushing hyperscalers and chipmakers to lock in optics capacity years in advance via direct equity investment rather than pure purchase orders.",
       "categories": [
         {
           "category": "Telecom & data communication grid",
@@ -1101,11 +1331,65 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Optical transceivers",
+          "companies": [
+            {
+              "company": "Lumentum",
+              "notes": "Public company operating in Optical transceivers for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Coherent",
+              "notes": "Public company operating in Optical transceivers for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "InnoLight",
+              "notes": "Public company operating in Optical transceivers for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Co-packaged optics",
+          "companies": [
+            {
+              "company": "Broadcom",
+              "notes": "Public company operating in Switches for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Switches",
+          "companies": []
+        },
+        {
+          "category": "Edge/quantum compute",
+          "companies": [
+            {
+              "company": "Cerebras",
+              "notes": "Public company operating in Edge/quantum compute for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "serversdc": {
-      "overview": "Enterprise server/compute hardware is dominated by public OEMs (Dell, HPE, Supermicro, Foxconn, Quanta, Wistron); Equinix and Digital Realty remain the large public datacenter REITs.",
+      "overview": "Server OEMs and data center operators are riding a second wave of AI capex upgrades: Dell and HPE both raised full-year guidance and saw double-digit stock pops on record AI server backlogs, while Equinix used its first-ever customer summit to push into AI inference and complete a $4B Nordic acquisition. Meanwhile the operator layer is being reshaped by a private-equity-to-public pivot, with Vantage, CyrusOne and Switch all lining up IPOs even as projects like QTS's $30B Virginia campus get killed by permitting and community pushback, showing capital availability is outrunning physical siting capacity.",
       "categories": [
         {
           "category": "Enterprise servers & compute hardware",
@@ -1207,11 +1491,23 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "OEM AI Servers",
+          "companies": []
+        },
+        {
+          "category": "Colocation & AI Interconnection",
+          "companies": []
+        },
+        {
+          "category": "Space & Novel Compute",
+          "companies": []
         }
       ]
     },
     "cloud": {
-      "overview": "Hyperscale cloud is overwhelmingly public-company territory (AWS/Amazon, Azure/Microsoft, Google Cloud/Alphabet, Oracle Cloud) alongside newly-public CoreWeave (NASDAQ: CRWV, IPO March 2025).",
+      "overview": "Hyperscaler cloud growth reaccelerated sharply in Q2 CY2026, with Google Cloud and Microsoft Azure both posting their fastest growth in years while combined Big Tech AI capex guidance pushed toward $700-800B for 2026, yet free cash flow at Amazon and Alphabet is compressing hard as spending outruns revenue recognition. Neoclouds CoreWeave and Nebius rode the same wave with triple-digit revenue growth and swelling backlogs, but their debt-heavy financing models drew fresh scrutiny in mid-August when rising rates triggered a sharp, if brief, selloff. The layer's central tension is now financing structure rather than demand: backlogs are enormous and real, but converting them into cash without over-leveraging balance sheets is the swing factor for 2027-2028.",
       "categories": [
         {
           "category": "Hyperscale cloud platforms",
@@ -1259,19 +1555,48 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Hyperscaler Cloud Platforms",
+          "companies": []
+        },
+        {
+          "category": "Enterprise/Database-anchored Cloud",
+          "companies": []
+        },
+        {
+          "category": "Public AI-Native Neoclouds",
+          "companies": [
+            {
+              "company": "Nebius",
+              "notes": "Public company operating in Public AI-Native Neoclouds for Cloud.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "IREN",
+              "notes": "Public company operating in Public AI-Native Neoclouds for Cloud.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "applications": {
-      "overview": "The public side of applications is dominated by the large platform companies distributing AI features (Microsoft, Google, Meta) rather than pure-play AI application companies, most of which remain private (see Private Markets).",
+      "overview": "The application layer is compounding on two axes at once: frontier labs are shipping new flagship models almost monthly (GPT-6 Astra, Claude Fable/Mythos 5.1, Gemini 3.7/3.8 Flash, Grok 4.6) while enterprise incumbents (Salesforce, ServiceNow, Adobe, Microsoft) are converting agentic AI into real, fast-growing recurring revenue lines rather than pilots. At the same time, two IPO trains \u2014 OpenAI toward a reported $1T target and Anthropic toward a rumored $2T target as soon as October \u2014 are forcing public markets to price frontier-lab economics for the first time, even as reports of enterprises defecting to 'good enough' open-weight models introduce a genuine margin-compression risk.",
       "categories": [
         {
           "category": "Platform Distribution",
           "companies": [
             {
               "company": "Microsoft",
-              "notes": "Distributes Copilot across its enterprise software suite.",
-              "diligenced": false
+              "notes": "Public company operating in Enterprise Copilots & Agent Platforms for Applications.",
+              "diligenced": false,
+              "source": null,
+              "url": null
             },
             {
               "company": "Alphabet",
@@ -1281,6 +1606,75 @@
             {
               "company": "Meta Platforms",
               "notes": "Meta AI models distributed across its consumer apps.",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Frontier Foundation Models",
+          "companies": [
+            {
+              "company": "Google DeepMind",
+              "notes": "Public company operating in Frontier Foundation Models for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Enterprise Copilots & Agent Platforms",
+          "companies": [
+            {
+              "company": "Salesforce Agentforce",
+              "notes": "Public company operating in Enterprise Copilots & Agent Platforms for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "ServiceNow",
+              "notes": "Public company operating in Enterprise Copilots & Agent Platforms for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Vertical/Domain AI",
+          "companies": [
+            {
+              "company": "Adobe Firefly - creative",
+              "notes": "Public company operating in Vertical/Domain AI for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "industry copilots",
+              "notes": "Public company operating in Vertical/Domain AI for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Consumer AI Apps",
+          "companies": [
+            {
+              "company": "ChatGPT/Gemini apps",
+              "notes": "Public company operating in Consumer AI Apps for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Grok",
+              "notes": "Public company operating in Consumer AI Apps for Applications.",
+              "source": null,
+              "url": null,
               "diligenced": false
             }
           ]

@@ -1,10 +1,10 @@
 {
-  "status": "imported from AI_Infrastructure_Market_Map_1.xlsx (8 of 9 layers; Applications not covered by that source) + automated refresh + manual diligence overlay",
+  "status": "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay",
   "note": "Private-side companies for Energy, Power, Cooling, Silicon, Compute, Networking, Servers/DC, and Cloud were imported from a user-provided market map spreadsheet (AI_Infrastructure_Market_Map_1.xlsx) and marked diligenced: true, since that's real curated data, not an automated guess -- the biweekly pull will never overwrite these entries. Applications wasn't covered by that source and is left as whatever this file already had. New companies the biweekly pull discovers going forward are added alongside these, starting as diligenced: false.",
   "lastUpdated": "2026-09-05",
   "layers": {
     "energy": {
-      "overview": "EDF and TVA sit structurally outside public markets as nationalized or government-owned entities, not as venture-backed private companies.",
+      "overview": "Private capital in this layer is split across three maturity tiers: molten-salt and sodium-cooled SMR developers (Kairos Power, TerraPower, Terrestrial Energy, Elementl Power) still in first-of-a-kind construction or permitting; fusion developers (Helion, Commonwealth Fusion Systems, Type One Energy, newcomer Inertia Enterprises) racing toward net-energy or first-power milestones; and long-duration/thermal storage firms (Form Energy, Antora Energy, Fourth Power) that have just crossed from pilot to first commercial-scale deployment.",
       "categories": [
         {
           "category": "Baseload & renewable generation",
@@ -24,11 +24,107 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Advanced Fission SMRs & Microreactors",
+          "companies": [
+            {
+              "company": "Kairos Power",
+              "notes": "Molten-salt-cooled KP-FHR developer building the Hermes demonstration reactor at Oak Ridge under a $303M DOE milestone-based funding agreement, with Google's 500 MW fleet deal as its flagship offtake.",
+              "source": "Carbon Credits / Core Insights Review",
+              "url": "https://carboncredits.com/does-303m-bet-on-kairos-power-signals-americas-advanced-nuclear-push/",
+              "diligenced": false
+            },
+            {
+              "company": "TerraPower",
+              "notes": "Bill Gates-founded Natrium developer building its first plant in Kemmerer, Wyoming, and now signed Hyundai as EPC partner to support Meta's order for up to eight Natrium plants, with a first data-center-specific project expected to be announced this year.",
+              "source": "TechCrunch / Neutron Bytes",
+              "url": "https://techcrunch.com/2026/08/19/terrapowers-nuclear-reactor-has-a-secret-weapon-for-powering-ai-data-centers/",
+              "diligenced": false
+            },
+            {
+              "company": "Elementl Power",
+              "notes": "Nuclear project developer advancing a planned 1.5 GW plant in southeast Ohio and a separate agreement to prep three 600 MW sites for Google.",
+              "source": "American Nuclear Society / Nuclear Newswire",
+              "url": "https://www.ans.org/news/article-7342/tva-and-entra1-to-deploy-6-gw-of-nuscale-smrs/",
+              "diligenced": false
+            },
+            {
+              "company": "ENTRA1 Energy",
+              "notes": "NuScale's exclusive global commercialization partner, positioned for up to $25 billion in investment capital under a US-Japan framework and in advanced talks with TVA on a potential 6-8 GW SMR fleet.",
+              "source": "BusinessWire",
+              "url": "https://www.businesswire.com/news/home/20251029556145/en/NuScale-Power-Proudly-Supports-ENTRA1-Energys-$25-Billion-Agreement-to-Deploy-Large-Scale-Power-Infrastructure-Assets-Across-the-United-States",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Fusion",
+          "companies": [
+            {
+              "company": "Helion Energy",
+              "notes": "Its Polaris prototype demonstrated measurable deuterium-tritium fusion at 150 million\u00b0C, and Helion secured Washington state's first-ever fusion power plant operating licenses while building its Orion commercial site under an aggressive 2028 Microsoft power-delivery deadline.",
+              "source": "Helion Energy / TechCrunch",
+              "url": "https://www.helionenergy.com/newsroom/helion-clears-key-regulatory-milestone-on-the-path-to-building-and-operating-the-worlds-first-fusion-power-plant",
+              "diligenced": false
+            },
+            {
+              "company": "Commonwealth Fusion Systems",
+              "notes": "Tokamak-based developer that signed a 200 MW power purchase agreement with Google as it advances its SPARC device.",
+              "source": "Data Center Dynamics",
+              "url": "https://www.datacenterdynamics.com/en/news/google-signs-power-deal-with-nextenergy-to-restart-iowas-615mw-duane-arnold-nuclear-plant-for-ai-data-centers/",
+              "diligenced": false
+            },
+            {
+              "company": "Type One Energy",
+              "notes": "Signed a cooperative agreement with TVA to jointly develop plans for a potential fusion power plant project.",
+              "source": "World Nuclear News",
+              "url": "https://www.world-nuclear-news.org/articles/tva-entra1-energy-team-up-for-smr-deployment",
+              "diligenced": false
+            },
+            {
+              "company": "Inertia Enterprises",
+              "notes": "New entrant founded in 2025 to commercialize inertial-confinement fusion advances from Lawrence Livermore National Laboratory, raising a $450 million Series A led by Bessemer Venture Partners with Google Ventures participating.",
+              "source": "American Nuclear Society / Nuclear Newswire",
+              "url": "https://www.ans.org/news/article-7765/fusion-roundup-helion-sets-temperature-record-inertia-raises-450m/",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Grid-Scale & Thermal Storage",
+          "companies": [
+            {
+              "company": "Form Energy",
+              "notes": "Raised $750 million to expand iron-air, 100-hour battery manufacturing in West Virginia, building on a roughly $1 billion Google-backed, 300 MW/30 GWh project with Xcel Energy to power a Minnesota data center.",
+              "source": "TechCrunch",
+              "url": "https://techcrunch.com/2026/08/12/form-energy-raises-750m-to-build-more-100-hour-batteries-for-the-grid/",
+              "diligenced": false
+            },
+            {
+              "company": "Antora Energy",
+              "notes": "Raised a $550 million Series C after commissioning a 5 GWh carbon-block thermal battery at a POET ethanol plant, one of the largest battery storage systems in the world, and is now targeting data center customers.",
+              "source": "Canary Media / Axios",
+              "url": "https://www.canarymedia.com/articles/climatetech-finance/antora-550m-heat-batteries",
+              "diligenced": false
+            },
+            {
+              "company": "Fourth Power",
+              "notes": "MIT-spinout developing graphite-block thermal batteries operating between 1,900-2,400\u00b0C with thermophotovoltaic power conversion, working toward a fully integrated demonstration unit for data centers and industry.",
+              "source": "MIT News",
+              "url": "https://news.mit.edu/2026/turning-extreme-heat-large-scale-energy-storage-0318",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "State-Backed Nuclear Utilities & Public Power (tracked)",
+          "companies": []
         }
       ]
     },
     "cooling": {
-      "overview": "Several long-established private/family-owned specialists (Stulz, Rittal, Nortek) and privately-held CoolIT round out the thermal management landscape.",
+      "overview": "The private cooling landscape now splits into direct-to-chip cold plate/CDU specialists (increasingly split between mature single-phase and emerging two-phase/microfluidic approaches), immersion cooling providers (single-phase more commercially proven than two-phase), and specialist air/hybrid integrators serving custom high-density retrofits. Many of the earlier independent leaders have already been folded into public strategics (CoolIT into Ecolab, LiquidStack into Trane, Boyd into Eaton, JetCool into Flex), leaving a next wave of venture-backed independents racing to scale and prove hyperscaler-grade reliability before further consolidation.",
       "categories": [
         {
           "category": "Thermal management",
@@ -62,29 +158,91 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Direct-to-chip / two-phase & microfluidic cold plates",
+          "companies": [
+            {
+              "company": "ZutaCore",
+              "notes": "Waterless, two-phase direct-to-chip cooling for chips above 4,000W; closed a $100M+ Series C in June 2026 from Mitsubishi Electric, Carrier Ventures and Samsung Ventures at roughly a $600M valuation.",
+              "source": "HPCwire",
+              "url": "https://www.hpcwire.com/off-the-wire/zutacore-raises-100m-series-c-to-scale-waterless-cooling-for-ai-and-hpc-data-centers/",
+              "diligenced": false
+            },
+            {
+              "company": "Accelsius",
+              "notes": "Two-phase direct-to-chip cooling maker that closed a $65 million Series B led by Johnson Controls with Legrand participating, following a deal to deploy its NeuCool tech across a 300MW Ontario campus for DarkNX.",
+              "source": "Business Wire",
+              "url": "https://www.businesswire.com/news/home/20260112588650/en/Accelsius-Closes-$65-Million-Series-B-Funding-Led-by-Johnson-Controls-Legrand-Joining-Round-to-Scale-Liquid-Cooling-for-Gigawatt-Class-AI-Factories",
+              "diligenced": false
+            },
+            {
+              "company": "Corintis",
+              "notes": "Swiss microfluidic cold-plate maker that has raised $53.2 million across five rounds, including backing from BlueYard and Applied Digital, targeting extreme chip-level heat fluxes.",
+              "source": "Tracxn",
+              "url": "https://tracxn.com/d/companies/corintis/__jOg4_IDq1dO4H_zSnB-wrJAzZ6whGLXeVUlBzh5NNGI",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Immersion cooling",
+          "companies": [
+            {
+              "company": "Iceotope",
+              "notes": "UK chassis-level precision immersion cooling specialist that raised a $26 million Series B led by Two Seas Capital and Barclays Climate Ventures, surpassing 200 patents.",
+              "source": "The Next Web",
+              "url": "https://thenextweb.com/news/iceotope-26m-series-b-liquid-cooling-ai",
+              "diligenced": false
+            },
+            {
+              "company": "Submer",
+              "notes": "Immersion cooling pioneer that acquired Radian Arc to build a full-stack AI-factory offering spanning cooling, design/construction and inference, and expanded EMEA reach via a Netceed partnership.",
+              "source": "Fierce Network",
+              "url": "https://www.fierce-network.com/cloud/hvac-giant-trane-buys-liquidstack-bolster-ai-data-center-cooling-portfolio",
+              "diligenced": false
+            },
+            {
+              "company": "GRC (Green Revolution Cooling)",
+              "notes": "Independent single-phase immersion cooling leader that signed an MoU with LG Electronics and SK Enmove for combined immersion cooling solutions for AI data centers.",
+              "source": "DCD",
+              "url": "https://www.datacenterdynamics.com/en/news/lg-sk-enmove-and-grc-sign-immersion-cooling-deal/",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Air / hybrid & rack-level specialists",
+          "companies": []
         }
       ]
     },
     "power": {
-      "overview": "The private power landscape here is mostly software, not hardware: demand-forecasting and grid-flexibility platforms are trying to squeeze more usable capacity out of an interconnection-constrained grid faster than new physical capacity like transformers and storage can be built.",
+      "overview": "Private-company activity in this layer splits between grid-flexible/demand-response software that squeezes more capacity out of existing infrastructure (Emerald AI, Verrus, Amperon), non-lithium long-life storage aimed at data center backup and grid buffering (EnerVenue), and fabless backside/vertical power-delivery silicon aimed directly at the AI rack (AmberSemi). The flexibility-software approach is now commercial-scale with utility partnerships live, while the storage and silicon bets are earlier-stage, still ramping first commercial production lines.",
       "categories": [
         {
           "category": "Grid Software & Demand Flexibility",
           "companies": [
             {
               "company": "Amperon",
-              "notes": "AI-driven electricity demand forecasting for grid operators and large power consumers.",
-              "diligenced": false
+              "notes": "AI-powered electricity forecasting platform that took a strategic investment from Samsung Ventures in January 2026, following prior 2025 backing from National Grid Partners and Tokyo Gas's Acario, extending its global utility and grid-operator customer base.",
+              "diligenced": false,
+              "source": "PR Newswire",
+              "url": "https://www.prnewswire.com/news-releases/amperon-secures-investment-from-samsung-ventures-to-advance-energy-forecasting-technology-302660618.html"
             },
             {
               "company": "Emerald AI",
-              "notes": "Software that lets data centers flex power consumption to ease grid interconnection bottlenecks.",
-              "diligenced": false
+              "notes": "Raised $150M in an oversubscribed Series A at a $1.05B valuation to scale its Emerald Conductor software, which throttles AI workloads against on-site batteries so utilities can dispatch data centers like generators.",
+              "diligenced": false,
+              "source": "SiliconANGLE",
+              "url": "https://siliconangle.com/2026/08/25/data-center-power-startup-emerald-ai-raises-150m-at-1-05b-valuation/"
             },
             {
               "company": "Verrus",
-              "notes": "Behind-the-meter power management aimed at faster-to-deploy, flexible data center capacity.",
-              "diligenced": false
+              "notes": "A Sidewalk Infrastructure Partners spinout building BESS-backed, grid-interactive data centers; is now pushing forward a proposed $5B+ multibuilding campus in Salem, Oregon designed to use battery storage instead of diesel for backup power.",
+              "diligenced": false,
+              "source": "Salem Business Journal",
+              "url": "https://salembusinessjournal.org/2026/07/17/salem-data-center-verrus-project-details/"
             }
           ]
         },
@@ -93,7 +251,37 @@
           "companies": [
             {
               "company": "EnerVenue",
-              "notes": "Long-duration metal-hydrogen battery storage for grid and industrial backup power.",
+              "notes": "Nickel-hydrogen battery maker that launched its 150 kWh 'Energy Rack' plug-and-play DC storage block in July 2026, claiming 30,000-cycle life and reduced thermal-management needs versus lithium-ion for utility-scale and data center backup.",
+              "diligenced": false,
+              "source": "pv magazine USA",
+              "url": "https://pv-magazine-usa.com/2026/07/23/enervenue-unveils-150-kwh-nickel-hydrogen-battery/"
+            }
+          ]
+        },
+        {
+          "category": "Grid-Flexible / Demand-Responsive Data Centers",
+          "companies": [
+            {
+              "company": "VoltaGrid",
+              "notes": "Texas-based microgrid power generation company building on-site generation for AI data centers; partnered with ABB for grid-stabilization equipment across multiple US AI infrastructure projects.",
+              "source": "MarketScreener",
+              "url": "https://uk.marketscreener.com/news/abb-and-voltagrid-partner-to-deliver-stable-data-center-power-to-support-ai-growth-ce7d5fdbd08ef423",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Non-Lithium / Long-Life Storage",
+          "companies": []
+        },
+        {
+          "category": "Backside / Vertical Power Delivery Silicon",
+          "companies": [
+            {
+              "company": "AmberSemi",
+              "notes": "Fabless startup whose PowerTile vertical power delivery chip mounts on the backside of the server board directly beneath the processor; closed a $30M Series C after taping out silicon and is set to begin shipping to major customers in Q3 2026.",
+              "source": "Semiconductor Digest",
+              "url": "https://www.semiconductor-digest.com/amber-semiconductor-raises-30-million-series-c-financing/",
               "diligenced": false
             }
           ]
@@ -101,7 +289,7 @@
       ]
     },
     "silicon": {
-      "overview": "Private companies cluster in emerging IP/architecture bets (SiFive, Achronix, Codasip), specialty materials (Heraeus, Brewer Science), and next-generation photonic interconnect (Ayar Labs, Lightmatter, Celestial AI).",
+      "overview": "Private companies in this layer split into three distinct bets: alternative AI-compute architectures (Groq, Tenstorrent, SambaNova) that depend entirely on foundry allocation rather than owning fabs and are increasingly pivoting toward cloud/inference services; optical interconnect and co-packaged-optics startups (Ayar Labs, Lightmatter, Celestial AI) racing to commercialize technology that ranges from early customer integration to full acquisition by incumbents; and supply-chain diversification plays \u2014 a state-backed alternative foundry (Rapidus) and specialized packaging/equipment vendors (Deca Technologies, ZEISS SMT) \u2014 trying to loosen TSMC's and the Korean memory duopoly's grip on the leading edge.",
       "categories": [
         {
           "category": "GPU/CPU/ASSP/ASIC",
@@ -428,11 +616,27 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "AI Inference/Accelerator Silicon",
+          "companies": []
+        },
+        {
+          "category": "Optical Interconnect / Co-Packaged Optics",
+          "companies": []
+        },
+        {
+          "category": "Alternative Foundries & Advanced Packaging",
+          "companies": []
+        },
+        {
+          "category": "Custom Networking & Connectivity Silicon",
+          "companies": []
         }
       ]
     },
     "compute": {
-      "overview": "The private landscape is concentrated in a small set of well-funded inference/training chip startups (Groq, Tenstorrent, SambaNova) and GPU cloud reseller Lambda.",
+      "overview": "Private compute challengers split into distinct bets: purpose-built inference silicon paired with a neocloud business model (Groq, SambaNova), alternative full-stack architectures competing on RISC-V/chiplet design (Tenstorrent), pure GPU-rental neoclouds riding Nvidia allocation rather than designing chips (Lambda), and analog/in-memory compute aiming at radically higher efficiency for edge inference (EnCharge AI) \u2014 with maturity ranging from Lambda's imminent IPO-track scale to EnCharge's still-early client shipments.",
       "categories": [
         {
           "category": "GPU/CPU/ASSP/ASIC (AI accelerators)",
@@ -471,11 +675,35 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Custom Inference Silicon + Cloud (Groq, SambaNova)",
+          "companies": []
+        },
+        {
+          "category": "GPU Neoclouds (Lambda)",
+          "companies": []
+        },
+        {
+          "category": "Alternative Compute Architectures (Tenstorrent)",
+          "companies": []
+        },
+        {
+          "category": "Analog/In-Memory Compute (EnCharge AI)",
+          "companies": [
+            {
+              "company": "EnCharge AI",
+              "notes": "Continues developing charge-based analog in-memory AI accelerators (following its EN100 edge chip launch and $100M Series B); no major new funding or product news surfaced in this cycle beyond its existing roadmap.",
+              "source": "DCD",
+              "url": "https://www.datacenterdynamics.com/en/news/encharge-ai-closes-oversubscribed-100m-series-b-funding-round-for-development-of-analog-in-memory-chips/",
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "networking": {
-      "overview": "Juniper is the one notable name here, having moved private-adjacent via its 2025 acquisition by HPE.",
+      "overview": "Private capital in networking is split between co-packaged optics/optical chiplet startups racing to prove volume manufacturability, and a smaller cohort of alternative compute plays adjacent to networking (quantum control chips, inference silicon) still finding their commercial footing. CPO is the most mature private bet, with Ayar Labs and Lightmatter both shipping samples and forming OEM/rack partnerships, while Celestial AI's exit via Marvell acquisition signals the segment is already consolidating around larger strategic buyers.",
       "categories": [
         {
           "category": "Network & application security/delivery",
@@ -488,11 +716,63 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Co-Packaged Optics & Optical Chiplets",
+          "companies": [
+            {
+              "company": "Ayar Labs",
+              "notes": "Closed a $500 million Series E led by Neuberger Berman at a $3.75 billion valuation to scale volume production of its TeraPHY co-packaged optics engines, and partnered with Wiwynn on rack-scale CPO reference designs.",
+              "source": "Data Center Dynamics / Yahoo Finance",
+              "url": "https://finance.yahoo.com/news/ayar-labs-secures-500m-funding-101323199.html",
+              "diligenced": false
+            },
+            {
+              "company": "Lightmatter",
+              "notes": "Expanded its Open Compute Project reference-architecture initiative for interoperable co-packaged optics to 19 member companies and partnered with Global Unichip Corp to commercialize its Passage 3D CPO platform.",
+              "source": "DatacenterDynamics",
+              "url": "https://www.datacenterdynamics.com/en/news/lightmatter-launches-19-company-strong-initiative-to-standardize-silicon-photonics-ready-infrastructure/",
+              "diligenced": false
+            },
+            {
+              "company": "Xscape Photonics",
+              "notes": "Raised an additional $37 million (total Series A of $81 million) led by Addition and launched FalconX, an eight-wavelength external laser module for AI data center fabrics.",
+              "source": "Photonics Spectra",
+              "url": "https://www.photonics.com/Articles/Xscape-Photonics-Secures-37M-in-Funding/a72044",
+              "diligenced": false
+            },
+            {
+              "company": "Celestial AI",
+              "notes": "Agreed to be acquired by Marvell for roughly $3.25 billion in cash and stock, folding its Photonic Fabric optical interconnect platform into a public acquirer's roadmap for scale-up XPU links.",
+              "source": "Optics & Photonics News",
+              "url": "https://www.optica-opn.org/home/industry/2025/december/marvell_looks_to_acquire_celestial_ai/",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Edge/Quantum & Alternative AI Compute",
+          "companies": [
+            {
+              "company": "SEEQC",
+              "notes": "Signed an MoU with Taiwan's Quantum Industry Technology Promotion Office at SEMICON Taiwan 2026 to build a cryo-chip supply chain for its chip-based quantum computing platform.",
+              "source": "HPCwire",
+              "url": "https://www.hpcwire.com/off-the-wire/seeqc-mou-targets-quantum-tech-and-supply-chain-development-in-taiwan/",
+              "diligenced": false
+            },
+            {
+              "company": "Groq",
+              "notes": "Raised $350 million at a $3.5 billion valuation, roughly half its year-earlier peak, as it pivots from AI inference chips to a neocloud model following Nvidia's licensing deal for its chip technology.",
+              "source": "Bloomberg",
+              "url": "https://www.bloomberg.com/news/articles/2026-08-17/groq-valued-at-3-5-billion-in-funding-round-after-nvidia-deal",
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "serversdc": {
-      "overview": "Several major datacenter operators (Vantage, QTS, CyrusOne, Switch, DataBank) have been taken private by infrastructure PE (KKR, Blackstone, DigitalBridge) in recent years.",
+      "overview": "The operator layer is split between long-established hyperscale campus builders now weighing public listings, enterprise colocation platforms consolidating under private-equity ownership, and a newer wave of cross-border M&A pulling national champions into global AI-infrastructure consortiums. Capital availability is no longer the constraint for most of these players; power, permitting and community acceptance increasingly are.",
       "categories": [
         {
           "category": "Datacenter real estate",
@@ -540,11 +820,53 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "Hyperscale Campus Developers & Builders",
+          "companies": [
+            {
+              "company": "Compass Datacenters",
+              "notes": "Brookfield/Ontario Teachers'-backed builder that has committed to Texas's new data center standards and whose CEO has been publicly pushing back on the wave of local moratoria affecting the industry.",
+              "source": "Office of the Texas Governor",
+              "url": "https://gov.texas.gov/news/post/governor-abbott-announces-galaxy-compass-datacenters-and-montera-infrastructure-commit-to-comply-with-his-data-center-standards",
+              "diligenced": false
+            },
+            {
+              "company": "STACK Infrastructure",
+              "notes": "Developing a roughly $12 billion multi-campus buildout in northwest Louisiana in collaboration with Amazon, alongside a separate $3 billion green financing package for US projects.",
+              "source": "GlobeNewswire",
+              "url": "https://finance.yahoo.com/news/stack-infrastructure-announces-data-center-193800728.html",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Enterprise Colocation & Edge Providers",
+          "companies": []
+        },
+        {
+          "category": "Consolidation & Cross-Border Plays",
+          "companies": [
+            {
+              "company": "Aligned Data Centers",
+              "notes": "A consortium led by BlackRock, joined by Microsoft and Nvidia, finalized its roughly $40 billion acquisition of Aligned from Macquarie Asset Management, the largest data center transaction on record, spanning close to 80 sites across the Americas.",
+              "source": "ClearlyAcquired",
+              "url": "https://www.clearlyacquired.com/blog/blackrock-completes-40b-acquisition-deal-for-aligned-data-centers",
+              "diligenced": false
+            },
+            {
+              "company": "atNorth",
+              "notes": "Leading Nordic high-density colocation operator acquired for $4 billion by CPP Investments and Equinix, with Partners Group re-investing to take a 10% stake in the platform to fund its Sweden, Finland, Norway and Denmark development pipeline.",
+              "source": "Equinix Newsroom",
+              "url": "https://newsroom.equinix.com/2026-09-02-CPP-Investments-and-Equinix-Complete-atNorth-Acquisition-to-Support-Growth-of-Leading-Nordic-Data-Center-Platform",
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "cloud": {
-      "overview": "Lambda is the one notable private GPU cloud alternative at meaningful scale.",
+      "overview": "Private neoclouds split between vertically integrated, energy-first builders like Crusoe that co-develop power and compute, GPU-rental specialists like Lambda that lean on asset-backed debt to fund hyperscale customer commitments, and newer alternative-silicon or sovereign-focused entrants like Groq and Nscale; nearly all are racing toward an IPO to access cheaper public capital before the financing cycle tightens further.",
       "categories": [
         {
           "category": "Hyperscale cloud platforms",
@@ -557,34 +879,78 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "GPU Neoclouds (Lambda, Crusoe)",
+          "companies": [
+            {
+              "company": "Crusoe",
+              "notes": "The energy-first AI factory company has contracted 4.9 gigawatts of infrastructure across data centers and cloud, with a development pipeline exceeding 40 GW, and continues building its 1.2 GW Abilene, Texas campus for Stargate.",
+              "source": "GlobeNewswire",
+              "url": "https://www.globenewswire.com/news-release/2026/06/09/3309072/0/en/crusoe-s-contracted-ai-infrastructure-capacity-approaches-5-gigawatts-across-data-centers-and-cloud.html",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Alternative Accelerator Clouds",
+          "companies": [
+            {
+              "company": "Groq",
+              "notes": "Raised roughly $350 million in a Series A round valuing the LPU-based inference cloud provider at about $3.5 billion, while scaling from 54 MW to a targeted 200+ MW of capacity by 2027.",
+              "source": "MarkTechPost",
+              "url": "https://www.marktechpost.com/2026/08/23/best-gpu-neoclouds-2026/",
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Sovereign / European Neoclouds",
+          "companies": [
+            {
+              "company": "Nscale",
+              "notes": "The UK-based AI cloud provider is targeting an IPO this year and has raised billions of dollars across equity, debt, and project financing in 2026 to fund its buildout.",
+              "source": "CNBC",
+              "url": "https://www.cnbc.com/2026/08/12/coreweave-q2-earnings-ai-demand.html",
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "applications": {
-      "overview": "The private applications landscape has two tiers: frontier labs racing on raw model capability and compute access, and vertical or consumer application companies racing to build defensible products on top of those models before capability gaps close.",
+      "overview": "Private frontier labs are racing on two fronts \u2014 raw model capability (GPT-6, Claude Fable/Mythos 5.1, Grok 4.6) and enterprise-grade safety/governance wrappers \u2014 while both OpenAI and Anthropic simultaneously prepare public listings that could reset how the whole category is valued. Beneath them, vertical enterprise AI (Harvey in legal, Glean in enterprise search) is proving out real, fast-scaling ARR, and consumer-facing players (Perplexity, Midjourney) are pushing into on-device/hybrid compute and new product categories to defend against commoditized chat interfaces.",
       "categories": [
         {
           "category": "Frontier Labs",
           "companies": [
             {
               "company": "OpenAI",
-              "notes": "Frontier AI lab (GPT / ChatGPT); privately held with a nonprofit / capped-profit corporate structure.",
-              "diligenced": false
+              "notes": "Released GPT-6 Astra to enterprise Daybreak testers with added cybersecurity safeguards and launched a $1 billion Daybreak for Frontline Defenders initiative, while pursuing an IPO reportedly targeting a $1 trillion-plus valuation.",
+              "diligenced": false,
+              "source": "Bloomberg",
+              "url": "https://www.bloomberg.com/news/articles/2026-09-03/openai-rolls-out-gpt-6-astra-model-with-added-cyber-guardrails"
             },
             {
               "company": "Anthropic",
-              "notes": "Frontier AI lab (Claude); privately held.",
-              "diligenced": false
+              "notes": "Launched Claude Fable 5.1 and Mythos 5.1 alongside Enterprise Frontier Safeguards and is positioning for an October 2026 IPO targeting a roughly $2 trillion valuation, following a ~$965 billion private round.",
+              "diligenced": false,
+              "source": "Yahoo Finance / Fortune",
+              "url": "https://finance.yahoo.com/technology/ai/articles/anthropic-september-1-triple-release-012352481.html"
             },
             {
               "company": "xAI",
-              "notes": "Frontier AI lab (Grok), founded by Elon Musk.",
-              "diligenced": false
+              "notes": "Shipped Grok 4.6 with a 500,000-token context window and expanded Grok Bot autonomous agents to enterprise plans, operating under the SpaceXAI structure after SpaceX's acquisition earlier in 2026.",
+              "diligenced": false,
+              "source": "Basenor",
+              "url": "https://www.basenor.com/blogs/news/grok-in-august-2026-5-details-that-actually-matter"
             },
             {
               "company": "Mistral AI",
-              "notes": "French developer of open-weight and commercial large language models.",
-              "diligenced": false
+              "notes": "Acquired Austrian industrial-AI startup Emmi to build a 'Physics AI' stack for manufacturers and is reportedly in talks to raise around \u20ac3 billion at a roughly \u20ac20 billion valuation.",
+              "diligenced": false,
+              "source": "AI Weekly / Daily AI Brief",
+              "url": "https://dailyaibrief.com/listings/mistralai/news"
             }
           ]
         },
@@ -593,13 +959,17 @@
           "companies": [
             {
               "company": "Harvey",
-              "notes": "Legal AI platform for law firms and corporate legal teams.",
-              "diligenced": false
+              "notes": "Continued rapid enterprise rollout with GE Aerospace and Finnegan deploying firmwide in early September, building on an $11 billion valuation and 1,500+ customers across 60+ countries.",
+              "diligenced": false,
+              "source": "Harvey Newsroom",
+              "url": "https://www.harvey.ai/newsroom"
             },
             {
               "company": "Glean",
-              "notes": "Enterprise search and AI assistant platform for internal company knowledge.",
-              "diligenced": false
+              "notes": "Raised a $768 million growth round in late August to scale its enterprise search platform and launch the Glean Tau desktop app, which it claims is about 80% cheaper in token costs than Anthropic's Claude Cowork.",
+              "diligenced": false,
+              "source": "SaaSrise",
+              "url": "https://www.saasrise.com/deals/glean-raises-768m-to-expand-its-enterprise-search-platform-857bac1a-8a6c-493b-be3e-96836f03d49e"
             }
           ]
         },
@@ -608,7 +978,29 @@
           "companies": [
             {
               "company": "Perplexity AI",
-              "notes": "AI-powered search and answer engine.",
+              "notes": "Introduced Hybrid Compute on Mac, blending cloud and local models to keep sensitive data on-device, alongside a new PII-detection benchmark and detector for agent privacy.",
+              "diligenced": false,
+              "source": "Perplexity Blog",
+              "url": "https://www.perplexity.ai/hub/blog/category/news"
+            }
+          ]
+        },
+        {
+          "category": "Frontier Model Labs",
+          "companies": []
+        },
+        {
+          "category": "Enterprise Vertical AI (Legal & Knowledge Work)",
+          "companies": []
+        },
+        {
+          "category": "Consumer Answer Engines & Creative AI",
+          "companies": [
+            {
+              "company": "Midjourney",
+              "notes": "Shipped its V8.2 image model focused on aesthetics and personalization and brought on Co-Star's founder to overhaul its product design as it continues testing a from-scratch alpha website.",
+              "source": "Releasebot",
+              "url": "https://releasebot.io/updates/midjourney",
               "diligenced": false
             }
           ]
