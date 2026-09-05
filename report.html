@@ -45,7 +45,7 @@
   h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em;}
   .subtitle{color:var(--text-dim);font-size:13px;margin:0;max-width:640px;line-height:1.5;}
 
-  /* ---- Main nav (Public / Private / Combined / Log) ---- */
+  /* ---- Main nav (Public / Private / Combined / Newsletter) ---- */
   .main-nav{display:flex;gap:0;margin:18px 0 26px;border-bottom:1px solid var(--line);overflow-x:auto;}
   .main-tab{
     font-family:'IBM Plex Mono', monospace;font-size:12.5px;letter-spacing:0.03em;
@@ -202,20 +202,28 @@
   }
   .combo-col p{font-size:13.5px;line-height:1.6;color:#c9cdd4;margin:0 0 6px;}
 
-  /* ---- Log (biweekly news digest, per layer) ---- */
-  .log-edition{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:28px;}
-  .log-edition:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-  .log-edition-date{
+  /* ---- Newsletter (biweekly news digest, per layer) ---- */
+  .newsletter-index{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:28px;}
+  .newsletter-index .table-label{margin-right:2px;}
+  .newsletter-index a{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--text-dim);
+    background:var(--panel);border:1px solid var(--line);padding:5px 12px;border-radius:4px;
+    text-decoration:none;transition:all .15s;
+  }
+  .newsletter-index a:hover{color:var(--text);border-color:var(--text-dim);}
+  .newsletter-edition{border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:28px;scroll-margin-top:20px;}
+  .newsletter-edition:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .newsletter-edition-date{
     font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.04em;color:var(--text);
     background:var(--panel-raised);display:inline-block;padding:4px 12px;border-radius:4px;margin-bottom:20px;
   }
-  .log-categories{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;}
-  .log-category-label{
+  .newsletter-categories{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;}
+  .newsletter-category-label{
     font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;
     color:var(--amber);margin-bottom:8px;
   }
-  .log-bullets{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
-  .log-bullets li{font-size:13px;line-height:1.55;color:#c9cdd4;}
+  .newsletter-bullets{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+  .newsletter-bullets li{font-size:13px;line-height:1.55;color:#c9cdd4;}
 
   footer{margin-top:30px;font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);text-align:center;line-height:1.6;}
 
@@ -225,7 +233,7 @@
     table.comp{font-size:11.5px;}
     .sent-cols{grid-template-columns:1fr;}
     .combo-cols{grid-template-columns:1fr;}
-    .log-categories{grid-template-columns:1fr;}
+    .newsletter-categories{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -244,7 +252,7 @@
     <button class="main-tab active" data-view="public">Public Markets</button>
     <button class="main-tab" data-view="private">Private Markets</button>
     <button class="main-tab" data-view="combined">Combined / Value Chain</button>
-    <button class="main-tab" data-view="log">Log</button>
+    <button class="main-tab" data-view="newsletter">Newsletter</button>
   </nav>
 
   <section class="view" id="view-public">
@@ -291,10 +299,11 @@
     <div id="combined-layers"></div>
   </section>
 
-  <section class="view" id="view-log" hidden>
-    <div class="view-head"><h2>Log</h2></div>
+  <section class="view" id="view-newsletter" hidden>
+    <div class="view-head"><h2>Newsletter</h2></div>
     <p class="view-intro">A biweekly digest of the most important public-markets news per layer over the prior two weeks &mdash; the same sourced signals behind Public Markets, reused here as a fast-read archive. Refreshed automatically every cycle.</p>
-    <div id="log-entries"></div>
+    <div id="newsletter-index" class="newsletter-index"></div>
+    <div id="newsletter-entries"></div>
   </section>
 
   <footer>
@@ -699,13 +708,13 @@ async function loadSegments(){
   renderCombinedLayers();
 }
 
-// ---- Main nav (Public Markets / Private Markets / Combined / Log) ----
+// ---- Main nav (Public Markets / Private Markets / Combined / Newsletter) ----
 const mainNav = document.getElementById('main-nav');
 const VIEWS = {
   public: document.getElementById('view-public'),
   private: document.getElementById('view-private'),
   combined: document.getElementById('view-combined'),
-  log: document.getElementById('view-log')
+  newsletter: document.getElementById('view-newsletter')
 };
 
 function showView(name){
@@ -799,8 +808,8 @@ function renderCombinedLayers(){
   }).join('');
 }
 
-// ---- Log (biweekly news digest, 5 bullets per layer -- no app updates here) ----
-const DEMO_LOG = {
+// ---- Newsletter (biweekly news digest, 5 bullets per layer -- no app updates here) ----
+const DEMO_NEWSLETTER = {
   editions: [
     {
       date: "2026-08-27",
@@ -846,22 +855,32 @@ const DEMO_LOG = {
   ]
 };
 
-let LOG_DATA = DEMO_LOG;
+let NEWSLETTER_DATA = DEMO_NEWSLETTER;
 
-function renderLog(){
-  const container = document.getElementById('log-entries');
-  const editions = (LOG_DATA.editions || []).slice().reverse();
+function renderNewsletterIndex(){
+  const container = document.getElementById('newsletter-index');
+  const editions = (NEWSLETTER_DATA.editions || []).slice().reverse();
+  if(editions.length <= 1){ container.innerHTML = ''; return; }
+  container.innerHTML = `
+    <span class="table-label">Previous editions:</span>
+    ${editions.map(ed => `<a href="#newsletter-${ed.date}">${ed.date}</a>`).join('')}
+  `;
+}
+
+function renderNewsletter(){
+  const container = document.getElementById('newsletter-entries');
+  const editions = (NEWSLETTER_DATA.editions || []).slice().reverse();
   container.innerHTML = editions.map(ed => `
-    <div class="log-edition">
-      <div class="log-edition-date">${ed.date}</div>
-      <div class="log-categories">
+    <div class="newsletter-edition" id="newsletter-${ed.date}">
+      <div class="newsletter-edition-date">${ed.date}</div>
+      <div class="newsletter-categories">
         ${LAYER_ORDER.map(id => {
           const bullets = (ed.categories && ed.categories[id]) || [];
           if(!bullets.length) return '';
           return `
-            <div class="log-category">
-              <div class="log-category-label">${LAYER_LABELS[id]}</div>
-              <ul class="log-bullets">
+            <div class="newsletter-category">
+              <div class="newsletter-category-label">${LAYER_LABELS[id]}</div>
+              <ul class="newsletter-bullets">
                 ${bullets.map(line => `<li>${line}</li>`).join('')}
               </ul>
             </div>
@@ -870,23 +889,24 @@ function renderLog(){
       </div>
     </div>
   `).join('');
+  renderNewsletterIndex();
 }
 
-async function loadLog(){
+async function loadNewsletter(){
   try{
-    const res = await fetch('log.json');
+    const res = await fetch('newsletter.json');
     if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
     const data = await res.json();
-    if(Array.isArray(data.editions) && data.editions.length) LOG_DATA = data;
+    if(Array.isArray(data.editions) && data.editions.length) NEWSLETTER_DATA = data;
   }catch(e){
-    LOG_DATA = DEMO_LOG;
+    NEWSLETTER_DATA = DEMO_NEWSLETTER;
   }
-  renderLog();
+  renderNewsletter();
 }
 
 loadSegments();
 loadPrivateMarkets();
-loadLog();
+loadNewsletter();
 
 // ---- Editorial gate (persisted in this browser's localStorage) ----
 const EDITION_KEY = 'edition-status:2026-08-27-v2';

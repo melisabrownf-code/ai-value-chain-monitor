@@ -12,9 +12,10 @@ What this does:
    used to be a single sector-wide "commentary sentiment" block; it's now per-layer
    and forward-looking to 2030 instead of a snapshot of current commentary.)
 4. Writes a timestamped snapshot into /history so you have a version trail.
-5. Appends a biweekly digest to log.json: each layer's 5 signals, reused as-is,
-   so the Log tab reads as a running "most important news" archive per category
-   rather than an app/feature changelog.
+5. Appends a biweekly digest to newsletter.json: each layer's 5 signals, reused
+   as-is, so the Newsletter tab reads as a running "most important news"
+   archive per category, linked edition-by-edition, rather than an app/feature
+   changelog.
 
 This script is meant to be run on a schedule (see .github/workflows/biweekly-report.yml)
 by a runner that has ANTHROPIC_API_KEY set as a secret. It does NOT publish anything
@@ -77,8 +78,8 @@ Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
   "signals": [
     {"text": "<one sentence, your own words, a specific fact/figure/announcement>", "source": "<publication name>", "url": "<source url>"},
     ... exactly 5 of these, most recent and most consequential first -- these double as this
-    layer's entry in the biweekly news digest (the Log tab), so they should read as the 5
-    most important things that happened in this layer over the last two weeks, not filler
+    layer's entry in the biweekly news digest (the Newsletter tab), so they should read as
+    the 5 most important things that happened in this layer over the last two weeks, not filler
   ]
 }
 Rules:
@@ -221,33 +222,35 @@ def generate_thesis(client, segments):
     return call_claude(client, system, segment_summary)
 
 
-def append_log_entry(edition):
-    """Append this cycle's biweekly news digest to log.json.
+def append_newsletter_entry(edition):
+    """Append this cycle's biweekly news digest to newsletter.json.
 
-    The Log tab is a market-news digest, not an app changelog: for each layer,
-    the 5 sourced signals already generated for that layer become that layer's
-    entry in the digest, dated to this edition. No app/feature updates belong
-    here -- those live in commit history / this file's own comments instead.
+    The Newsletter tab is a market-news digest, not an app changelog: for each
+    layer, the 5 sourced signals already generated for that layer become that
+    layer's entry in the digest, dated to this edition. No app/feature updates
+    belong here -- those live in commit history / this file's own comments
+    instead. Every edition stays in the file so the Newsletter tab can link
+    back to all previous editions, not just the latest.
     """
-    log_path = "log.json"
+    newsletter_path = "newsletter.json"
     try:
-        with open(log_path) as f:
-            log = json.load(f)
+        with open(newsletter_path) as f:
+            newsletter = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        log = {"editions": []}
+        newsletter = {"editions": []}
 
     categories = {
         seg["id"]: [sig["text"] for sig in seg.get("signals", [])]
         for seg in edition["segments"]
     }
 
-    log.setdefault("editions", []).append({
+    newsletter.setdefault("editions", []).append({
         "date": edition["editionDate"],
         "categories": categories,
     })
 
-    with open(log_path, "w") as f:
-        json.dump(log, f, indent=2)
+    with open(newsletter_path, "w") as f:
+        json.dump(newsletter, f, indent=2)
 
 
 def main():
@@ -283,9 +286,9 @@ def main():
     with open(history_path, "w") as f:
         json.dump(edition, f, indent=2)
 
-    append_log_entry(edition)
+    append_newsletter_entry(edition)
 
-    print(f"Wrote report_data.json, {history_path}, and appended to log.json")
+    print(f"Wrote report_data.json, {history_path}, and appended to newsletter.json")
 
 
 if __name__ == "__main__":
