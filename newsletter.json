@@ -3,52 +3,88 @@
     {
       "date": "2026-08-27",
       "categories": {
-        "energy": [
-          "Form Energy raised $750 million to expand iron-air battery manufacturing in West Virginia, explicitly citing AI data-center demand as a driver of storage investment.",
-          "Duke Energy's Q2 2026 earnings call flagged $5-10 billion of incremental capital upside beyond its five-year plan, concentrated in Indiana and Florida and tied to data-center load, with signed electric service agreements now totaling 7.8 GW.",
-          "NuScale and Oklo shares have swung sharply through August -- a sector selloff mid-month erased much of a prior rally, followed by a risk-on rebound with no new contract or regulatory news behind either move."
-        ],
-        "cooling": [
-          "Ecolab completed its roughly $4.75 billion acquisition of CoolIT Systems in July 2026, after CoolIT's year-to-date sales had reportedly grown more than 100% on AI data center demand.",
-          "Vertiv's Q2 2026 revenue rose 24% year-over-year to $3.274 billion with adjusted operating profit up 51%, and the company raised full-year 2026 guidance to about $14 billion in net sales, up 37% year-over-year, citing a backlog exceeding $15 billion.",
-          "Immersion-cooling specialist Submer announced a EUR 1 billion investment in July 2026 to build its own AI data center at a former chemical plant site in Catalonia, moving the vendor into full-stack infrastructure ownership."
-        ],
-        "power": [
-          "As of late August 2026, transformer and switchgear shortages\u2014not GPU supply\u2014were described as the hard ceiling on data center energization, with an estimated 30-50% of roughly 16 GW of announced 2026 US capacity at risk of delay or cancellation.",
-          "Hitachi Energy announced a $300 million investment in China on August 17, 2026 to expand power transformer and component manufacturing in Hefei as part of its broader $9 billion global capacity expansion plan.",
-          "Vicor's Q2 2026 backlog surged to $380 million, up 145% year-over-year, as AI hyperscaler demand for its second-generation Vertical Power Delivery modules outpaced current factory capacity."
-        ],
-        "silicon": [
-          "Samsung's HBM4 yield reportedly climbed from below 60% at February mass-production start to about 80% by August 2026, while industry-wide HBM bit shipments are projected to grow 50-60% in 2027, still short of demand and keeping suppliers' pricing power intact through 2027.",
-          "TSMC confirmed its 1.6nm-class A16 process, built around backside power delivery ('Super Power Rail'), remains on track for mass production in Q4 2026, targeted first at HPC and AI accelerator customers rather than mobile chips.",
-          "Continued DRAM price escalation through Q3 2026 pushed a DDR4 chip to a record $42.45 and drove console makers including Microsoft and Sony to raise Xbox and PlayStation prices, illustrating how AI-driven wafer reallocation is spilling into consumer electronics costs."
-        ],
-        "compute": [
-          "Nvidia's fiscal Q2 2027 data center revenue rose 18% sequentially to $89 billion, with hyperscale revenue of $49 billion up 13%, and the company guided Q3 revenue to $108 billion while announcing AWS will deploy an additional 2 million GPUs through fiscal 2029.",
-          "Marvell disclosed on August 19 an expanded custom AI chip partnership with Google, including a warrant for Google to acquire a stake in Marvell worth about $12.18 billion, sending Broadcom shares down roughly 5% on fears its Google exclusivity is eroding.",
-          "Microsoft is reportedly planning to unveil its next-generation Maia 300 chip as early as September and is seeking capacity for more than 300,000 units from TSMC for 2027 delivery, even as Google targets 12-15 million TPUs by 2028."
-        ],
-        "networking": [
-          "Cisco's fiscal Q4 2026 results showed AI infrastructure orders from hyperscalers surging roughly 4.5x year-over-year to $9.3 billion for the full fiscal year, with $7.5 billion in AI revenue expected in fiscal 2027.",
-          "Cerebras introduced its CS-4 rack-scale AI accelerator on August 18, 2026, claiming up to 10x more throughput per watt and 2x the speed of its prior CS-3 system.",
-          "Reports that the FCC is drafting a ban on imports of new Chinese optical transceiver models sent Coherent, Lumentum, and Applied Optoelectronics shares sharply higher, even though Chinese manufacturers still supply roughly two-thirds of global transceiver units."
-        ],
-        "serversdc": [
-          "Supermicro pre-announced fiscal Q4 2026 gross margins nearly doubling to 15-17% alongside a record order backlog exceeding $60 billion, and then guided Q1 FY2027 revenue to $14.5-15.5 billion, well above the $11.9 billion consensus.",
-          "HPE booked $1.8 billion in new AI systems orders in its most recent quarter, bringing cumulative AI systems bookings to $16.4 billion with a $5.9 billion backlog entering the next quarter.",
-          "New York issued an executive order pausing permits for new data centers over 50 MW pending rules on grid costs and water use, while Texas Governor Abbott ordered a statewide audit of data center projects in the ERCOT interconnection queue."
-        ],
-        "cloud": [
-          "Lambda is negotiating a pre-IPO raise of up to $3 billion at a valuation of $12 billion or more, positioning for a possible 2027 listing.",
-          "CoreWeave's Q2 2026 revenue jumped 112% year-over-year to $2.58 billion, with its backlog reaching $104 billion excluding over $25 billion in new Q3 commitments, prompting raised full-year guidance.",
-          "AWS revenue reaccelerated to 37% year-over-year growth in Q2 2026, its fastest pace in 18 quarters, as Amazon raised its 2026 capital spending outlook to about $220 billion."
-        ],
-        "applications": [
-          "Anthropic's annualized revenue reached roughly $47 billion in May 2026, overtaking OpenAI's approximately $25 billion, driven by Claude Code and enterprise deployments including a 470,000-employee rollout at Deloitte.",
-          "OpenAI suspended parts of development on its upcoming Astra model after finding it had crossed a 'critical cybersecurity capability threshold,' able to independently identify and carry out cyberattacks.",
-          "Legal AI startup Harvey is in talks to raise at least $500 million at a $15.5 billion valuation, up from $11 billion in March, as its annualized revenue surged over 80% to more than $350 million.",
-          "Perplexity launched an on-device AI agent called Portable Computer for Nvidia-equipped desktops, following reports that Nvidia is weighing an investment that could value Perplexity above $30 billion."
-        ]
+        "energy": {
+          "public": [
+            "Form Energy raised $750 million to expand iron-air battery manufacturing in West Virginia, explicitly citing AI data-center demand as a driver of storage investment.",
+            "Duke Energy's Q2 2026 earnings call flagged $5-10 billion of incremental capital upside beyond its five-year plan, concentrated in Indiana and Florida and tied to data-center load, with signed electric service agreements now totaling 7.8 GW.",
+            "NuScale and Oklo shares have swung sharply through August -- a sector selloff mid-month erased much of a prior rally, followed by a risk-on rebound with no new contract or regulatory news behind either move."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "cooling": {
+          "public": [
+            "Ecolab completed its roughly $4.75 billion acquisition of CoolIT Systems in July 2026, after CoolIT's year-to-date sales had reportedly grown more than 100% on AI data center demand.",
+            "Vertiv's Q2 2026 revenue rose 24% year-over-year to $3.274 billion with adjusted operating profit up 51%, and the company raised full-year 2026 guidance to about $14 billion in net sales, up 37% year-over-year, citing a backlog exceeding $15 billion.",
+            "Immersion-cooling specialist Submer announced a EUR 1 billion investment in July 2026 to build its own AI data center at a former chemical plant site in Catalonia, moving the vendor into full-stack infrastructure ownership."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "power": {
+          "public": [
+            "As of late August 2026, transformer and switchgear shortages\u2014not GPU supply\u2014were described as the hard ceiling on data center energization, with an estimated 30-50% of roughly 16 GW of announced 2026 US capacity at risk of delay or cancellation.",
+            "Hitachi Energy announced a $300 million investment in China on August 17, 2026 to expand power transformer and component manufacturing in Hefei as part of its broader $9 billion global capacity expansion plan.",
+            "Vicor's Q2 2026 backlog surged to $380 million, up 145% year-over-year, as AI hyperscaler demand for its second-generation Vertical Power Delivery modules outpaced current factory capacity."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "silicon": {
+          "public": [
+            "Samsung's HBM4 yield reportedly climbed from below 60% at February mass-production start to about 80% by August 2026, while industry-wide HBM bit shipments are projected to grow 50-60% in 2027, still short of demand and keeping suppliers' pricing power intact through 2027.",
+            "TSMC confirmed its 1.6nm-class A16 process, built around backside power delivery ('Super Power Rail'), remains on track for mass production in Q4 2026, targeted first at HPC and AI accelerator customers rather than mobile chips.",
+            "Continued DRAM price escalation through Q3 2026 pushed a DDR4 chip to a record $42.45 and drove console makers including Microsoft and Sony to raise Xbox and PlayStation prices, illustrating how AI-driven wafer reallocation is spilling into consumer electronics costs."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "compute": {
+          "public": [
+            "Nvidia's fiscal Q2 2027 data center revenue rose 18% sequentially to $89 billion, with hyperscale revenue of $49 billion up 13%, and the company guided Q3 revenue to $108 billion while announcing AWS will deploy an additional 2 million GPUs through fiscal 2029.",
+            "Marvell disclosed on August 19 an expanded custom AI chip partnership with Google, including a warrant for Google to acquire a stake in Marvell worth about $12.18 billion, sending Broadcom shares down roughly 5% on fears its Google exclusivity is eroding.",
+            "Microsoft is reportedly planning to unveil its next-generation Maia 300 chip as early as September and is seeking capacity for more than 300,000 units from TSMC for 2027 delivery, even as Google targets 12-15 million TPUs by 2028."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "networking": {
+          "public": [
+            "Cisco's fiscal Q4 2026 results showed AI infrastructure orders from hyperscalers surging roughly 4.5x year-over-year to $9.3 billion for the full fiscal year, with $7.5 billion in AI revenue expected in fiscal 2027.",
+            "Cerebras introduced its CS-4 rack-scale AI accelerator on August 18, 2026, claiming up to 10x more throughput per watt and 2x the speed of its prior CS-3 system.",
+            "Reports that the FCC is drafting a ban on imports of new Chinese optical transceiver models sent Coherent, Lumentum, and Applied Optoelectronics shares sharply higher, even though Chinese manufacturers still supply roughly two-thirds of global transceiver units."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "serversdc": {
+          "public": [
+            "Supermicro pre-announced fiscal Q4 2026 gross margins nearly doubling to 15-17% alongside a record order backlog exceeding $60 billion, and then guided Q1 FY2027 revenue to $14.5-15.5 billion, well above the $11.9 billion consensus.",
+            "HPE booked $1.8 billion in new AI systems orders in its most recent quarter, bringing cumulative AI systems bookings to $16.4 billion with a $5.9 billion backlog entering the next quarter.",
+            "New York issued an executive order pausing permits for new data centers over 50 MW pending rules on grid costs and water use, while Texas Governor Abbott ordered a statewide audit of data center projects in the ERCOT interconnection queue."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "cloud": {
+          "public": [
+            "Lambda is negotiating a pre-IPO raise of up to $3 billion at a valuation of $12 billion or more, positioning for a possible 2027 listing.",
+            "CoreWeave's Q2 2026 revenue jumped 112% year-over-year to $2.58 billion, with its backlog reaching $104 billion excluding over $25 billion in new Q3 commitments, prompting raised full-year guidance.",
+            "AWS revenue reaccelerated to 37% year-over-year growth in Q2 2026, its fastest pace in 18 quarters, as Amazon raised its 2026 capital spending outlook to about $220 billion."
+          ],
+          "private": [],
+          "collaboration": []
+        },
+        "applications": {
+          "public": [
+            "Anthropic's annualized revenue reached roughly $47 billion in May 2026, overtaking OpenAI's approximately $25 billion, driven by Claude Code and enterprise deployments including a 470,000-employee rollout at Deloitte.",
+            "OpenAI suspended parts of development on its upcoming Astra model after finding it had crossed a 'critical cybersecurity capability threshold,' able to independently identify and carry out cyberattacks.",
+            "Legal AI startup Harvey is in talks to raise at least $500 million at a $15.5 billion valuation, up from $11 billion in March, as its annualized revenue surged over 80% to more than $350 million.",
+            "Perplexity launched an on-device AI agent called Portable Computer for Nvidia-equipped desktops, following reports that Nvidia is weighing an investment that could value Perplexity above $30 billion."
+          ],
+          "private": [],
+          "collaboration": []
+        }
       }
     }
   ]

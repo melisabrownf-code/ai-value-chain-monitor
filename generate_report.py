@@ -20,18 +20,23 @@ What this does:
    a deployment timeline (today / ~2yr / ~4yr per sub-category, with company
    names in each sub-category label), a 2030 bull/bear outlook specific to
    that layer, 5 sourced PUBLIC-company signals -- the most important news for
-   that layer over the prior two weeks -- and a PRIVATE-company landscape (an
+   that layer over the prior two weeks -- a PRIVATE-company landscape (an
    overview paragraph plus companies grouped by technology sub-category),
    weighted toward startup/venture press (TechCrunch, The Information, Axios
-   Pro Rata, Crunchbase News).
+   Pro Rata, Crunchbase News), and up to 3 collaborationSignals -- deals,
+   PPAs, investments, or partnerships that name BOTH a specific public company
+   AND a specific private company. All from the same single call/search per
+   layer; collaborationSignals is one more bucket on it, not a new pull.
 3. Assembles all layers plus an overall thesis into report_data.json. (Bull/bear
    used to be a single sector-wide "commentary sentiment" block; it's now per-layer
    and forward-looking to 2030 instead of a snapshot of current commentary.)
 4. Writes a timestamped snapshot into /history so you have a version trail.
-5. Appends a biweekly digest to newsletter.json: each layer's 5 PUBLIC signals,
-   reused as-is, so the Newsletter tab reads as a running "most important news"
-   archive per category, linked edition-by-edition, rather than an app/feature
-   changelog. Private companies never appear here -- see private_markets.json.
+5. Appends a biweekly digest to newsletter.json: each layer gets three sections
+   -- public (that layer's 5 signals, reused as-is), private (that layer's
+   privateLandscape companies, reused as "Company: notes" bullets), and
+   collaboration (that layer's collaborationSignals) -- so the Newsletter tab
+   reads as a running "most important news" archive per category, linked
+   edition-by-edition, rather than an app/feature changelog.
 6. Merges each layer's private-company landscape into private_markets.json.
    Derives each layer's PUBLIC-company landscape for Market Map by parsing the
    timeline's own sub-category labels (e.g. "Custom ASICs (Google TPU, AWS
@@ -132,7 +137,15 @@ Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
       Weight discovery toward startup/venture press specifically -- TechCrunch, The Information,
       Axios Pro Rata, Crunchbase News, PitchBook News -- over generic aggregators.
     ]
-  }
+  },
+  "collaborationSignals": [
+    {"text": "<one sentence, your own words: a specific deal, partnership, investment, offtake agreement, PPA, or acquisition connecting a NAMED public company and a NAMED private company>", "source": "<publication name>", "url": "<source url>"},
+    ... up to 3 of these, most recent and most consequential first. Only include an item if it names
+    BOTH a specific public company AND a specific private company party to the same deal/relationship --
+    e.g. "Google signed a power purchase agreement with Kairos Power" or "Microsoft's investment in
+    OpenAI expanded to include..." Return an empty array if nothing like this turned up this cycle --
+    don't stretch a public-only or private-only item to fit.
+  ]
 }
 Rules:
 - Use web search to find developments from roughly the last 14 days where possible (this job runs biweekly),
@@ -361,7 +374,12 @@ def generate_segment(client, seg):
     ]
     public_landscape = derive_public_landscape(data, all_private_names)
 
-    return data, private_landscape, public_landscape
+    # Public-private collaboration signals are Newsletter-only content (a third
+    # section alongside that layer's public and private news) -- don't belong
+    # in report_data.json either.
+    collaboration_signals = data.pop("collaborationSignals", None) or []
+
+    return data, private_landscape, public_landscape, collaboration_signals
 
 
 def generate_thesis(client, segments):
@@ -377,15 +395,21 @@ def generate_thesis(client, segments):
     return call_claude(client, system, segment_summary)
 
 
-def append_newsletter_entry(edition):
+def append_newsletter_entry(edition, private_landscape_by_layer, collaboration_by_layer):
     """Append this cycle's biweekly news digest to newsletter.json.
 
     The Newsletter tab is a market-news digest, not an app changelog: for each
-    layer, the 5 sourced signals already generated for that layer become that
-    layer's entry in the digest, dated to this edition. No app/feature updates
-    belong here -- those live in commit history / this file's own comments
-    instead. Every edition stays in the file so the Newsletter tab can link
-    back to all previous editions, not just the latest.
+    layer, three sections -- public, private, and public/private collaboration
+    -- become that layer's entry in the digest, dated to this edition. No app/
+    feature updates belong here -- those live in commit history / this file's
+    own comments instead. Every edition stays in the file so the Newsletter tab
+    can link back to all previous editions, not just the latest.
+
+    None of this is a separate pull: public comes from the signals already
+    generated for Public Markets, private comes from the same-cycle
+    privateLandscape already generated for Private Markets, and collaboration
+    comes from collaborationSignals -- one more bucket in that same single
+    per-layer call, not a new one.
     """
     newsletter_path = "newsletter.json"
     try:
@@ -394,10 +418,21 @@ def append_newsletter_entry(edition):
     except (FileNotFoundError, json.JSONDecodeError):
         newsletter = {"editions": []}
 
-    categories = {
-        seg["id"]: [sig["text"] for sig in seg.get("signals", [])]
-        for seg in edition["segments"]
-    }
+    categories = {}
+    for seg in edition["segments"]:
+        layer_id = seg["id"]
+        private_landscape = private_landscape_by_layer.get(layer_id, {})
+        private_bullets = [
+            f"{comp['company']}: {comp['notes']}"
+            for cat in private_landscape.get("categories", [])
+            for comp in cat.get("companies", [])
+        ][:5]
+
+        categories[layer_id] = {
+            "public": [sig["text"] for sig in seg.get("signals", [])],
+            "private": private_bullets,
+            "collaboration": [c["text"] for c in collaboration_by_layer.get(layer_id, [])],
+        }
 
     newsletter.setdefault("editions", []).append({
         "date": edition["editionDate"],
@@ -525,12 +560,14 @@ def main():
     segments = []
     private_landscape_by_layer = {}
     public_landscape_by_layer = {}
+    collaboration_by_layer = {}
     for seg in SEGMENTS:
         print(f"  - {seg['label']}")
-        seg_data, private_landscape, public_landscape = generate_segment(client, seg)
+        seg_data, private_landscape, public_landscape, collaboration_signals = generate_segment(client, seg)
         segments.append(seg_data)
         private_landscape_by_layer[seg["id"]] = private_landscape
         public_landscape_by_layer[seg["id"]] = public_landscape
+        collaboration_by_layer[seg["id"]] = collaboration_signals
 
     print("Synthesizing overall thesis...")
     thesis_block = generate_thesis(client, segments)
@@ -551,7 +588,7 @@ def main():
     with open(history_path, "w") as f:
         json.dump(edition, f, indent=2)
 
-    append_newsletter_entry(edition)
+    append_newsletter_entry(edition, private_landscape_by_layer, collaboration_by_layer)
     update_landscape_file(
         "private_markets.json",
         "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay",

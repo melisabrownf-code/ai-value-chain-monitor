@@ -223,6 +223,15 @@
   }
   .newsletter-bullets{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
   .newsletter-bullets li{font-size:13px;line-height:1.55;color:#c9cdd4;}
+  .newsletter-subsection{margin-top:12px;}
+  .newsletter-subsection:first-of-type{margin-top:10px;}
+  .newsletter-subsection-label{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.07em;text-transform:uppercase;
+    margin-bottom:5px;
+  }
+  .newsletter-subsection-label.public{color:var(--amber);}
+  .newsletter-subsection-label.private{color:var(--violet);}
+  .newsletter-subsection-label.collab{color:var(--cyan);}
 
   /* ---- Market Map ---- */
   .mm-legend{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:22px;}
@@ -345,7 +354,7 @@
 
   <section class="view" id="view-newsletter" hidden>
     <div class="view-head"><h2>Newsletter</h2></div>
-    <p class="view-intro">A biweekly digest of the most important public-markets news per layer over the prior two weeks &mdash; the same sourced signals behind Public Markets, reused here as a fast-read archive. Refreshed automatically every cycle.</p>
+    <p class="view-intro">A biweekly digest of the most important news per layer over the prior two weeks, in three sections: Public (from Public Markets), Private (from Private Markets), and Public &times; Private Collaboration (deals, PPAs, investments, or partnerships naming both a public and a private company). Nothing here is a separate pull -- all three reuse what Public Markets and Private Markets already produced.</p>
     <div id="newsletter-index" class="newsletter-index"></div>
     <div id="newsletter-entries"></div>
   </section>
@@ -1165,48 +1174,68 @@ async function loadPublicMarketMap(){
   renderMarketMap();
 }
 
-// ---- Newsletter (biweekly news digest, 5 bullets per layer -- no app updates here) ----
+// ---- Newsletter (biweekly news digest, 3 sections per layer -- no app updates here) ----
+// public/private/collaboration all come from the same single per-layer pull (see
+// generate_report.py) -- this tab doesn't trigger anything of its own, it just
+// reformats what Public Markets and Private Markets already produced.
 const DEMO_NEWSLETTER = {
   editions: [
     {
       date: "2026-08-27",
       categories: {
-        energy: [
-          "Form Energy raised $750M to expand iron-air battery manufacturing, citing AI data-center demand as a driver.",
-          "Duke Energy flagged $5-10B of incremental capex upside tied to data-center load, with signed agreements totaling 7.8 GW."
-        ],
-        cooling: [
-          "Ecolab completed its ~$4.75B acquisition of CoolIT Systems after CoolIT's sales grew over 100% on AI demand.",
-          "Vertiv raised full-year guidance to ~$14B in net sales, citing a backlog exceeding $15B."
-        ],
-        power: [
-          "Transformer and switchgear shortages, not GPU supply, now described as the hard ceiling on data-center energization.",
-          "Vicor's backlog surged to $380M, up 145% year-over-year, on demand for its power-delivery modules."
-        ],
-        silicon: [
-          "Samsung's HBM4 yield climbed from under 60% to ~80% by August 2026.",
-          "TSMC confirmed its A16 (backside power delivery) node remains on track for Q4 2026 mass production."
-        ],
-        compute: [
-          "Nvidia's data-center revenue rose 18% sequentially to $89B, guiding Q3 to $108B.",
-          "Marvell disclosed an expanded custom AI chip partnership with Google."
-        ],
-        networking: [
-          "Cisco's AI infrastructure orders from hyperscalers surged ~4.5x year-over-year to $9.3B.",
-          "Cerebras introduced its CS-4 rack-scale accelerator, claiming up to 10x throughput per watt."
-        ],
-        serversdc: [
-          "Supermicro's order backlog exceeded $60B, with Q1 FY2027 guidance well above consensus.",
-          "New York paused permits for data centers over 50MW pending grid-cost and water-use rules."
-        ],
-        cloud: [
-          "CoreWeave's revenue jumped 112% year-over-year, with backlog reaching $104B.",
-          "AWS revenue reaccelerated to 37% year-over-year growth, its fastest pace in 18 quarters."
-        ],
-        applications: [
-          "Anthropic's annualized revenue reached ~$47B, overtaking OpenAI's ~$25B.",
-          "Legal AI startup Harvey is in talks to raise at a $15.5B valuation, revenue up over 80%."
-        ]
+        energy: {
+          public: [
+            "Duke Energy flagged $5-10B of incremental capex upside tied to data-center load, with signed agreements totaling 7.8 GW.",
+            "NuScale shares swung sharply through August on no new contract or regulatory news."
+          ],
+          private: [
+            "Helion Energy: fusion developer with a power purchase agreement targeting 50MW for Microsoft.",
+            "Form Energy: raised $750M to expand iron-air battery manufacturing, citing AI data-center demand."
+          ],
+          collaboration: [
+            "Google signed a power purchase agreement with Kairos Power for future SMR-generated electricity."
+          ]
+        },
+        cooling: {
+          public: ["Vertiv raised full-year guidance to ~$14B in net sales, citing a backlog exceeding $15B."],
+          private: ["Submer: announced a EUR 1B investment to build its own AI data center in Catalonia."],
+          collaboration: []
+        },
+        power: {
+          public: ["Transformer and switchgear shortages, not GPU supply, now described as the hard ceiling on data-center energization."],
+          private: ["Vicor: backlog surged to $380M, up 145% year-over-year, on power-delivery module demand."],
+          collaboration: []
+        },
+        silicon: {
+          public: ["TSMC confirmed its A16 (backside power delivery) node remains on track for Q4 2026 mass production."],
+          private: ["Rapidus: Japanese foundry consortium advancing its 2nm domestic fab program."],
+          collaboration: []
+        },
+        compute: {
+          public: ["Nvidia's data-center revenue rose 18% sequentially to $89B, guiding Q3 to $108B."],
+          private: ["Groq: LPU inference chip maker continuing to expand data-center deployments."],
+          collaboration: ["Marvell disclosed an expanded custom AI chip partnership with Google, including a warrant to acquire a Marvell stake."]
+        },
+        networking: {
+          public: ["Cisco's AI infrastructure orders from hyperscalers surged ~4.5x year-over-year to $9.3B."],
+          private: ["Ayar Labs: optical I/O chiplet maker advancing AI cluster interconnect designs."],
+          collaboration: []
+        },
+        serversdc: {
+          public: ["Supermicro's order backlog exceeded $60B, with Q1 FY2027 guidance well above consensus."],
+          private: ["Crusoe: continuing to co-locate AI data centers with stranded/flared energy sources."],
+          collaboration: []
+        },
+        cloud: {
+          public: ["CoreWeave's revenue jumped 112% year-over-year, with backlog reaching $104B."],
+          private: ["Lambda: reportedly pursuing further pre-IPO fundraising for its GPU cloud business."],
+          collaboration: []
+        },
+        applications: {
+          public: ["Anthropic's annualized revenue reached ~$47B, overtaking OpenAI's ~$25B."],
+          private: ["Harvey: legal AI platform in talks to raise at a $15.5B valuation, revenue up over 80%."],
+          collaboration: []
+        }
       }
     }
   ]
@@ -1224,6 +1253,18 @@ function renderNewsletterIndex(){
   `;
 }
 
+function renderNewsletterSubsection(cssClass, label, bullets){
+  if(!bullets || !bullets.length) return '';
+  return `
+    <div class="newsletter-subsection">
+      <div class="newsletter-subsection-label ${cssClass}">${label}</div>
+      <ul class="newsletter-bullets">
+        ${bullets.map(line => `<li>${line}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
 function renderNewsletter(){
   const container = document.getElementById('newsletter-entries');
   const editions = (NEWSLETTER_DATA.editions || []).slice().reverse();
@@ -1232,14 +1273,19 @@ function renderNewsletter(){
       <div class="newsletter-edition-date">${ed.date}</div>
       <div class="newsletter-categories">
         ${LAYER_ORDER.map(id => {
-          const bullets = (ed.categories && ed.categories[id]) || [];
-          if(!bullets.length) return '';
+          // A pre-3-section edition stored a plain array; treat it as "public only".
+          const raw = (ed.categories && ed.categories[id]) || {};
+          const section = Array.isArray(raw) ? { public: raw, private: [], collaboration: [] } : raw;
+          const hasAny = (section.public && section.public.length)
+            || (section.private && section.private.length)
+            || (section.collaboration && section.collaboration.length);
+          if(!hasAny) return '';
           return `
             <div class="newsletter-category">
               <div class="newsletter-category-label">${LAYER_LABELS[id]}</div>
-              <ul class="newsletter-bullets">
-                ${bullets.map(line => `<li>${line}</li>`).join('')}
-              </ul>
+              ${renderNewsletterSubsection('public', 'Public', section.public)}
+              ${renderNewsletterSubsection('private', 'Private', section.private)}
+              ${renderNewsletterSubsection('collab', 'Public × Private Collaboration', section.collaboration)}
             </div>
           `;
         }).join('')}
