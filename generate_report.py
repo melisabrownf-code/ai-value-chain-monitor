@@ -243,7 +243,12 @@ def call_claude(client, system, user_content, cache_system=False):
     for attempt in range(1, MAX_CLAUDE_ATTEMPTS + 1):
         resp = client.messages.create(
             model=MODEL,
-            max_tokens=8192,
+            # Raised from 8192 -- a run on 2026-09-05 burned all 5 retry attempts on the very
+            # first segment, every one truncated mid-JSON-string. max_tokens caps the model's
+            # WHOLE turn (search tool-use content plus the final answer), so a search-heavy
+            # segment can exhaust the budget on tool calls before it finishes writing JSON.
+            # This doesn't raise cost -- billing is for tokens actually generated, not the cap.
+            max_tokens=16000,
             system=system_param,
             tools=[{
                 "type": "web_search_20250305",
@@ -280,12 +285,15 @@ def call_claude(client, system, user_content, cache_system=False):
             # round-trips and stop_reason cuts it off before any final text),
             # regardless of how high max_tokens is set. Retrying the same
             # request is cheap relative to losing an entire report run to one
-            # unlucky segment.
+            # unlucky segment. stop_reason/usage are logged so a repeat failure
+            # is diagnosable instead of just "it didn't parse".
             print(
                 f"    (attempt {attempt}/{MAX_CLAUDE_ATTEMPTS}: "
-                f"failed to parse response as JSON -- {e}; retrying)"
+                f"failed to parse response as JSON -- {e} "
+                f"[stop_reason={resp.stop_reason}, output_tokens={resp.usage.output_tokens}]; retrying)"
                 if attempt < MAX_CLAUDE_ATTEMPTS
-                else f"    (attempt {attempt}/{MAX_CLAUDE_ATTEMPTS}: giving up -- {e})"
+                else f"    (attempt {attempt}/{MAX_CLAUDE_ATTEMPTS}: giving up -- {e} "
+                     f"[stop_reason={resp.stop_reason}, output_tokens={resp.usage.output_tokens}])"
             )
     raise last_error
 
