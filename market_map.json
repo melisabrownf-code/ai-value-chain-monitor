@@ -1,0 +1,134 @@
+{
+  "status": "automated landscape (public filings, earnings calls, market commentary) + manual review overlay",
+  "note": "Each biweekly cycle, generate_report.py's web search also produces a public-company landscape per layer -- an overview plus companies grouped by technology/business-model sub-category -- and merges it in automatically (see update_landscape_file() / merge_landscape_layer() in generate_report.py). A company already tracked here gets its notes refreshed with fresh search findings each cycle (that's the actual 'search for updates' behavior) UNLESS it's flipped to diligenced: true, at which point automation leaves it alone permanently. Hand-edit this file directly to add, correct, or diligence an entry -- same contract as private_markets.json.",
+  "lastUpdated": "2026-09-05",
+  "layers": {
+    "energy": {
+      "overview": "Public energy exposure to AI data-center demand runs through utilities booking record capex on data-center service agreements, plus a handful of already-public reactor and storage-equipment makers riding the same demand.",
+      "categories": [
+        { "category": "Renewables & Utilities", "companies": [
+          { "company": "NextEra Energy", "notes": "Largest US renewables operator; booking record data-center-driven capacity backlogs.", "diligenced": false },
+          { "company": "Duke Energy", "notes": "Utility with a growing signed electric-service-agreement backlog tied to data-center load.", "diligenced": false },
+          { "company": "Enphase Energy", "notes": "Solar/storage equipment maker.", "diligenced": false }
+        ]},
+        { "category": "Nuclear & SMR", "companies": [
+          { "company": "GE Vernova", "notes": "Power equipment maker; BWRX-300 SMR design partner (with Hitachi).", "diligenced": false },
+          { "company": "NuScale Power", "notes": "Publicly traded small modular reactor developer (NYSE: SMR).", "diligenced": false }
+        ]},
+        { "category": "Storage", "companies": [
+          { "company": "Tesla", "notes": "Grid-scale battery storage (Megapack) alongside its core auto business.", "diligenced": false }
+        ]}
+      ]
+    },
+    "cooling": {
+      "overview": "Most pure-play cooling specialists are private (see Private Markets); the public exposure here is mainly diversified industrial/electrical equipment makers who added liquid-cooling lines rather than cooling-only public companies.",
+      "categories": [
+        { "category": "Diversified Thermal & Electrical Equipment", "companies": [
+          { "company": "Vertiv", "notes": "Data center power and thermal management equipment; direct beneficiary of the liquid-cooling transition.", "diligenced": false },
+          { "company": "Schneider Electric", "notes": "Power and cooling infrastructure for data centers.", "diligenced": false },
+          { "company": "Siemens", "notes": "Industrial and electrical infrastructure, incl. data center systems.", "diligenced": false }
+        ]}
+      ]
+    },
+    "power": {
+      "overview": "Public power exposure splits between large diversified electrical-equipment makers and smaller, more AI-data-center-specific power-delivery component suppliers.",
+      "categories": [
+        { "category": "Grid & UPS Equipment", "companies": [
+          { "company": "ABB", "notes": "Electrification and automation equipment, incl. grid/UPS systems.", "diligenced": false },
+          { "company": "Eaton", "notes": "Power management equipment; direct beneficiary of data-center power buildout.", "diligenced": false },
+          { "company": "Siemens", "notes": "Industrial and electrical infrastructure, incl. grid equipment.", "diligenced": false },
+          { "company": "Schneider Electric", "notes": "Power and cooling infrastructure for data centers.", "diligenced": false }
+        ]},
+        { "category": "Power Delivery Silicon", "companies": [
+          { "company": "Vicor", "notes": "High-density power delivery modules for AI racks; backlog surging on hyperscaler demand.", "diligenced": false },
+          { "company": "Monolithic Power Systems", "notes": "Power management silicon supplying AI server/GPU power delivery.", "diligenced": false }
+        ]}
+      ]
+    },
+    "silicon": {
+      "overview": "Leading-edge fabs and memory are almost entirely public-company territory -- the handful of scaled players here set the pace for the whole GPU/AI-accelerator ecosystem.",
+      "categories": [
+        { "category": "Fabs", "companies": [
+          { "company": "TSMC", "notes": "Leading-edge foundry; pacing the entire AI accelerator ecosystem via its node roadmap.", "diligenced": false },
+          { "company": "Samsung", "notes": "Foundry and memory maker racing to close the leading-edge gap with TSMC.", "diligenced": false },
+          { "company": "Intel", "notes": "Foundry (Intel Foundry) plus its own chip design business.", "diligenced": false }
+        ]},
+        { "category": "Memory", "companies": [
+          { "company": "SK Hynix", "notes": "Leading HBM supplier; record margins on AI-driven memory demand.", "diligenced": false },
+          { "company": "Micron", "notes": "Memory maker (DRAM/HBM) benefiting from AI-driven demand.", "diligenced": false }
+        ]}
+      ]
+    },
+    "compute": {
+      "overview": "Merchant GPUs and hyperscaler custom silicon programs dominate the public compute landscape, with a small set of co-design partners supplying the custom-ASIC wave.",
+      "categories": [
+        { "category": "Merchant GPU", "companies": [
+          { "company": "Nvidia", "notes": "Dominant merchant GPU supplier for AI training and inference.", "diligenced": false },
+          { "company": "AMD", "notes": "Merchant GPU and CPU supplier competing for AI accelerator share.", "diligenced": false }
+        ]},
+        { "category": "Hyperscaler Custom Silicon", "companies": [
+          { "company": "Alphabet", "notes": "Designs the TPU custom AI accelerator line for Google Cloud/internal use.", "diligenced": false },
+          { "company": "Amazon", "notes": "Designs the Trainium/Inferentia custom AI accelerator line for AWS.", "diligenced": false },
+          { "company": "Microsoft", "notes": "Designs the Maia custom AI accelerator line for Azure.", "diligenced": false },
+          { "company": "Meta Platforms", "notes": "Designs the MTIA custom AI accelerator line for internal use.", "diligenced": false }
+        ]},
+        { "category": "Co-Design Partners", "companies": [
+          { "company": "Broadcom", "notes": "Co-designs custom AI ASICs directly with hyperscalers (e.g. Google TPU).", "diligenced": false },
+          { "company": "Marvell", "notes": "Co-designs custom AI silicon and networking chips with hyperscalers.", "diligenced": false }
+        ]}
+      ]
+    },
+    "networking": {
+      "overview": "Pluggable optics and networking-equipment incumbents still carry the overwhelming majority of public-company revenue in this layer; co-packaged optics adoption at scale remains mostly a private-company story for now.",
+      "categories": [
+        { "category": "Pluggable Transceivers", "companies": [
+          { "company": "Lumentum", "notes": "Optical component and transceiver maker for data center networking.", "diligenced": false },
+          { "company": "Coherent", "notes": "Optical components and transceivers for AI data center networking.", "diligenced": false },
+          { "company": "InnoLight", "notes": "Optical transceiver maker supplying hyperscale data centers.", "diligenced": false }
+        ]},
+        { "category": "Switches & Networking Equipment", "companies": [
+          { "company": "Arista Networks", "notes": "High-performance networking switches for AI data centers.", "diligenced": false },
+          { "company": "Cisco", "notes": "Networking equipment, incl. AI data center switching.", "diligenced": false }
+        ]}
+      ]
+    },
+    "serversdc": {
+      "overview": "OEM server makers and the largest colocation/data-center REITs make up the bulk of public-company exposure here; much of the newest hyperscale-developer capacity is backed by private capital instead (see Private Markets).",
+      "categories": [
+        { "category": "OEM Servers", "companies": [
+          { "company": "Dell Technologies", "notes": "OEM server maker retrofitting lineups for liquid cooling.", "diligenced": false },
+          { "company": "Supermicro", "notes": "OEM server maker specializing in AI/GPU server systems.", "diligenced": false },
+          { "company": "HPE", "notes": "OEM server maker with a growing AI systems order book.", "diligenced": false }
+        ]},
+        { "category": "DC Operators", "companies": [
+          { "company": "Equinix", "notes": "Publicly traded colocation/data-center REIT.", "diligenced": false },
+          { "company": "SpaceX", "notes": "Publicly traded (NASDAQ: SPCX, IPO'd June 2026); expanding into data-center-adjacent ground infrastructure alongside its core launch/Starlink business.", "diligenced": false }
+        ]}
+      ]
+    },
+    "cloud": {
+      "overview": "Hyperscaler cloud capex still dwarfs everything else in this layer; among AI-native neoclouds, only a handful have gone public so far, with most still privately funded (see Private Markets).",
+      "categories": [
+        { "category": "Hyperscaler Cloud", "companies": [
+          { "company": "Amazon", "notes": "AWS -- largest cloud provider by revenue.", "diligenced": false },
+          { "company": "Microsoft", "notes": "Azure cloud, plus its OpenAI compute partnership.", "diligenced": false },
+          { "company": "Alphabet", "notes": "Google Cloud, plus in-house TPU infrastructure.", "diligenced": false },
+          { "company": "Oracle", "notes": "OCI cloud infrastructure with large AI-compute contracts.", "diligenced": false }
+        ]},
+        { "category": "Public AI-Native Neoclouds", "companies": [
+          { "company": "CoreWeave", "notes": "Publicly traded AI-native GPU cloud provider.", "diligenced": false }
+        ]}
+      ]
+    },
+    "applications": {
+      "overview": "The public side of applications is dominated by the large platform companies distributing AI features (Microsoft, Google, Meta) rather than pure-play AI application companies, most of which remain private (see Private Markets).",
+      "categories": [
+        { "category": "Platform Distribution", "companies": [
+          { "company": "Microsoft", "notes": "Distributes Copilot across its enterprise software suite.", "diligenced": false },
+          { "company": "Alphabet", "notes": "Google DeepMind frontier models plus Gemini distribution across Google products.", "diligenced": false },
+          { "company": "Meta Platforms", "notes": "Meta AI models distributed across its consumer apps.", "diligenced": false }
+        ]}
+      ]
+    }
+  }
+}

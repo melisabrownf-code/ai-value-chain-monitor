@@ -182,7 +182,7 @@
     color:var(--violet);display:block;margin-bottom:8px;
   }
   .manual-notice p{font-size:13.5px;line-height:1.6;color:var(--text-dim);margin:0;}
-  .manual-notice code{font-family:'IBM Plex Mono',monospace;color:var(--text);background:var(--panel-raised);padding:1px 5px;border-radius:3px;font-size:12.5px;}
+  code{font-family:'IBM Plex Mono',monospace;color:var(--text);background:var(--panel-raised);padding:1px 5px;border-radius:3px;font-size:12.5px;}
   .pending-badge{
     font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.05em;text-transform:uppercase;
     color:var(--violet);background:var(--violet-dim);padding:1px 6px;border-radius:3px;margin-left:6px;white-space:nowrap;
@@ -232,6 +232,7 @@
   }
   .mm-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
   .mm-dot.public{background:var(--amber);}
+  .mm-dot.public.pending{background:transparent;border:1.5px dashed var(--amber);}
   .mm-dot.private{background:var(--violet);}
   .mm-dot.private.pending{background:transparent;border:1.5px dashed var(--violet);}
   .mm-columns{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
@@ -248,6 +249,7 @@
     border:1px solid;white-space:nowrap;line-height:1.3;
   }
   .company-chip.public{color:var(--amber);border-color:var(--amber-dim);background:var(--amber-dim);}
+  .company-chip.public.pending{border-style:dashed;background:transparent;}
   .company-chip.private{color:var(--violet);border-color:var(--violet);background:var(--violet-dim);}
   .company-chip.private.pending{border-style:dashed;background:transparent;}
 
@@ -316,7 +318,7 @@
     <div class="view-head"><h2>Private Markets</h2></div>
     <div class="manual-notice">
       <span class="label">Automated landscape &middot; manual diligence overlay</span>
-      <p>Each biweekly cycle, the same web search behind Public Markets also surfaces private-company activity per layer &mdash; weighted toward startup/venture press (TechCrunch, The Information, Axios Pro Rata, Crunchbase News) &mdash; and merges new companies in automatically. Rows marked <strong>pending diligence</strong> haven't been reviewed by a person yet; flip a row to diligenced in <code>private_markets.json</code> once it has real internal notes, and the automation will never touch it again.</p>
+      <p>Each biweekly cycle, the same web search behind Public Markets also surfaces private-company activity per layer &mdash; weighted toward startup/venture press (TechCrunch, The Information, Axios Pro Rata, Crunchbase News). New companies get added; companies already tracked get their notes refreshed with fresh findings, since the pull is told what's already here and asked to search for updates on it specifically. Rows marked <strong>pending diligence</strong> haven't been reviewed by a person yet; flip a row to diligenced in <code>private_markets.json</code> once it has real internal notes, and the automation will never touch it again.</p>
     </div>
     <div class="tab-bar" id="pm-tab-bar"></div>
     <div class="panel" id="pm-panel"></div>
@@ -330,9 +332,10 @@
 
   <section class="view" id="view-marketmap" hidden>
     <div class="view-head"><h2>Market Map</h2></div>
-    <p class="view-intro">Who's active in this layer, public and private side by side &mdash; public companies grouped the same way as the Public Markets timeline, private companies grouped by technology sub-category. Color marks which side; a dashed chip means the private company hasn't been diligenced yet.</p>
+    <p class="view-intro">Who's active in this layer, public and private side by side &mdash; both hand-editable, both refreshed each biweekly cycle with new search findings. Color marks which side; a dashed chip means that entry hasn't been reviewed by a person yet. Edit <code>market_map.json</code> (public) or <code>private_markets.json</code> (private) directly to add, correct, or diligence an entry.</p>
     <div class="mm-legend">
-      <span class="mm-legend-item"><span class="mm-dot public"></span>Public</span>
+      <span class="mm-legend-item"><span class="mm-dot public"></span>Public &middot; diligenced</span>
+      <span class="mm-legend-item"><span class="mm-dot public pending"></span>Public &middot; pending diligence</span>
       <span class="mm-legend-item"><span class="mm-dot private"></span>Private &middot; diligenced</span>
       <span class="mm-legend-item"><span class="mm-dot private pending"></span>Private &middot; pending diligence</span>
     </div>
@@ -747,7 +750,6 @@ async function loadSegments(){
   renderTabs(null);
   showPanel(SEGMENTS[0].id);
   renderCombinedLayers();
-  renderMarketMap();
 }
 
 // ---- Main nav (Public Markets / Private Markets / Combined / Newsletter) ----
@@ -1001,22 +1003,95 @@ function renderCombinedLayers(){
   }).join('');
 }
 
-// ---- Market Map (visual public + private company map, per layer) ----
-// Public groups are parsed straight out of the Public Markets timeline sub-category
-// labels (e.g. "Nuclear & SMR (GE Vernova, NuScale, Helion)" -> group "Nuclear & SMR"
-// with companies [GE Vernova, NuScale, Helion]) -- no new backend field needed.
-function parsePublicGroups(seg){
-  if(!seg || !seg.timeline || !Array.isArray(seg.timeline.rows)) return [];
-  return seg.timeline.rows.map(row => {
-    const label = row[0] || '';
-    const match = label.match(/\(([^)]+)\)\s*$/);
-    // The model isn't consistent about separator style inside the parenthetical
-    // (comma-separated in some editions, slash-separated in others) -- split on either.
-    const companies = match ? match[1].split(/[,/]/).map(s => s.trim()).filter(Boolean) : [];
-    const group = match ? label.slice(0, match.index).trim() : label.trim();
-    return { group, companies };
-  }).filter(g => g.companies.length);
-}
+// ---- Market Map (hand-editable public + private company map, per layer) ----
+// Both sides now live in their own persistent, hand-editable file -- market_map.json
+// for public, private_markets.json for private -- with the same automated
+// merge/refresh/diligenced-protect contract on both. This tab no longer derives
+// anything from parsing Public Markets' timeline text.
+const DEMO_PUBLIC_MARKET_MAP = {
+  layers: {
+    energy: { overview: "Public energy exposure runs through utilities and a handful of already-public reactor/storage-equipment makers.", categories: [
+      { category: "Renewables & Utilities", companies: [
+        { company: "NextEra Energy", notes: "Largest US renewables operator.", diligenced: false },
+        { company: "Duke Energy", notes: "Utility with data-center-driven capex growth.", diligenced: false }
+      ]},
+      { category: "Nuclear & SMR", companies: [
+        { company: "GE Vernova", notes: "BWRX-300 SMR design partner.", diligenced: false },
+        { company: "NuScale Power", notes: "Publicly traded SMR developer (NYSE: SMR).", diligenced: false }
+      ]}
+    ]},
+    cooling: { overview: "Most pure-play cooling specialists are private; public exposure is mainly diversified equipment makers.", categories: [
+      { category: "Diversified Thermal & Electrical", companies: [
+        { company: "Vertiv", notes: "Data center power and thermal management equipment.", diligenced: false },
+        { company: "Schneider Electric", notes: "Power and cooling infrastructure.", diligenced: false }
+      ]}
+    ]},
+    power: { overview: "Public power exposure splits between diversified electrical-equipment makers and power-delivery silicon suppliers.", categories: [
+      { category: "Grid & UPS Equipment", companies: [
+        { company: "Eaton", notes: "Power management equipment.", diligenced: false },
+        { company: "ABB", notes: "Electrification and automation equipment.", diligenced: false }
+      ]},
+      { category: "Power Delivery Silicon", companies: [
+        { company: "Vicor", notes: "High-density power delivery modules for AI racks.", diligenced: false }
+      ]}
+    ]},
+    silicon: { overview: "Leading-edge fabs and memory are almost entirely public-company territory.", categories: [
+      { category: "Fabs", companies: [
+        { company: "TSMC", notes: "Leading-edge foundry pacing the AI accelerator ecosystem.", diligenced: false },
+        { company: "Samsung", notes: "Foundry and memory maker.", diligenced: false }
+      ]},
+      { category: "Memory", companies: [
+        { company: "SK Hynix", notes: "Leading HBM supplier.", diligenced: false },
+        { company: "Micron", notes: "Memory maker benefiting from AI demand.", diligenced: false }
+      ]}
+    ]},
+    compute: { overview: "Merchant GPUs and hyperscaler custom silicon dominate the public compute landscape.", categories: [
+      { category: "Merchant GPU", companies: [
+        { company: "Nvidia", notes: "Dominant merchant GPU supplier.", diligenced: false },
+        { company: "AMD", notes: "Merchant GPU/CPU supplier.", diligenced: false }
+      ]},
+      { category: "Hyperscaler Custom Silicon", companies: [
+        { company: "Alphabet", notes: "Designs the TPU accelerator line.", diligenced: false },
+        { company: "Amazon", notes: "Designs the Trainium/Inferentia line.", diligenced: false }
+      ]}
+    ]},
+    networking: { overview: "Pluggable optics and networking incumbents still carry most public-company revenue in this layer.", categories: [
+      { category: "Pluggable Transceivers", companies: [
+        { company: "Lumentum", notes: "Optical components and transceivers.", diligenced: false },
+        { company: "Coherent", notes: "Optical components and transceivers.", diligenced: false }
+      ]},
+      { category: "Switches", companies: [
+        { company: "Arista Networks", notes: "High-performance data center switches.", diligenced: false }
+      ]}
+    ]},
+    serversdc: { overview: "OEM server makers and large colocation REITs make up the bulk of public exposure here.", categories: [
+      { category: "OEM Servers", companies: [
+        { company: "Dell Technologies", notes: "OEM server maker.", diligenced: false },
+        { company: "Supermicro", notes: "AI/GPU server systems.", diligenced: false }
+      ]},
+      { category: "DC Operators", companies: [
+        { company: "Equinix", notes: "Publicly traded colocation REIT.", diligenced: false }
+      ]}
+    ]},
+    cloud: { overview: "Hyperscaler cloud capex still dwarfs everything else; few AI-native neoclouds have gone public so far.", categories: [
+      { category: "Hyperscaler Cloud", companies: [
+        { company: "Amazon", notes: "AWS.", diligenced: false },
+        { company: "Microsoft", notes: "Azure.", diligenced: false }
+      ]},
+      { category: "Public AI-Native Neoclouds", companies: [
+        { company: "CoreWeave", notes: "Publicly traded AI-native GPU cloud provider.", diligenced: false }
+      ]}
+    ]},
+    applications: { overview: "The public side is dominated by large platform companies distributing AI features.", categories: [
+      { category: "Platform Distribution", companies: [
+        { company: "Microsoft", notes: "Distributes Copilot across its software suite.", diligenced: false },
+        { company: "Alphabet", notes: "Google DeepMind models plus Gemini distribution.", diligenced: false }
+      ]}
+    ]}
+  }
+};
+
+let PUBLIC_MARKET_MAP = DEMO_PUBLIC_MARKET_MAP;
 
 const mmTabBar = document.getElementById('mm-tab-bar');
 const mmPanel = document.getElementById('mm-panel');
@@ -1033,58 +1108,41 @@ function renderMmTabs(activeId){
   });
 }
 
+function renderMmColumn(layer, side){
+  const categories = (layer && layer.categories) || [];
+  if(!categories.length) return `<p class="empty-note">No entries yet.</p>`;
+  return categories.map(cat => `
+    <div class="mm-group">
+      <div class="mm-group-label">${cat.category}</div>
+      <div class="chip-grid">
+        ${(cat.companies || []).map(c =>
+          `<span class="company-chip ${side}${!c.diligenced ? ' pending' : ''}">${c.company}</span>`
+        ).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
 function showMmPanel(id){
   activeMmLayer = id;
   renderMmTabs(id);
-  const seg = SEGMENTS.find(s => s.id === id);
+  const pubLayer = (PUBLIC_MARKET_MAP.layers && PUBLIC_MARKET_MAP.layers[id]) || { categories: [] };
   const privLayer = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || { categories: [] };
-
-  // Timeline sub-category labels are allowed to name private companies as
-  // categorical examples (e.g. "Fusion (Helion, Commonwealth Fusion)"), so
-  // cross-reference against the private landscape and drop any name we
-  // already know is private -- the whole point of this tab is not to mix
-  // the two up. Substring match both ways since names are often shortened in
-  // the timeline (e.g. "Helion" there vs "Helion Energy" in private_markets.json).
-  const knownPrivateNames = (privLayer.categories || [])
-    .flatMap(cat => (cat.companies || []).map(c => c.company.trim().toLowerCase()))
-    .filter(Boolean);
-  const isKnownPrivate = (name) => {
-    const n = name.trim().toLowerCase();
-    return knownPrivateNames.some(p => n.length >= 3 && p.length >= 3 && (n.includes(p) || p.includes(n)));
-  };
-  const publicGroups = parsePublicGroups(seg)
-    .map(g => ({ group: g.group, companies: g.companies.filter(c => !isKnownPrivate(c)) }))
-    .filter(g => g.companies.length);
 
   mmPanel.innerHTML = `
     <div class="panel-head">
       <h2>${LAYER_LABELS[id]}</h2>
-      ${seg ? `<span class="tab-tag ${seg.tagClass}">${seg.tag}</span>` : ''}
     </div>
     <div class="mm-columns">
       <div>
         <div class="mm-col-label">Public companies</div>
-        ${publicGroups.length ? publicGroups.map(g => `
-          <div class="mm-group">
-            <div class="mm-group-label">${g.group}</div>
-            <div class="chip-grid">
-              ${g.companies.map(c => `<span class="company-chip public">${c}</span>`).join('')}
-            </div>
-          </div>
-        `).join('') : '<p class="empty-note">No public companies parsed yet.</p>'}
+        ${pubLayer.overview ? `<p class="panel-synthesis" style="margin-top:0;">${pubLayer.overview}</p>` : ''}
+        ${renderMmColumn(pubLayer, 'public')}
       </div>
       <div>
         <div class="mm-col-label">Private companies</div>
-        ${(privLayer.categories || []).length ? privLayer.categories.map(cat => `
-          <div class="mm-group">
-            <div class="mm-group-label">${cat.category}</div>
-            <div class="chip-grid">
-              ${(cat.companies || []).map(c =>
-                `<span class="company-chip private${!c.diligenced ? ' pending' : ''}">${c.company}</span>`
-              ).join('')}
-            </div>
-          </div>
-        `).join('') : '<p class="empty-note">No private companies yet.</p>'}
+        ${privLayer.overview ? `<p class="panel-synthesis" style="margin-top:0;">${privLayer.overview}</p>` : ''}
+        ${renderMmColumn(privLayer, 'private')}
       </div>
     </div>
   `;
@@ -1093,6 +1151,18 @@ function showMmPanel(id){
 function renderMarketMap(){
   if(!mmTabBar || !mmPanel) return;
   showMmPanel(activeMmLayer);
+}
+
+async function loadPublicMarketMap(){
+  try{
+    const res = await fetch('market_map.json');
+    if(!res.ok) throw new Error(`fetch failed: ${res.status}`);
+    const data = await res.json();
+    if(data && data.layers) PUBLIC_MARKET_MAP = data;
+  }catch(e){
+    PUBLIC_MARKET_MAP = DEMO_PUBLIC_MARKET_MAP;
+  }
+  renderMarketMap();
 }
 
 // ---- Newsletter (biweekly news digest, 5 bullets per layer -- no app updates here) ----
@@ -1193,6 +1263,7 @@ async function loadNewsletter(){
 
 loadSegments();
 loadPrivateMarkets();
+loadPublicMarketMap();
 loadNewsletter();
 
 // ---- Editorial gate (persisted in this browser's localStorage) ----
