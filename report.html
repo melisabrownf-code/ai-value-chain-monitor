@@ -183,7 +183,6 @@
   }
   .manual-notice p{font-size:13.5px;line-height:1.6;color:var(--text-dim);margin:0;}
   .manual-notice code{font-family:'IBM Plex Mono',monospace;color:var(--text);background:var(--panel-raised);padding:1px 5px;border-radius:3px;font-size:12.5px;}
-  .pm-layer{margin-bottom:28px;}
   .pending-badge{
     font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.05em;text-transform:uppercase;
     color:var(--violet);background:var(--violet-dim);padding:1px 6px;border-radius:3px;margin-left:6px;white-space:nowrap;
@@ -290,7 +289,8 @@
       <span class="label">Manual &middot; not automated</span>
       <p>A first-pass landscape of known private companies per layer, maintained by hand &mdash; not pulled from a generic company database. Rows marked <strong>pending diligence</strong> reflect general public knowledge, not internal review; real diligence notes will replace them over time in <code>private_markets.json</code> as they're written up.</p>
     </div>
-    <div id="private-layers"></div>
+    <div class="tab-bar" id="pm-tab-bar"></div>
+    <div class="panel" id="pm-panel"></div>
   </section>
 
   <section class="view" id="view-combined" hidden>
@@ -797,29 +797,41 @@ const DEMO_PRIVATE_MARKETS = {
 
 let PRIVATE_MARKETS = DEMO_PRIVATE_MARKETS;
 
-function renderPrivateLayers(){
-  const container = document.getElementById('private-layers');
-  container.innerHTML = LAYER_ORDER.map(id => {
-    const rows = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || [];
-    return `
-      <div class="pm-layer">
-        <div class="table-label-row">
-          <div class="table-label">${LAYER_LABELS[id]}</div>
-        </div>
-        <table class="comp">
-          <thead><tr><th>Company</th><th>Notes</th></tr></thead>
-          <tbody>
-            ${rows.length ? rows.map(row => `
-              <tr>
-                <td class="cat">${row.company}${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''}</td>
-                <td>${row.notes}</td>
-              </tr>
-            `).join('') : `<tr><td colspan="2" class="empty-note">No entries yet.</td></tr>`}
-          </tbody>
-        </table>
-      </div>
-    `;
-  }).join('');
+const pmTabBar = document.getElementById('pm-tab-bar');
+const pmPanel = document.getElementById('pm-panel');
+let activePmLayer = LAYER_ORDER[0];
+
+function renderPmTabs(activeId){
+  pmTabBar.innerHTML = LAYER_ORDER.map(id => `
+    <div class="tab ${id===activeId?'active':''}" data-id="${id}">
+      <div class="tab-label">${LAYER_LABELS[id]}</div>
+    </div>
+  `).join('');
+  pmTabBar.querySelectorAll('.tab').forEach(el=>{
+    el.addEventListener('click', ()=> showPmPanel(el.dataset.id));
+  });
+}
+
+function showPmPanel(id){
+  activePmLayer = id;
+  renderPmTabs(id);
+  const rows = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || [];
+  pmPanel.innerHTML = `
+    <div class="panel-head">
+      <h2>${LAYER_LABELS[id]}</h2>
+    </div>
+    <table class="comp">
+      <thead><tr><th>Company</th><th>Notes</th></tr></thead>
+      <tbody>
+        ${rows.length ? rows.map(row => `
+          <tr>
+            <td class="cat">${row.company}${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''}</td>
+            <td>${row.notes}</td>
+          </tr>
+        `).join('') : `<tr><td colspan="2" class="empty-note">No entries yet.</td></tr>`}
+      </tbody>
+    </table>
+  `;
 }
 
 async function loadPrivateMarkets(){
@@ -831,7 +843,7 @@ async function loadPrivateMarkets(){
   }catch(e){
     PRIVATE_MARKETS = DEMO_PRIVATE_MARKETS;
   }
-  renderPrivateLayers();
+  showPmPanel(activePmLayer);
   renderCombinedLayers();
 }
 
