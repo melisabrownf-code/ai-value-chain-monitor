@@ -1,50 +1,73 @@
 {
-  "status": "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay",
-  "note": "Each biweekly cycle, generate_report.py's web search also produces a private-company landscape per layer -- an overview plus companies grouped by technology sub-category -- and merges new companies in automatically (see update_private_markets()). Merge is additive and never touches a company once it's diligenced: true -- flip that flag once a row reflects real internal diligence, and the automation will leave it alone from then on. The overview paragraph itself refreshes every cycle since it's a categorical summary, not a specific company's diligence.",
-  "lastUpdated": "2026-09-03",
+  "status": "imported from AI_Infrastructure_Market_Map_1.xlsx (8 of 9 layers; Applications not covered by that source) + automated refresh + manual diligence overlay",
+  "note": "Private-side companies for Energy, Power, Cooling, Silicon, Compute, Networking, Servers/DC, and Cloud were imported from a user-provided market map spreadsheet (AI_Infrastructure_Market_Map_1.xlsx) and marked diligenced: true, since that's real curated data, not an automated guess -- the biweekly pull will never overwrite these entries. Applications wasn't covered by that source and is left as whatever this file already had. New companies the biweekly pull discovers going forward are added alongside these, starting as diligenced: false.",
+  "lastUpdated": "2026-09-05",
   "layers": {
     "energy": {
-      "overview": "The private energy landscape splits into two bets on very different timelines: fusion and advanced-fission developers racing toward first commercial power by the late 2020s, and storage/geothermal companies solving the nearer-term problem of firming renewables already on the grid. None of the frontier reactor bets have delivered commercial power yet -- the category is still pre-revenue at scale.",
+      "overview": "Several major global utilities (EDF, State Grid, TVA) sit structurally outside public markets as nationalized or government-owned entities, not as venture-backed private companies.",
       "categories": [
         {
-          "category": "Fusion",
+          "category": "Baseload & renewable generation",
           "companies": [
-            { "company": "Commonwealth Fusion Systems", "notes": "Fusion energy developer building the SPARC tokamak; spun out of MIT, backed by Breakthrough Energy Ventures among others.", "diligenced": false },
-            { "company": "Helion Energy", "notes": "Fusion energy developer with a power purchase agreement targeting 50MW of fusion power for Microsoft.", "diligenced": false }
-          ]
-        },
-        {
-          "category": "Advanced Fission / SMR",
-          "companies": [
-            { "company": "TerraPower", "notes": "Advanced nuclear reactor developer (Natrium design) founded by Bill Gates.", "diligenced": false },
-            { "company": "Kairos Power", "notes": "Molten-salt-cooled small modular reactor developer with a Google power purchase agreement.", "diligenced": false }
-          ]
-        },
-        {
-          "category": "Storage & Geothermal",
-          "companies": [
-            { "company": "Form Energy", "notes": "Iron-air battery maker targeting multi-day, grid-scale energy storage.", "diligenced": false },
-            { "company": "Fervo Energy", "notes": "Enhanced geothermal energy developer supplying firm, round-the-clock clean power.", "diligenced": false }
+            {
+              "company": "EDF",
+              "notes": "Fully nationalized by the French state, delisted from Euronext Paris 2023",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "State Grid",
+              "notes": "Chinese state-owned enterprise; not publicly traded",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "TVA",
+              "notes": "US federal government corporation; not publicly traded",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
     },
     "cooling": {
-      "overview": "Private cooling companies split cleanly by approach: immersion specialists betting that fully submerging hardware is the endpoint for extreme-density racks, and direct-to-chip developers betting that retrofittable, waterless cold-plate designs win on cost and compatibility with existing air-cooled facilities.",
+      "overview": "Several long-established private/family-owned specialists (Stulz, Rittal, Nortek) and privately-held CoolIT round out the thermal management landscape.",
       "categories": [
         {
-          "category": "Immersion Cooling",
+          "category": "Thermal management",
           "companies": [
-            { "company": "Submer", "notes": "Immersion cooling systems for data centers, expanding into owning its own AI data center capacity.", "diligenced": false },
-            { "company": "LiquidStack", "notes": "Two-phase and single-phase immersion cooling technology for high-density AI racks.", "diligenced": false },
-            { "company": "Iceotope", "notes": "Precision, chassis-level liquid cooling for data center and edge deployments.", "diligenced": false }
-          ]
-        },
-        {
-          "category": "Direct-to-Chip Liquid Cooling",
-          "companies": [
-            { "company": "ZutaCore", "notes": "Waterless, two-phase direct-to-chip liquid cooling technology.", "diligenced": false },
-            { "company": "Accelsius", "notes": "Two-phase direct-to-chip cooling systems designed to retrofit existing air-cooled data centers.", "diligenced": false }
+            {
+              "company": "Stulz",
+              "notes": "Family-owned (Germany)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Rittal",
+              "notes": "Part of Friedhelm Loh Group (family-owned)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "CoolIT",
+              "notes": "Privately held (Canada)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Nortek",
+              "notes": "Owned by Madison Industries",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
@@ -55,109 +78,531 @@
         {
           "category": "Grid Software & Demand Flexibility",
           "companies": [
-            { "company": "Amperon", "notes": "AI-driven electricity demand forecasting for grid operators and large power consumers.", "diligenced": false },
-            { "company": "Emerald AI", "notes": "Software that lets data centers flex power consumption to ease grid interconnection bottlenecks.", "diligenced": false },
-            { "company": "Verrus", "notes": "Behind-the-meter power management aimed at faster-to-deploy, flexible data center capacity.", "diligenced": false }
+            {
+              "company": "Amperon",
+              "notes": "AI-driven electricity demand forecasting for grid operators and large power consumers.",
+              "diligenced": false
+            },
+            {
+              "company": "Emerald AI",
+              "notes": "Software that lets data centers flex power consumption to ease grid interconnection bottlenecks.",
+              "diligenced": false
+            },
+            {
+              "company": "Verrus",
+              "notes": "Behind-the-meter power management aimed at faster-to-deploy, flexible data center capacity.",
+              "diligenced": false
+            }
           ]
         },
         {
           "category": "Backup / Long-Duration Storage",
           "companies": [
-            { "company": "EnerVenue", "notes": "Long-duration metal-hydrogen battery storage for grid and industrial backup power.", "diligenced": false }
+            {
+              "company": "EnerVenue",
+              "notes": "Long-duration metal-hydrogen battery storage for grid and industrial backup power.",
+              "diligenced": false
+            }
           ]
         }
       ]
     },
     "silicon": {
-      "overview": "Private companies barely register at the leading edge of fabs and memory -- this category is structurally dominated by public incumbents (TSMC, Samsung, Micron, SK Hynix). Rapidus is the one credible independent bet, a government-and-consortium-backed attempt to rebuild Japan's domestic foundry capacity.",
+      "overview": "Private companies cluster in emerging IP/architecture bets (SiFive, Achronix, Codasip), specialty materials (Heraeus, Brewer Science), and next-generation photonic interconnect (Ayar Labs, Lightmatter, Celestial AI).",
       "categories": [
         {
-          "category": "Foundry (Leading-Edge)",
+          "category": "GPU/CPU/ASSP/ASIC",
           "companies": [
-            { "company": "Rapidus", "notes": "Japanese foundry consortium backed by Toyota, Sony, NTT, and the Japanese government, building a 2nm fab to re-establish domestic leading-edge chip manufacturing.", "diligenced": false }
+            {
+              "company": "Groq",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tenstorrent",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SambaNova",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Memory (DRAM & NAND)",
+          "companies": [
+            {
+              "company": "CXMT",
+              "notes": "Chinese state-linked; not publicly listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "YMTC",
+              "notes": "Chinese state-linked; not publicly listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Solidigm",
+              "notes": "Subsidiary of SK Hynix (public parent: KRX 000660)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Analog, mixed signal & MCU",
+          "companies": [
+            {
+              "company": "Wiliot",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Ayar Labs",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Black Semiconductor",
+              "notes": "German VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Power management IC",
+          "companies": [
+            {
+              "company": "Cambridge GaN Devices",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Eggtronic",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Silanna Semiconductor",
+              "notes": "Privately held",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Optoelectronics",
+          "companies": [
+            {
+              "company": "OmniVision",
+              "notes": "Went private 2016; held via Chinese consortium (Will Semiconductor group)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Ayar Labs",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Lightmatter",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Celestial AI",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Salience Labs",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Xsight Labs",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Sensors, discretes & passives",
+          "companies": [
+            {
+              "company": "Bosch",
+              "notes": "Majority owned by Robert Bosch Stiftung; not publicly traded",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Uhnder",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Metawave",
+              "notes": "Startup; status uncertain, reported financial distress",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Prophesee",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Vayyar",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Materials & wafers",
+          "companies": [
+            {
+              "company": "JSR",
+              "notes": "Taken private by Japan Investment Corporation, 2024",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Heraeus",
+              "notes": "Family-owned (Germany)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Brewer Science",
+              "notes": "Family/privately held",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "EMD Electronics",
+              "notes": "Subsidiary of Merck KGaA (public parent: XETRA MRK)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Nanosys",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "EDA & IP",
+          "companies": [
+            {
+              "company": "SiFive",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Codasip",
+              "notes": "VC-backed RISC-V IP startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Achronix",
+              "notes": "Backed by Intel Capital; no public listing",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Ascenium",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Movellus",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Foundry",
+          "companies": [
+            {
+              "company": "Rapidus",
+              "notes": "Japanese government/consortium-backed; not publicly listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Nexchip",
+              "notes": "Chinese state/investor-backed; not publicly listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Wafer fabrication equipment",
+          "companies": [
+            {
+              "company": "ZEISS SMT",
+              "notes": "Subsidiary of Carl Zeiss AG (foundation-owned)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "EV Group",
+              "notes": "Privately held (Austria)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Advanced packaging",
+          "companies": [
+            {
+              "company": "Deca Technologies",
+              "notes": "Majority owned by Infineon",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Promex Industries",
+              "notes": "Privately held",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Shinko",
+              "notes": "Taken private by Japan Investment Corp-led consortium, 2023",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Outsourced assembly & test",
+          "companies": [
+            {
+              "company": "UTAC",
+              "notes": "Owned by Affinity Equity Partners",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Carsem",
+              "notes": "Subsidiary of Malaysia's Hong Leong Group",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
     },
     "compute": {
-      "overview": "The private compute landscape is the most crowded in the value chain: inference-specialized chip startups are betting speed and cost beat general-purpose GPUs for serving models, while wafer-scale and reconfigurable-architecture players are betting on training and flexibility instead. Several have flirted with public listings without completing one.",
+      "overview": "The private landscape is concentrated in a small set of well-funded inference/training chip startups (Groq, Tenstorrent, SambaNova) and GPU cloud reseller Lambda.",
       "categories": [
         {
-          "category": "AI Inference Chips",
+          "category": "GPU/CPU/ASSP/ASIC (AI accelerators)",
           "companies": [
-            { "company": "Groq", "notes": "Purpose-built LPU (language processing unit) chips for ultra-fast, low-latency AI inference.", "diligenced": false },
-            { "company": "d-Matrix", "notes": "In-memory computing AI inference chips optimized for datacenter deployment.", "diligenced": false },
-            { "company": "Etched", "notes": "AI chip startup building transformer-specific ASICs (the 'Sohu' chip).", "diligenced": false }
+            {
+              "company": "Groq",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tenstorrent",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SambaNova",
+              "notes": "VC-backed startup",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         },
         {
-          "category": "Training / Wafer-Scale Systems",
+          "category": "GPU/compute-as-a-service",
           "companies": [
-            { "company": "Cerebras Systems", "notes": "Wafer-scale AI training/inference systems (CS-3/CS-4); has previously filed for and withdrawn a public listing.", "diligenced": false }
-          ]
-        },
-        {
-          "category": "Flexible / Reconfigurable Architectures",
-          "companies": [
-            { "company": "Tenstorrent", "notes": "RISC-V-based AI accelerator company led by chip designer Jim Keller.", "diligenced": false },
-            { "company": "SambaNova Systems", "notes": "Reconfigurable dataflow AI chips and a full-stack enterprise AI platform.", "diligenced": false }
+            {
+              "company": "Lambda",
+              "notes": "VC-backed (Lambda Labs)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
     },
     "networking": {
-      "overview": "Private networking companies are almost entirely optical-interconnect plays betting that co-packaged optics displaces pluggable transceivers at the rack level, plus networking-silicon startups pushing to keep pace with GPU cluster bandwidth demands.",
+      "overview": "Huawei is the one large private exception here, structurally outside public markets as an employee-owned Chinese company; Juniper moved private-adjacent via its 2025 acquisition by HPE.",
       "categories": [
         {
-          "category": "Co-Packaged Optics / Optical I/O",
+          "category": "Telecom & data communication grid",
           "companies": [
-            { "company": "Ayar Labs", "notes": "Optical I/O chiplets for high-bandwidth, low-power AI cluster interconnect.", "diligenced": false },
-            { "company": "Lightmatter", "notes": "Photonic computing and optical interconnect technology for AI data centers.", "diligenced": false }
+            {
+              "company": "Huawei",
+              "notes": "Employee-owned; not publicly traded",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         },
         {
-          "category": "Networking Silicon",
+          "category": "Network & application security/delivery",
           "companies": [
-            { "company": "Enfabrica", "notes": "Networking silicon designed to scale GPU cluster interconnect bandwidth.", "diligenced": false }
+            {
+              "company": "Juniper (HPE)",
+              "notes": "Acquired by HPE (public parent: NYSE HPE), deal closed 2025",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
     },
     "serversdc": {
-      "overview": "The private data center landscape splits into large, PE-and-infrastructure-backed developers building at hyperscale, and a newer cohort pairing data center development directly with unconventional, often stranded, power sources.",
+      "overview": "Several major datacenter operators (Vantage, QTS, CyrusOne, Switch, DataBank) have been taken private by infrastructure PE (KKR, Blackstone, DigitalBridge) in recent years.",
       "categories": [
         {
-          "category": "Hyperscale Data Center Developers",
+          "category": "Datacenter real estate",
           "companies": [
-            { "company": "Vantage Data Centers", "notes": "Hyperscale data center developer and operator, backed by DigitalBridge.", "diligenced": false },
-            { "company": "Aligned Data Centers", "notes": "Data center developer and operator backed by Macquarie Asset Management.", "diligenced": false },
-            { "company": "Compass Datacenters", "notes": "Data center developer building modular, hyperscale-ready campuses.", "diligenced": false },
-            { "company": "STACK Infrastructure", "notes": "Data center developer and operator backed by IPI Partners.", "diligenced": false }
-          ]
-        },
-        {
-          "category": "Power-Colocated / AI-Native Infrastructure",
-          "companies": [
-            { "company": "Crusoe", "notes": "AI-focused data center developer, notable for co-locating compute with stranded or flared energy sources.", "diligenced": false }
+            {
+              "company": "CyrusOne",
+              "notes": "Taken private by KKR/GIP consortium, 2022",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Vantage",
+              "notes": "Owned by DigitalBridge & PSP Investments (Vantage Data Centers)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "QTS",
+              "notes": "Taken private by Blackstone, 2021",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Switch",
+              "notes": "Taken private by DigitalBridge/IFM consortium, 2022",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "CoreSite",
+              "notes": "Subsidiary of American Tower (public parent: NYSE AMT)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "DataBank",
+              "notes": "Owned by DigitalBridge",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
     },
     "cloud": {
-      "overview": "Private AI cloud providers are all reselling or optimizing access to GPU capacity, differentiated mainly by whether they compete on raw compute access, inference-serving performance, or open-model hosting.",
+      "overview": "Lambda is the one notable private GPU cloud alternative at meaningful scale.",
       "categories": [
         {
-          "category": "AI Cloud / GPU Infrastructure",
+          "category": "Hyperscale cloud platforms",
           "companies": [
-            { "company": "Lambda", "notes": "AI cloud and GPU infrastructure provider, reportedly pursuing further pre-IPO fundraising.", "diligenced": false },
-            { "company": "Voltage Park", "notes": "GPU cloud infrastructure provider.", "diligenced": false }
-          ]
-        },
-        {
-          "category": "Inference & Model-Serving Platforms",
-          "companies": [
-            { "company": "Together AI", "notes": "AI cloud platform providing inference and fine-tuning infrastructure for open models.", "diligenced": false },
-            { "company": "Fireworks AI", "notes": "Inference cloud platform optimized for serving open-weight and custom models.", "diligenced": false }
+            {
+              "company": "Lambda",
+              "notes": "VC-backed (Lambda Labs)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
           ]
         }
       ]
@@ -168,23 +613,51 @@
         {
           "category": "Frontier Labs",
           "companies": [
-            { "company": "OpenAI", "notes": "Frontier AI lab (GPT / ChatGPT); privately held with a nonprofit / capped-profit corporate structure.", "diligenced": false },
-            { "company": "Anthropic", "notes": "Frontier AI lab (Claude); privately held.", "diligenced": false },
-            { "company": "xAI", "notes": "Frontier AI lab (Grok), founded by Elon Musk.", "diligenced": false },
-            { "company": "Mistral AI", "notes": "French developer of open-weight and commercial large language models.", "diligenced": false }
+            {
+              "company": "OpenAI",
+              "notes": "Frontier AI lab (GPT / ChatGPT); privately held with a nonprofit / capped-profit corporate structure.",
+              "diligenced": false
+            },
+            {
+              "company": "Anthropic",
+              "notes": "Frontier AI lab (Claude); privately held.",
+              "diligenced": false
+            },
+            {
+              "company": "xAI",
+              "notes": "Frontier AI lab (Grok), founded by Elon Musk.",
+              "diligenced": false
+            },
+            {
+              "company": "Mistral AI",
+              "notes": "French developer of open-weight and commercial large language models.",
+              "diligenced": false
+            }
           ]
         },
         {
           "category": "Enterprise AI",
           "companies": [
-            { "company": "Harvey", "notes": "Legal AI platform for law firms and corporate legal teams.", "diligenced": false },
-            { "company": "Glean", "notes": "Enterprise search and AI assistant platform for internal company knowledge.", "diligenced": false }
+            {
+              "company": "Harvey",
+              "notes": "Legal AI platform for law firms and corporate legal teams.",
+              "diligenced": false
+            },
+            {
+              "company": "Glean",
+              "notes": "Enterprise search and AI assistant platform for internal company knowledge.",
+              "diligenced": false
+            }
           ]
         },
         {
           "category": "Consumer AI",
           "companies": [
-            { "company": "Perplexity AI", "notes": "AI-powered search and answer engine.", "diligenced": false }
+            {
+              "company": "Perplexity AI",
+              "notes": "AI-powered search and answer engine.",
+              "diligenced": false
+            }
           ]
         }
       ]

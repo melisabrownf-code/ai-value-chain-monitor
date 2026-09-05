@@ -1,133 +1,1388 @@
 {
-  "status": "automated landscape (public filings, earnings calls, market commentary) + manual review overlay",
-  "note": "Each biweekly cycle, generate_report.py's web search also produces a public-company landscape per layer -- an overview plus companies grouped by technology/business-model sub-category -- and merges it in automatically (see update_landscape_file() / merge_landscape_layer() in generate_report.py). A company already tracked here gets its notes refreshed with fresh search findings each cycle (that's the actual 'search for updates' behavior) UNLESS it's flipped to diligenced: true, at which point automation leaves it alone permanently. Hand-edit this file directly to add, correct, or diligence an entry -- same contract as private_markets.json.",
+  "status": "imported from AI_Infrastructure_Market_Map_1.xlsx (8 of 9 layers; Applications not covered by that source) + automated refresh + manual diligence overlay",
+  "note": "Public-side companies for Energy, Power, Cooling, Silicon, Compute, Networking, Servers/DC, and Cloud were imported from a user-provided market map spreadsheet (AI_Infrastructure_Market_Map_1.xlsx) and marked diligenced: true, since that's real curated data, not an automated guess -- the biweekly pull will never overwrite these entries. Applications wasn't covered by that source and is left as whatever this file already had. New companies the biweekly pull discovers going forward are added alongside these, starting as diligenced: false.",
   "lastUpdated": "2026-09-05",
   "layers": {
     "energy": {
-      "overview": "Public energy exposure to AI data-center demand runs through utilities booking record capex on data-center service agreements, plus a handful of already-public reactor and storage-equipment makers riding the same demand.",
+      "overview": "Public utility incumbents (NextEra, Duke, Constellation, Iberdrola, Enel, Orsted, Southern Co) dominate investor-grade baseload and renewable generation.",
       "categories": [
-        { "category": "Renewables & Utilities", "companies": [
-          { "company": "NextEra Energy", "notes": "Largest US renewables operator; booking record data-center-driven capacity backlogs.", "diligenced": false },
-          { "company": "Duke Energy", "notes": "Utility with a growing signed electric-service-agreement backlog tied to data-center load.", "diligenced": false },
-          { "company": "Enphase Energy", "notes": "Solar/storage equipment maker.", "diligenced": false }
-        ]},
-        { "category": "Nuclear & SMR", "companies": [
-          { "company": "GE Vernova", "notes": "Power equipment maker; BWRX-300 SMR design partner (with Hitachi).", "diligenced": false },
-          { "company": "NuScale Power", "notes": "Publicly traded small modular reactor developer (NYSE: SMR).", "diligenced": false }
-        ]},
-        { "category": "Storage", "companies": [
-          { "company": "Tesla", "notes": "Grid-scale battery storage (Megapack) alongside its core auto business.", "diligenced": false }
-        ]}
+        {
+          "category": "Baseload & renewable generation",
+          "companies": [
+            {
+              "company": "NextEra Energy",
+              "notes": "NYSE: NEE",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Duke Energy",
+              "notes": "NYSE: DUK",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Constellation",
+              "notes": "NASDAQ: CEG (Constellation Energy)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Iberdrola",
+              "notes": "BME: IBE",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Southern Co",
+              "notes": "NYSE: SO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Enel",
+              "notes": "Borsa Italiana: ENEL",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Orsted",
+              "notes": "Nasdaq Copenhagen: ORSTED",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "cooling": {
-      "overview": "Most pure-play cooling specialists are private (see Private Markets); the public exposure here is mainly diversified industrial/electrical equipment makers who added liquid-cooling lines rather than cooling-only public companies.",
+      "overview": "Thermal management leaders overlap with power-delivery incumbents (Vertiv, Schneider Electric) plus public Nordic specialist Munters.",
       "categories": [
-        { "category": "Diversified Thermal & Electrical Equipment", "companies": [
-          { "company": "Vertiv", "notes": "Data center power and thermal management equipment; direct beneficiary of the liquid-cooling transition.", "diligenced": false },
-          { "company": "Schneider Electric", "notes": "Power and cooling infrastructure for data centers.", "diligenced": false },
-          { "company": "Siemens", "notes": "Industrial and electrical infrastructure, incl. data center systems.", "diligenced": false }
-        ]}
+        {
+          "category": "Thermal management",
+          "companies": [
+            {
+              "company": "Vertiv",
+              "notes": "NYSE: VRT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Schneider Electric",
+              "notes": "Euronext Paris: SU",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Munters",
+              "notes": "Nasdaq Stockholm: MTRS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "power": {
-      "overview": "Public power exposure splits between large diversified electrical-equipment makers and smaller, more AI-data-center-specific power-delivery component suppliers.",
+      "overview": "Power delivery and backup equipment is concentrated among a handful of large public industrial suppliers (Vertiv, Schneider Electric, Eaton, Delta, Legrand).",
       "categories": [
-        { "category": "Grid & UPS Equipment", "companies": [
-          { "company": "ABB", "notes": "Electrification and automation equipment, incl. grid/UPS systems.", "diligenced": false },
-          { "company": "Eaton", "notes": "Power management equipment; direct beneficiary of data-center power buildout.", "diligenced": false },
-          { "company": "Siemens", "notes": "Industrial and electrical infrastructure, incl. grid equipment.", "diligenced": false },
-          { "company": "Schneider Electric", "notes": "Power and cooling infrastructure for data centers.", "diligenced": false }
-        ]},
-        { "category": "Power Delivery Silicon", "companies": [
-          { "company": "Vicor", "notes": "High-density power delivery modules for AI racks; backlog surging on hyperscaler demand.", "diligenced": false },
-          { "company": "Monolithic Power Systems", "notes": "Power management silicon supplying AI server/GPU power delivery.", "diligenced": false }
-        ]}
+        {
+          "category": "Power delivery & backup",
+          "companies": [
+            {
+              "company": "Vertiv",
+              "notes": "NYSE: VRT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Schneider Electric",
+              "notes": "Euronext Paris: SU",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Eaton",
+              "notes": "NYSE: ETN",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Delta",
+              "notes": "TWSE: 2308 (Delta Electronics)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Legrand",
+              "notes": "Euronext Paris: LR",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "silicon": {
-      "overview": "Leading-edge fabs and memory are almost entirely public-company territory -- the handful of scaled players here set the pace for the whole GPU/AI-accelerator ecosystem.",
+      "overview": "The most structurally complex layer in the value chain, spanning chip design, foundry, wafer fab equipment, materials, EDA/IP, advanced packaging, and OSAT -- public incumbents dominate the capital-intensive fabrication and equipment sub-verticals (TSMC, ASML, Applied Materials, Samsung, Synopsys, Cadence).",
       "categories": [
-        { "category": "Fabs", "companies": [
-          { "company": "TSMC", "notes": "Leading-edge foundry; pacing the entire AI accelerator ecosystem via its node roadmap.", "diligenced": false },
-          { "company": "Samsung", "notes": "Foundry and memory maker racing to close the leading-edge gap with TSMC.", "diligenced": false },
-          { "company": "Intel", "notes": "Foundry (Intel Foundry) plus its own chip design business.", "diligenced": false }
-        ]},
-        { "category": "Memory", "companies": [
-          { "company": "SK Hynix", "notes": "Leading HBM supplier; record margins on AI-driven memory demand.", "diligenced": false },
-          { "company": "Micron", "notes": "Memory maker (DRAM/HBM) benefiting from AI-driven demand.", "diligenced": false }
-        ]}
+        {
+          "category": "Chip design (overall)",
+          "companies": [
+            {
+              "company": "NVIDIA",
+              "notes": "NASDAQ: NVDA",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "AMD",
+              "notes": "NASDAQ: AMD",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Intel",
+              "notes": "NASDAQ: INTC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Broadcom",
+              "notes": "NASDAQ: AVGO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Qualcomm",
+              "notes": "NASDAQ: QCOM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ARM",
+              "notes": "Nasdaq: ARM (IPO 2023)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Marvell",
+              "notes": "NASDAQ: MRVL",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "MediaTek",
+              "notes": "TWSE: 2454",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Apple",
+              "notes": "NASDAQ: AAPL",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cerebras",
+              "notes": "Nasdaq: CBRS (IPO 2026)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "GPU/CPU/ASSP/ASIC",
+          "companies": [
+            {
+              "company": "NVIDIA",
+              "notes": "NASDAQ: NVDA",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "AMD",
+              "notes": "NASDAQ: AMD",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Intel",
+              "notes": "NASDAQ: INTC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Broadcom",
+              "notes": "NASDAQ: AVGO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ARM",
+              "notes": "Nasdaq: ARM (IPO 2023)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Qualcomm",
+              "notes": "NASDAQ: QCOM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cerebras",
+              "notes": "Nasdaq: CBRS (IPO 2026)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Memory (DRAM & NAND)",
+          "companies": [
+            {
+              "company": "Samsung",
+              "notes": "KRX: 005930",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SK Hynix",
+              "notes": "KRX: 000660",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Micron",
+              "notes": "NASDAQ: MU",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Western Digital",
+              "notes": "NASDAQ: WDC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Kioxia",
+              "notes": "TSE: 285A (IPO December 2024)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Winbond",
+              "notes": "TWSE: 2344",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Nanya",
+              "notes": "TWSE: 2408",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Analog, mixed signal & MCU",
+          "companies": [
+            {
+              "company": "Texas Instruments",
+              "notes": "NASDAQ: TXN",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "NXP",
+              "notes": "NASDAQ: NXPI",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "STMicroelectronics",
+              "notes": "NYSE: STM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Analog Devices",
+              "notes": "NASDAQ: ADI",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Microchip",
+              "notes": "NASDAQ: MCHP",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Renesas",
+              "notes": "TSE: 6723",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Onsemi",
+              "notes": "NASDAQ: ON",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Power management IC",
+          "companies": [
+            {
+              "company": "Infineon",
+              "notes": "XETRA: IFX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Texas Instruments",
+              "notes": "NASDAQ: TXN",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "STMicroelectronics",
+              "notes": "NYSE: STM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Analog Devices",
+              "notes": "NASDAQ: ADI",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Wolfspeed",
+              "notes": "NYSE: WOLF",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "NXP",
+              "notes": "NASDAQ: NXPI",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Navitas",
+              "notes": "NASDAQ: NVTS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Optoelectronics",
+          "companies": [
+            {
+              "company": "Sony",
+              "notes": "TSE: 6758 / NYSE ADR: SONY",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Broadcom",
+              "notes": "NASDAQ: AVGO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Lumentum",
+              "notes": "NASDAQ: LITE",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Coherent",
+              "notes": "NYSE: COHR",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Sensors, discretes & passives",
+          "companies": [
+            {
+              "company": "STMicroelectronics",
+              "notes": "NYSE: STM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Infineon",
+              "notes": "XETRA: IFX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "TDK",
+              "notes": "TSE: 6762",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Murata",
+              "notes": "TSE: 6981",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Yageo",
+              "notes": "TWSE: 2327",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Supply chain (overall)",
+          "companies": [
+            {
+              "company": "TSMC",
+              "notes": "TWSE/NYSE ADR: 2330 / TSM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ASML",
+              "notes": "NASDAQ/Euronext: ASML",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Applied Materials",
+              "notes": "NASDAQ: AMAT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Lam Research",
+              "notes": "NASDAQ: LRCX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "KLA",
+              "notes": "NASDAQ: KLAC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tokyo Electron",
+              "notes": "TSE: 8035",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Samsung",
+              "notes": "KRX: 005930",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "GlobalFoundries",
+              "notes": "NASDAQ: GFS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Synopsys",
+              "notes": "NASDAQ: SNPS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cadence",
+              "notes": "NASDAQ: CDNS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Materials & wafers",
+          "companies": [
+            {
+              "company": "Shin-Etsu",
+              "notes": "TSE: 4063",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SUMCO",
+              "notes": "TSE: 3436",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "GlobalWafers",
+              "notes": "TWSE: 6488",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Siltronic",
+              "notes": "XETRA: WAF",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Entegris",
+              "notes": "NASDAQ: ENTG",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "EDA & IP",
+          "companies": [
+            {
+              "company": "Synopsys",
+              "notes": "NASDAQ: SNPS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cadence",
+              "notes": "NASDAQ: CDNS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Siemens EDA",
+              "notes": "Division of Siemens (XETRA: SIE)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ARM",
+              "notes": "Nasdaq: ARM (IPO 2023)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Rambus",
+              "notes": "NASDAQ: RMBS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Foundry",
+          "companies": [
+            {
+              "company": "TSMC",
+              "notes": "TWSE/NYSE ADR: 2330 / TSM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Samsung Foundry",
+              "notes": "Division of Samsung Electronics (KRX: 005930)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Intel Foundry",
+              "notes": "Reporting segment of Intel (NASDAQ: INTC)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "GlobalFoundries",
+              "notes": "NASDAQ: GFS",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "UMC",
+              "notes": "TWSE/NYSE ADR: 2303 / UMC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SMIC",
+              "notes": "HKEX/SSE STAR: 0981 / 688981",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SkyWater",
+              "notes": "NASDAQ: SKYT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "DB HiTek",
+              "notes": "KRX: 000990",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Wafer fabrication equipment",
+          "companies": [
+            {
+              "company": "ASML",
+              "notes": "NASDAQ/Euronext: ASML",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Applied Materials",
+              "notes": "NASDAQ: AMAT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Lam Research",
+              "notes": "NASDAQ: LRCX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tokyo Electron",
+              "notes": "TSE: 8035",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "KLA",
+              "notes": "NASDAQ: KLAC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Screen",
+              "notes": "TSE: 7735 (SCREEN Holdings)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ASM International",
+              "notes": "Euronext Amsterdam: ASM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Canon",
+              "notes": "TSE: 7751 / NYSE ADR: CAJ",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Advanced packaging",
+          "companies": [
+            {
+              "company": "TSMC",
+              "notes": "TWSE/NYSE ADR: 2330 / TSM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ASE Group",
+              "notes": "TWSE: 3711 / NYSE ADR: ASX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Amkor",
+              "notes": "NASDAQ: AMKR",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Intel",
+              "notes": "NASDAQ: INTC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Samsung",
+              "notes": "KRX: 005930",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "JCET",
+              "notes": "SSE: 600584",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "NHK Spring",
+              "notes": "TSE: 5991",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Outsourced assembly & test",
+          "companies": [
+            {
+              "company": "ASE Group",
+              "notes": "TWSE: 3711 / NYSE ADR: ASX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Amkor",
+              "notes": "NASDAQ: AMKR",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "JCET",
+              "notes": "SSE: 600584",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Powertech",
+              "notes": "TWSE: 6239",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tongfu Microelectronics",
+              "notes": "SZSE: 002156",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Huatian",
+              "notes": "SZSE: 002185",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Unisem",
+              "notes": "Bursa Malaysia: UNISEM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "King Yuan",
+              "notes": "TWSE: 2449",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "compute": {
-      "overview": "Merchant GPUs and hyperscaler custom silicon programs dominate the public compute landscape, with a small set of co-design partners supplying the custom-ASIC wave.",
+      "overview": "AI accelerator supply is led by public merchant silicon (Nvidia, AMD, Intel, Broadcom, ARM) and hyperscaler cloud platforms (AWS, Azure, Google Cloud) reselling GPU-as-a-service.",
       "categories": [
-        { "category": "Merchant GPU", "companies": [
-          { "company": "Nvidia", "notes": "Dominant merchant GPU supplier for AI training and inference.", "diligenced": false },
-          { "company": "AMD", "notes": "Merchant GPU and CPU supplier competing for AI accelerator share.", "diligenced": false }
-        ]},
-        { "category": "Hyperscaler Custom Silicon", "companies": [
-          { "company": "Alphabet", "notes": "Designs the TPU custom AI accelerator line for Google Cloud/internal use.", "diligenced": false },
-          { "company": "Amazon", "notes": "Designs the Trainium/Inferentia custom AI accelerator line for AWS.", "diligenced": false },
-          { "company": "Microsoft", "notes": "Designs the Maia custom AI accelerator line for Azure.", "diligenced": false },
-          { "company": "Meta Platforms", "notes": "Designs the MTIA custom AI accelerator line for internal use.", "diligenced": false }
-        ]},
-        { "category": "Co-Design Partners", "companies": [
-          { "company": "Broadcom", "notes": "Co-designs custom AI ASICs directly with hyperscalers (e.g. Google TPU).", "diligenced": false },
-          { "company": "Marvell", "notes": "Co-designs custom AI silicon and networking chips with hyperscalers.", "diligenced": false }
-        ]}
+        {
+          "category": "GPU/CPU/ASSP/ASIC (AI accelerators)",
+          "companies": [
+            {
+              "company": "NVIDIA",
+              "notes": "NASDAQ: NVDA",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "AMD",
+              "notes": "NASDAQ: AMD",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Intel",
+              "notes": "NASDAQ: INTC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Broadcom",
+              "notes": "NASDAQ: AVGO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ARM",
+              "notes": "Nasdaq: ARM (IPO 2023)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Qualcomm",
+              "notes": "NASDAQ: QCOM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cerebras",
+              "notes": "Nasdaq: CBRS (IPO 2026)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "GPU/compute-as-a-service",
+          "companies": [
+            {
+              "company": "AWS",
+              "notes": "Segment of Amazon (NASDAQ: AMZN), not separately listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Azure",
+              "notes": "Segment of Microsoft (NASDAQ: MSFT), not separately listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Google Cloud",
+              "notes": "Segment of Alphabet (NASDAQ: GOOGL), not separately listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Oracle Cloud",
+              "notes": "Segment of Oracle (NYSE: ORCL)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Alibaba",
+              "notes": "NYSE/HKEX: BABA / 9988",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "IBM Cloud",
+              "notes": "Segment of IBM (NYSE: IBM)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tencent",
+              "notes": "HKEX: 0700",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "CoreWeave",
+              "notes": "NASDAQ: CRWV (IPO March 2025)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Baidu",
+              "notes": "NASDAQ/HKEX: BIDU / 9888",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "networking": {
-      "overview": "Pluggable optics and networking-equipment incumbents still carry the overwhelming majority of public-company revenue in this layer; co-packaged optics adoption at scale remains mostly a private-company story for now.",
+      "overview": "Telecom infrastructure and network/application security are almost entirely public-company territory (Ericsson, Nokia, Cisco, Arista, Cloudflare, Akamai, Palo Alto).",
       "categories": [
-        { "category": "Pluggable Transceivers", "companies": [
-          { "company": "Lumentum", "notes": "Optical component and transceiver maker for data center networking.", "diligenced": false },
-          { "company": "Coherent", "notes": "Optical components and transceivers for AI data center networking.", "diligenced": false },
-          { "company": "InnoLight", "notes": "Optical transceiver maker supplying hyperscale data centers.", "diligenced": false }
-        ]},
-        { "category": "Switches & Networking Equipment", "companies": [
-          { "company": "Arista Networks", "notes": "High-performance networking switches for AI data centers.", "diligenced": false },
-          { "company": "Cisco", "notes": "Networking equipment, incl. AI data center switching.", "diligenced": false }
-        ]}
+        {
+          "category": "Telecom & data communication grid",
+          "companies": [
+            {
+              "company": "Ericsson",
+              "notes": "NASDAQ: ERIC",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Nokia",
+              "notes": "NYSE: NOK",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cisco",
+              "notes": "NASDAQ: CSCO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Corning",
+              "notes": "NYSE: GLW",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "CommScope",
+              "notes": "NASDAQ: COMM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Crown Castle",
+              "notes": "NYSE: CCI",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "American Tower",
+              "notes": "NYSE: AMT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Ciena",
+              "notes": "NYSE: CIEN",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "ZTE",
+              "notes": "SZSE/HKEX: 000063 / 0763",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Network & application security/delivery",
+          "companies": [
+            {
+              "company": "Cisco",
+              "notes": "NASDAQ: CSCO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Arista",
+              "notes": "NYSE: ANET",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "F5",
+              "notes": "NASDAQ: FFIV",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Palo Alto",
+              "notes": "NASDAQ: PANW",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Fortinet",
+              "notes": "NASDAQ: FTNT",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cloudflare",
+              "notes": "NYSE: NET",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Akamai",
+              "notes": "NASDAQ: AKAM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Fastly",
+              "notes": "NYSE: FSLY",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Check Point",
+              "notes": "NASDAQ: CHKP",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "serversdc": {
-      "overview": "OEM server makers and the largest colocation/data-center REITs make up the bulk of public-company exposure here; much of the newest hyperscale-developer capacity is backed by private capital instead (see Private Markets).",
+      "overview": "Enterprise server/compute hardware is dominated by public OEMs (Dell, HPE, Supermicro, Lenovo, Foxconn); Equinix and Digital Realty remain the large public datacenter REITs.",
       "categories": [
-        { "category": "OEM Servers", "companies": [
-          { "company": "Dell Technologies", "notes": "OEM server maker retrofitting lineups for liquid cooling.", "diligenced": false },
-          { "company": "Supermicro", "notes": "OEM server maker specializing in AI/GPU server systems.", "diligenced": false },
-          { "company": "HPE", "notes": "OEM server maker with a growing AI systems order book.", "diligenced": false }
-        ]},
-        { "category": "DC Operators", "companies": [
-          { "company": "Equinix", "notes": "Publicly traded colocation/data-center REIT.", "diligenced": false },
-          { "company": "SpaceX", "notes": "Publicly traded (NASDAQ: SPCX, IPO'd June 2026); expanding into data-center-adjacent ground infrastructure alongside its core launch/Starlink business.", "diligenced": false }
-        ]}
+        {
+          "category": "Enterprise servers & compute hardware",
+          "companies": [
+            {
+              "company": "Dell",
+              "notes": "NYSE: DELL",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "HPE",
+              "notes": "NYSE: HPE",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Supermicro",
+              "notes": "NASDAQ: SMCI",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Lenovo",
+              "notes": "HKEX: 0992",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Cisco",
+              "notes": "NASDAQ: CSCO",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Inspur",
+              "notes": "SSE: 000977 (Inspur Electronic Information; parent Inspur Group is state-owned)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Quanta",
+              "notes": "TWSE: 2382",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Foxconn",
+              "notes": "TWSE: 2317 (Hon Hai Precision)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Wistron",
+              "notes": "TWSE: 3231",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "IBM",
+              "notes": "NYSE: IBM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        },
+        {
+          "category": "Datacenter real estate",
+          "companies": [
+            {
+              "company": "Equinix",
+              "notes": "NASDAQ: EQIX",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Digital Realty",
+              "notes": "NYSE: DLR",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Iron Mountain",
+              "notes": "NYSE: IRM",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "NTT",
+              "notes": "TSE: 9432",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "SpaceX",
+              "notes": "NASDAQ: SPCX (IPO June 2026) -- builds and operates its own data center / compute infrastructure for Starlink and Starship operations",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "cloud": {
-      "overview": "Hyperscaler cloud capex still dwarfs everything else in this layer; among AI-native neoclouds, only a handful have gone public so far, with most still privately funded (see Private Markets).",
+      "overview": "Hyperscale cloud is overwhelmingly public-company territory (AWS/Amazon, Azure/Microsoft, Google Cloud/Alphabet, Oracle Cloud, Alibaba, Tencent, Baidu) alongside newly-public CoreWeave (NASDAQ: CRWV, IPO March 2025).",
       "categories": [
-        { "category": "Hyperscaler Cloud", "companies": [
-          { "company": "Amazon", "notes": "AWS -- largest cloud provider by revenue.", "diligenced": false },
-          { "company": "Microsoft", "notes": "Azure cloud, plus its OpenAI compute partnership.", "diligenced": false },
-          { "company": "Alphabet", "notes": "Google Cloud, plus in-house TPU infrastructure.", "diligenced": false },
-          { "company": "Oracle", "notes": "OCI cloud infrastructure with large AI-compute contracts.", "diligenced": false }
-        ]},
-        { "category": "Public AI-Native Neoclouds", "companies": [
-          { "company": "CoreWeave", "notes": "Publicly traded AI-native GPU cloud provider.", "diligenced": false }
-        ]}
+        {
+          "category": "Hyperscale cloud platforms",
+          "companies": [
+            {
+              "company": "AWS",
+              "notes": "Segment of Amazon (NASDAQ: AMZN), not separately listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Azure",
+              "notes": "Segment of Microsoft (NASDAQ: MSFT), not separately listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Google Cloud",
+              "notes": "Segment of Alphabet (NASDAQ: GOOGL), not separately listed",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Oracle Cloud",
+              "notes": "Segment of Oracle (NYSE: ORCL)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Alibaba",
+              "notes": "NYSE/HKEX: BABA / 9988",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "IBM Cloud",
+              "notes": "Segment of IBM (NYSE: IBM)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Tencent",
+              "notes": "HKEX: 0700",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "CoreWeave",
+              "notes": "NASDAQ: CRWV (IPO March 2025)",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            },
+            {
+              "company": "Baidu",
+              "notes": "NASDAQ/HKEX: BIDU / 9888",
+              "source": null,
+              "url": null,
+              "diligenced": true
+            }
+          ]
+        }
       ]
     },
     "applications": {
       "overview": "The public side of applications is dominated by the large platform companies distributing AI features (Microsoft, Google, Meta) rather than pure-play AI application companies, most of which remain private (see Private Markets).",
       "categories": [
-        { "category": "Platform Distribution", "companies": [
-          { "company": "Microsoft", "notes": "Distributes Copilot across its enterprise software suite.", "diligenced": false },
-          { "company": "Alphabet", "notes": "Google DeepMind frontier models plus Gemini distribution across Google products.", "diligenced": false },
-          { "company": "Meta Platforms", "notes": "Meta AI models distributed across its consumer apps.", "diligenced": false }
-        ]}
+        {
+          "category": "Platform Distribution",
+          "companies": [
+            {
+              "company": "Microsoft",
+              "notes": "Distributes Copilot across its enterprise software suite.",
+              "diligenced": false
+            },
+            {
+              "company": "Alphabet",
+              "notes": "Google DeepMind frontier models plus Gemini distribution across Google products.",
+              "diligenced": false
+            },
+            {
+              "company": "Meta Platforms",
+              "notes": "Meta AI models distributed across its consumer apps.",
+              "diligenced": false
+            }
+          ]
+        }
       ]
     }
   }
