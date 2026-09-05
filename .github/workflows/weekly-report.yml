@@ -30,6 +30,6 @@ jobs:
         run: |
           git config user.name "report-bot"
           git config user.email "report-bot@users.noreply.github.com"
-          git add report_data.json history/ newsletter.json
+          git add report_data.json history/ newsletter.json private_markets.json
           git diff --cached --quiet || git commit -m "Weekly edition: $(date +'%Y-%m-%d')"
           git push

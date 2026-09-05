@@ -286,8 +286,8 @@
   <section class="view" id="view-private" hidden>
     <div class="view-head"><h2>Private Markets</h2></div>
     <div class="manual-notice">
-      <span class="label">Manual &middot; not automated</span>
-      <p>A first-pass landscape of known private companies per layer, maintained by hand &mdash; not pulled from a generic company database. Rows marked <strong>pending diligence</strong> reflect general public knowledge, not internal review; real diligence notes will replace them over time in <code>private_markets.json</code> as they're written up.</p>
+      <span class="label">Automated landscape &middot; manual diligence overlay</span>
+      <p>Each biweekly cycle, the same web search behind Public Markets also surfaces private-company activity per layer &mdash; weighted toward startup/venture press (TechCrunch, The Information, Axios Pro Rata, Crunchbase News) &mdash; and merges new companies in automatically. Rows marked <strong>pending diligence</strong> haven't been reviewed by a person yet; flip a row to diligenced in <code>private_markets.json</code> once it has real internal notes, and the automation will never touch it again.</p>
     </div>
     <div class="tab-bar" id="pm-tab-bar"></div>
     <div class="panel" id="pm-panel"></div>
@@ -295,7 +295,7 @@
 
   <section class="view" id="view-combined" hidden>
     <div class="view-head"><h2>Combined / Value Chain</h2></div>
-    <p class="view-intro">Pairs each layer's automated Public Markets read with what we know privately, so you can see who the public leaders are and who they're actually working with. The public side is drawn straight from the Public Markets tab; the private side is a manual landscape, pending internal diligence.</p>
+    <p class="view-intro">Pairs each layer's automated Public Markets read with what we know privately, so you can see who the public leaders are and who they're actually working with. Both sides are automated discovery; the private side additionally carries a manual diligence overlay as entries get reviewed.</p>
     <div id="combined-layers"></div>
   </section>
 
@@ -307,7 +307,7 @@
   </section>
 
   <footer>
-    PILOT BUILD &middot; Public Markets refreshes automatically every two weeks, gated behind human approval before publish. Private Markets is maintained by hand.<br/>
+    PILOT BUILD &middot; Public Markets refreshes automatically every two weeks, gated behind human approval before publish. Private Markets landscape refreshes automatically too; diligence review is manual.<br/>
     Directional signal only &mdash; not investment advice, not a substitute for primary sources.
   </footer>
 
@@ -826,7 +826,7 @@ function showPmPanel(id){
         ${rows.length ? rows.map(row => `
           <tr>
             <td class="cat">${row.company}${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''}</td>
-            <td>${row.notes}</td>
+            <td>${row.notes}${row.url ? `<div class="signal-source">${row.source || 'source'} &middot; <a href="${row.url}" target="_blank" rel="noopener">source</a></div>` : ''}</td>
           </tr>
         `).join('') : `<tr><td colspan="2" class="empty-note">No entries yet.</td></tr>`}
       </tbody>
@@ -866,9 +866,9 @@ function renderCombinedLayers(){
             <p>${seg ? seg.synthesis : 'Not loaded yet.'}</p>
           </div>
           <div class="combo-col private">
-            <span class="label">Private &middot; manual</span>
+            <span class="label">Private &middot; automated + diligenced</span>
             ${privRows.length ? privRows.map(row => `
-              <p><strong>${row.company}</strong>${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''} &mdash; ${row.notes}</p>
+              <p><strong>${row.company}</strong>${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''} &mdash; ${row.notes}${row.url ? ` <a href="${row.url}" target="_blank" rel="noopener" class="mono" style="font-size:11px;color:var(--text-faint);">(source)</a>` : ''}</p>
             `).join('') : '<p class="empty-note">No entries yet.</p>'}
           </div>
         </div>

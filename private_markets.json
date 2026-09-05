@@ -1,6 +1,6 @@
 {
-  "status": "manual",
-  "note": "A first-pass landscape of known private companies per layer, built from general public knowledge -- not yet diligenced. Internal notes will be added over time (see 'diligenced' on each row); once a row reflects real internal diligence, flip diligenced to true.",
+  "status": "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay",
+  "note": "Each biweekly cycle, generate_report.py's web search also surfaces private-company activity per layer and merges new companies in automatically (see update_private_markets()). Merge is additive and never touches a row once it's diligenced: true -- flip that flag once a row reflects real internal diligence, and the automation will leave it alone from then on.",
   "lastUpdated": "2026-09-03",
   "layers": {
     "energy": [

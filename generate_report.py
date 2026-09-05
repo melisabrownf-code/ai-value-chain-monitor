@@ -6,16 +6,24 @@ What this does:
    matching the full stack from energy through applications).
 2. Asks it to return ONLY structured JSON: a momentum score, a one-line tag,
    a deployment timeline (today / ~2yr / ~4yr per sub-category), a 2030 bull/bear
-   outlook specific to that layer, and 5 sourced signals -- the most important
-   news for that layer over the prior two weeks.
+   outlook specific to that layer, 5 sourced PUBLIC-company signals -- the most
+   important news for that layer over the prior two weeks -- and up to 4 sourced
+   PRIVATE-company signals from startup/venture press (TechCrunch, The Information,
+   Axios Pro Rata, Crunchbase News). Same web search, no extra API calls; the model
+   just buckets what it finds by whether the company is publicly traded.
 3. Assembles all layers plus an overall thesis into report_data.json. (Bull/bear
    used to be a single sector-wide "commentary sentiment" block; it's now per-layer
    and forward-looking to 2030 instead of a snapshot of current commentary.)
 4. Writes a timestamped snapshot into /history so you have a version trail.
-5. Appends a biweekly digest to newsletter.json: each layer's 5 signals, reused
-   as-is, so the Newsletter tab reads as a running "most important news"
+5. Appends a biweekly digest to newsletter.json: each layer's 5 PUBLIC signals,
+   reused as-is, so the Newsletter tab reads as a running "most important news"
    archive per category, linked edition-by-edition, rather than an app/feature
-   changelog.
+   changelog. Private companies never appear here -- see private_markets.json.
+6. Merges each layer's private-company findings into private_markets.json.
+   Merge is additive and never destructive to human review: any row a person has
+   flipped to "diligenced": true is left untouched no matter what the search
+   finds; newly-found companies are added as "diligenced": false; a company from
+   a prior cycle that doesn't turn up again this cycle is kept, not dropped.
 
 This script is meant to be run on a schedule (see .github/workflows/biweekly-report.yml)
 by a runner that has ANTHROPIC_API_KEY set as a secret. It does NOT publish anything
@@ -76,10 +84,18 @@ Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
     "bear": "<2-3 sentences: the bear case / key risk for specifically where THIS layer could be by 2030 -- what has to go wrong, slip, or fail to scale for this layer to disappoint>"
   },
   "signals": [
-    {"text": "<one sentence, your own words, a specific fact/figure/announcement>", "source": "<publication name>", "url": "<source url>"},
+    {"text": "<one sentence, your own words, a specific fact/figure/announcement, about a PUBLICLY TRADED company only>", "source": "<publication name>", "url": "<source url>"},
     ... exactly 5 of these, most recent and most consequential first -- these double as this
     layer's entry in the biweekly news digest (the Newsletter tab), so they should read as
     the 5 most important things that happened in this layer over the last two weeks, not filler
+  ],
+  "privateCompanies": [
+    {"company": "<name>", "notes": "<one sentence, your own words: what they do and the most notable recent development>", "source": "<publication name>", "url": "<source url>"},
+    ... up to 4 of these, PRIVATE (not publicly traded) companies only, most notable/newest first.
+    Weight toward startup/venture press specifically -- TechCrunch, The Information, Axios Pro Rata,
+    Crunchbase News, PitchBook News -- over generic aggregators. A company with a concrete recent
+    signal (funding round, notable launch, partnership, executive hire) beats one included for
+    completeness. Return an empty array if nothing notable turned up for this layer.
   ]
 }
 Rules:
@@ -90,8 +106,11 @@ Rules:
 - Prefer primary sources (company filings, earnings calls, government data, official roadmap announcements) and
   reputable outlets over aggregators. Note real uncertainty rather than inventing precision, especially for the
   further-out timeline columns and the 2030 outlook.
-- Public companies only in signals and timeline cells — do not include private/venture-stage companies by name
-  unless they are the subject of a specific, sourced, publicly reported deal (e.g. a named PPA or funding round).
+- `signals` is PUBLIC companies only, full stop -- never name a private/venture-stage company there, not even
+  for a funding round or a named deal. Any private-company news, including funding rounds, belongs in
+  `privateCompanies` instead. This keeps the two tabs' data cleanly separated.
+- Timeline sub-category names (e.g. "Nuclear & SMR (GE Vernova, NuScale, Helion)") may still name private
+  companies as examples of who operates in that space -- that's categorical grouping, not a news signal.
 - "Trend" tag must be exactly one of: Accelerating, Constrained, Steady.
 - outlook2030 must be specific to this layer's own dynamics (its own bottleneck, technology transition, or
   financing structure), not a restatement of generic AI-market bullishness or skepticism.
@@ -206,7 +225,11 @@ def generate_segment(client, seg):
     data["timeline"] = timeline
     data["tables"] = STATIC_TABLES.get(seg["id"], [])
 
-    return data
+    # Private-company findings never belong in the public report_data.json --
+    # pulled out here and returned separately for the Private Markets merge.
+    private_companies = data.pop("privateCompanies", []) or []
+
+    return data, private_companies
 
 
 def generate_thesis(client, segments):
@@ -253,6 +276,51 @@ def append_newsletter_entry(edition):
         json.dump(newsletter, f, indent=2)
 
 
+def update_private_markets(private_by_layer):
+    """Merge this cycle's private-company findings into private_markets.json.
+
+    Additive and non-destructive: a row a human has flipped to diligenced=true
+    is never touched, regardless of what this cycle's search finds. A company
+    found again is left as-is (not overwritten) to avoid discarding any manual
+    edits to its notes; only genuinely new companies are added. A company from
+    a prior cycle that doesn't resurface this cycle is kept, not dropped --
+    the landscape only grows unless a human removes something.
+    """
+    path = "private_markets.json"
+    try:
+        with open(path) as f:
+            pm = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pm = {"layers": {}}
+
+    pm.setdefault("layers", {})
+    pm["status"] = "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay"
+
+    for layer_id, found in private_by_layer.items():
+        existing = pm["layers"].get(layer_id, [])
+        existing_names = {row["company"].strip().lower() for row in existing}
+
+        for item in found:
+            name_key = item["company"].strip().lower()
+            if name_key in existing_names:
+                continue  # already present (diligenced or not) -- don't clobber it
+            existing.append({
+                "company": item["company"],
+                "notes": item.get("notes", ""),
+                "source": item.get("source"),
+                "url": item.get("url"),
+                "diligenced": False,
+            })
+            existing_names.add(name_key)
+
+        pm["layers"][layer_id] = existing
+
+    pm["lastUpdated"] = datetime.date.today().isoformat()
+
+    with open(path, "w") as f:
+        json.dump(pm, f, indent=2)
+
+
 def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
@@ -263,9 +331,12 @@ def main():
 
     print("Generating segments...")
     segments = []
+    private_by_layer = {}
     for seg in SEGMENTS:
         print(f"  - {seg['label']}")
-        segments.append(generate_segment(client, seg))
+        seg_data, private_companies = generate_segment(client, seg)
+        segments.append(seg_data)
+        private_by_layer[seg["id"]] = private_companies
 
     print("Synthesizing overall thesis...")
     thesis_block = generate_thesis(client, segments)
@@ -287,8 +358,13 @@ def main():
         json.dump(edition, f, indent=2)
 
     append_newsletter_entry(edition)
+    update_private_markets(private_by_layer)
 
-    print(f"Wrote report_data.json, {history_path}, and appended to newsletter.json")
+    total_private_found = sum(len(v) for v in private_by_layer.values())
+    print(
+        f"Wrote report_data.json, {history_path}, appended to newsletter.json, "
+        f"and merged {total_private_found} private-company findings into private_markets.json"
+    )
 
 
 if __name__ == "__main__":
