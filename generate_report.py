@@ -210,14 +210,41 @@ valid JSON matching this shape:
 MAX_CLAUDE_ATTEMPTS = 5
 
 
-def call_claude(client, system, user_content):
+def call_claude(client, system, user_content, cache_system=False):
+    """cache_system=True marks the system prompt as an ephemeral cache
+    breakpoint, in addition to the one always placed on the tools array.
+
+    SEGMENT_SCHEMA_INSTRUCTIONS -- the bulk of every segment call's system
+    prompt -- is byte-identical across all 9 segment calls in a run, so
+    generate_segment() passes cache_system=True: the first segment pays full
+    price to write the cache, the remaining 8 read it back at a steep
+    discount (and lower latency) as long as they land within the 5-minute
+    ephemeral TTL, which sequential calls in one run comfortably do. The
+    thesis call has its own system prompt used exactly once, so caching it
+    would only pay the (slightly higher) cache-write price for zero reuse --
+    it leaves cache_system at the False default.
+
+    The web_search tool definition is identical across every call this
+    script makes (segments and thesis alike), so it's always cached
+    regardless of cache_system.
+    """
+    system_param = system
+    if cache_system:
+        system_param = [
+            {"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}
+        ]
+
     last_error = None
     for attempt in range(1, MAX_CLAUDE_ATTEMPTS + 1):
         resp = client.messages.create(
             model=MODEL,
             max_tokens=8192,
-            system=system,
-            tools=[{"type": "web_search_20250305", "name": "web_search"}],
+            system=system_param,
+            tools=[{
+                "type": "web_search_20250305",
+                "name": "web_search",
+                "cache_control": {"type": "ephemeral"},
+            }],
             messages=[{"role": "user", "content": user_content}],
         )
         # Concatenate all text blocks (web search may interleave tool_use/tool_result blocks)
@@ -347,7 +374,10 @@ def generate_segment(client, seg):
             f"each of these specifically, in addition to finding any new ones: {', '.join(tracked_private)}."
         )
 
-    data = call_claude(client, system, user_content)
+    # cache_system=True: this exact system prompt (the bulk of it is
+    # SEGMENT_SCHEMA_INSTRUCTIONS) is identical across all 9 segment calls in
+    # a run, so it's a cache hit for every call after the first.
+    data = call_claude(client, system, user_content, cache_system=True)
     data["id"] = seg["id"]
     data["label"] = seg["label"]
 
