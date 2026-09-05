@@ -65,7 +65,7 @@ SEGMENTS = [
                      "co-packaged optics (Lightmatter, Ayar Labs), switches (Arista, Cisco), and "
                      "edge/quantum compute (SEEQC, Cerebras)"},
     {"id": "serversdc", "label": "Servers / DC", "prompt_focus": "OEM server makers (Dell EMC, Supermicro, HPE) and "
-                     "data center operators/developers (Equinix, Vantage, QTS, Compass, STACK, Aligned)"},
+                     "data center operators/developers (Equinix, Vantage, QTS, Compass, STACK, Aligned, SpaceX)"},
     {"id": "cloud", "label": "Cloud", "prompt_focus": "hyperscaler cloud capex and results (AWS, Azure, Google Cloud, "
                      "Oracle) and AI-native neoclouds (CoreWeave, Lambda, Crusoe)"},
     {"id": "applications", "label": "Applications", "prompt_focus": "frontier labs (OpenAI, Anthropic, Google DeepMind, "
