@@ -141,6 +141,13 @@
   table.timeline th.h2026{border-top:2px solid var(--green);}
   table.timeline th.h2028{border-top:2px solid var(--amber);}
   table.timeline th.h2030{border-top:2px solid var(--cyan);}
+  /* Timeline sub-category labels now carry a full comma-separated company list in
+     parentheses (e.g. "Nuclear Restarts & Large-Reactor PPAs (Constellation, NextEra,
+     Talen, Vistra)"), much longer than the short labels table.comp td.cat's nowrap was
+     designed for -- nowrap here forced the label column to blow out to fit one line,
+     squeezing the other three columns off-screen. Let this column wrap and cap its width
+     so it can't crowd the status columns out again. */
+  table.timeline td.cat{white-space:normal;max-width:220px;}
   table.timeline td{font-size:12.5px;}
 
   .signals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
