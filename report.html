@@ -726,72 +726,139 @@ mainNav.querySelectorAll('.main-tab').forEach(btn => {
   btn.addEventListener('click', () => showView(btn.dataset.view));
 });
 
-// ---- Private Markets (manual -- not part of the automated pipeline) ----
-// A first-pass landscape of known private companies per layer, built from general
-// public knowledge -- not yet diligenced. See private_markets.json for the live
-// version; this is only the fallback for when that fetch fails (e.g. opened locally).
+// ---- Private Markets (automated landscape + manual diligence overlay) ----
+// Each layer: { overview, categories: [{ category, companies: [{company, notes, source, url, diligenced}] }] }.
+// See private_markets.json for the live version; this is only the fallback for
+// when that fetch fails (e.g. opened locally without a server).
 const DEMO_PRIVATE_MARKETS = {
-  status: "manual",
+  status: "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay",
   layers: {
-    energy: [
-      { company: "Commonwealth Fusion Systems", notes: "Fusion energy developer building the SPARC tokamak; spun out of MIT, backed by Breakthrough Energy Ventures among others.", diligenced: false },
-      { company: "Helion Energy", notes: "Fusion energy developer with a power purchase agreement targeting 50MW of fusion power for Microsoft.", diligenced: false },
-      { company: "TerraPower", notes: "Advanced nuclear reactor developer (Natrium design) founded by Bill Gates.", diligenced: false },
-      { company: "Kairos Power", notes: "Molten-salt-cooled small modular reactor developer with a Google power purchase agreement.", diligenced: false },
-      { company: "Form Energy", notes: "Iron-air battery maker targeting multi-day, grid-scale energy storage.", diligenced: false },
-      { company: "Fervo Energy", notes: "Enhanced geothermal energy developer supplying firm, round-the-clock clean power.", diligenced: false }
-    ],
-    cooling: [
-      { company: "Submer", notes: "Immersion cooling systems for data centers, expanding into owning its own AI data center capacity.", diligenced: false },
-      { company: "LiquidStack", notes: "Two-phase and single-phase immersion cooling technology for high-density AI racks.", diligenced: false },
-      { company: "Iceotope", notes: "Precision, chassis-level liquid cooling for data center and edge deployments.", diligenced: false },
-      { company: "ZutaCore", notes: "Waterless, two-phase direct-to-chip liquid cooling technology.", diligenced: false },
-      { company: "Accelsius", notes: "Two-phase direct-to-chip cooling systems designed to retrofit existing air-cooled data centers.", diligenced: false }
-    ],
-    power: [
-      { company: "Amperon", notes: "AI-driven electricity demand forecasting for grid operators and large power consumers.", diligenced: false },
-      { company: "Emerald AI", notes: "Software that lets data centers flex power consumption to ease grid interconnection bottlenecks.", diligenced: false },
-      { company: "Verrus", notes: "Behind-the-meter power management aimed at faster-to-deploy, flexible data center capacity.", diligenced: false },
-      { company: "EnerVenue", notes: "Long-duration metal-hydrogen battery storage for grid and industrial backup power.", diligenced: false }
-    ],
-    silicon: [
-      { company: "Rapidus", notes: "Japanese foundry consortium backed by Toyota, Sony, NTT, and the Japanese government, building a 2nm fab to re-establish domestic leading-edge chip manufacturing. Note: leading-edge fabs and memory are capital-intensive and dominated by public players (TSMC, Samsung, Micron, SK Hynix) -- the private landscape at this specific layer is thin by nature, not by omission.", diligenced: false }
-    ],
-    compute: [
-      { company: "Groq", notes: "Purpose-built LPU (language processing unit) chips for ultra-fast, low-latency AI inference.", diligenced: false },
-      { company: "Cerebras Systems", notes: "Wafer-scale AI training/inference systems (CS-3/CS-4); has previously filed for and withdrawn a public listing.", diligenced: false },
-      { company: "Tenstorrent", notes: "RISC-V-based AI accelerator company led by chip designer Jim Keller.", diligenced: false },
-      { company: "d-Matrix", notes: "In-memory computing AI inference chips optimized for datacenter deployment.", diligenced: false },
-      { company: "SambaNova Systems", notes: "Reconfigurable dataflow AI chips and a full-stack enterprise AI platform.", diligenced: false },
-      { company: "Etched", notes: "AI chip startup building transformer-specific ASICs (the 'Sohu' chip).", diligenced: false }
-    ],
-    networking: [
-      { company: "Ayar Labs", notes: "Optical I/O chiplets for high-bandwidth, low-power AI cluster interconnect.", diligenced: false },
-      { company: "Lightmatter", notes: "Photonic computing and optical interconnect technology for AI data centers.", diligenced: false },
-      { company: "Enfabrica", notes: "Networking silicon designed to scale GPU cluster interconnect bandwidth.", diligenced: false }
-    ],
-    serversdc: [
-      { company: "Crusoe", notes: "AI-focused data center developer, notable for co-locating compute with stranded or flared energy sources.", diligenced: false },
-      { company: "Vantage Data Centers", notes: "Hyperscale data center developer and operator, backed by DigitalBridge.", diligenced: false },
-      { company: "Aligned Data Centers", notes: "Data center developer and operator backed by Macquarie Asset Management.", diligenced: false },
-      { company: "Compass Datacenters", notes: "Data center developer building modular, hyperscale-ready campuses.", diligenced: false },
-      { company: "STACK Infrastructure", notes: "Data center developer and operator backed by IPI Partners.", diligenced: false }
-    ],
-    cloud: [
-      { company: "Lambda", notes: "AI cloud and GPU infrastructure provider, reportedly pursuing further pre-IPO fundraising.", diligenced: false },
-      { company: "Together AI", notes: "AI cloud platform providing inference and fine-tuning infrastructure for open models.", diligenced: false },
-      { company: "Voltage Park", notes: "GPU cloud infrastructure provider.", diligenced: false },
-      { company: "Fireworks AI", notes: "Inference cloud platform optimized for serving open-weight and custom models.", diligenced: false }
-    ],
-    applications: [
-      { company: "OpenAI", notes: "Frontier AI lab (GPT / ChatGPT); privately held with a nonprofit / capped-profit corporate structure.", diligenced: false },
-      { company: "Anthropic", notes: "Frontier AI lab (Claude); privately held.", diligenced: false },
-      { company: "xAI", notes: "Frontier AI lab (Grok), founded by Elon Musk.", diligenced: false },
-      { company: "Mistral AI", notes: "French developer of open-weight and commercial large language models.", diligenced: false },
-      { company: "Perplexity AI", notes: "AI-powered search and answer engine.", diligenced: false },
-      { company: "Harvey", notes: "Legal AI platform for law firms and corporate legal teams.", diligenced: false },
-      { company: "Glean", notes: "Enterprise search and AI assistant platform for internal company knowledge.", diligenced: false }
-    ]
+    energy: {
+      overview: "The private energy landscape splits into two bets on very different timelines: fusion and advanced-fission developers racing toward first commercial power by the late 2020s, and storage/geothermal companies solving the nearer-term problem of firming renewables already on the grid.",
+      categories: [
+        { category: "Fusion", companies: [
+          { company: "Commonwealth Fusion Systems", notes: "Fusion energy developer building the SPARC tokamak; spun out of MIT, backed by Breakthrough Energy Ventures among others.", diligenced: false },
+          { company: "Helion Energy", notes: "Fusion energy developer with a power purchase agreement targeting 50MW of fusion power for Microsoft.", diligenced: false }
+        ]},
+        { category: "Advanced Fission / SMR", companies: [
+          { company: "TerraPower", notes: "Advanced nuclear reactor developer (Natrium design) founded by Bill Gates.", diligenced: false },
+          { company: "Kairos Power", notes: "Molten-salt-cooled small modular reactor developer with a Google power purchase agreement.", diligenced: false }
+        ]},
+        { category: "Storage & Geothermal", companies: [
+          { company: "Form Energy", notes: "Iron-air battery maker targeting multi-day, grid-scale energy storage.", diligenced: false },
+          { company: "Fervo Energy", notes: "Enhanced geothermal energy developer supplying firm, round-the-clock clean power.", diligenced: false }
+        ]}
+      ]
+    },
+    cooling: {
+      overview: "Private cooling companies split cleanly by approach: immersion specialists betting that fully submerging hardware is the endpoint for extreme-density racks, and direct-to-chip developers betting that retrofittable, waterless cold-plate designs win instead.",
+      categories: [
+        { category: "Immersion Cooling", companies: [
+          { company: "Submer", notes: "Immersion cooling systems for data centers, expanding into owning its own AI data center capacity.", diligenced: false },
+          { company: "LiquidStack", notes: "Two-phase and single-phase immersion cooling technology for high-density AI racks.", diligenced: false },
+          { company: "Iceotope", notes: "Precision, chassis-level liquid cooling for data center and edge deployments.", diligenced: false }
+        ]},
+        { category: "Direct-to-Chip Liquid Cooling", companies: [
+          { company: "ZutaCore", notes: "Waterless, two-phase direct-to-chip liquid cooling technology.", diligenced: false },
+          { company: "Accelsius", notes: "Two-phase direct-to-chip cooling systems designed to retrofit existing air-cooled data centers.", diligenced: false }
+        ]}
+      ]
+    },
+    power: {
+      overview: "The private power landscape here is mostly software, not hardware: demand-forecasting and grid-flexibility platforms are trying to squeeze more usable capacity out of an interconnection-constrained grid faster than new physical capacity can be built.",
+      categories: [
+        { category: "Grid Software & Demand Flexibility", companies: [
+          { company: "Amperon", notes: "AI-driven electricity demand forecasting for grid operators and large power consumers.", diligenced: false },
+          { company: "Emerald AI", notes: "Software that lets data centers flex power consumption to ease grid interconnection bottlenecks.", diligenced: false },
+          { company: "Verrus", notes: "Behind-the-meter power management aimed at faster-to-deploy, flexible data center capacity.", diligenced: false }
+        ]},
+        { category: "Backup / Long-Duration Storage", companies: [
+          { company: "EnerVenue", notes: "Long-duration metal-hydrogen battery storage for grid and industrial backup power.", diligenced: false }
+        ]}
+      ]
+    },
+    silicon: {
+      overview: "Private companies barely register at the leading edge of fabs and memory -- this category is structurally dominated by public incumbents (TSMC, Samsung, Micron, SK Hynix).",
+      categories: [
+        { category: "Foundry (Leading-Edge)", companies: [
+          { company: "Rapidus", notes: "Japanese foundry consortium backed by Toyota, Sony, NTT, and the Japanese government, building a 2nm fab to re-establish domestic leading-edge chip manufacturing.", diligenced: false }
+        ]}
+      ]
+    },
+    compute: {
+      overview: "The private compute landscape is the most crowded in the value chain: inference-specialized chip startups bet speed and cost beat general-purpose GPUs, while wafer-scale and reconfigurable-architecture players bet on training and flexibility instead.",
+      categories: [
+        { category: "AI Inference Chips", companies: [
+          { company: "Groq", notes: "Purpose-built LPU (language processing unit) chips for ultra-fast, low-latency AI inference.", diligenced: false },
+          { company: "d-Matrix", notes: "In-memory computing AI inference chips optimized for datacenter deployment.", diligenced: false },
+          { company: "Etched", notes: "AI chip startup building transformer-specific ASICs (the 'Sohu' chip).", diligenced: false }
+        ]},
+        { category: "Training / Wafer-Scale Systems", companies: [
+          { company: "Cerebras Systems", notes: "Wafer-scale AI training/inference systems (CS-3/CS-4); has previously filed for and withdrawn a public listing.", diligenced: false }
+        ]},
+        { category: "Flexible / Reconfigurable Architectures", companies: [
+          { company: "Tenstorrent", notes: "RISC-V-based AI accelerator company led by chip designer Jim Keller.", diligenced: false },
+          { company: "SambaNova Systems", notes: "Reconfigurable dataflow AI chips and a full-stack enterprise AI platform.", diligenced: false }
+        ]}
+      ]
+    },
+    networking: {
+      overview: "Private networking companies are almost entirely optical-interconnect plays betting that co-packaged optics displaces pluggable transceivers at the rack level, plus networking-silicon startups pushing GPU cluster bandwidth.",
+      categories: [
+        { category: "Co-Packaged Optics / Optical I/O", companies: [
+          { company: "Ayar Labs", notes: "Optical I/O chiplets for high-bandwidth, low-power AI cluster interconnect.", diligenced: false },
+          { company: "Lightmatter", notes: "Photonic computing and optical interconnect technology for AI data centers.", diligenced: false }
+        ]},
+        { category: "Networking Silicon", companies: [
+          { company: "Enfabrica", notes: "Networking silicon designed to scale GPU cluster interconnect bandwidth.", diligenced: false }
+        ]}
+      ]
+    },
+    serversdc: {
+      overview: "The private data center landscape splits into large, PE-and-infrastructure-backed developers building at hyperscale, and a newer cohort pairing data center development directly with unconventional power sources.",
+      categories: [
+        { category: "Hyperscale Data Center Developers", companies: [
+          { company: "Vantage Data Centers", notes: "Hyperscale data center developer and operator, backed by DigitalBridge.", diligenced: false },
+          { company: "Aligned Data Centers", notes: "Data center developer and operator backed by Macquarie Asset Management.", diligenced: false },
+          { company: "Compass Datacenters", notes: "Data center developer building modular, hyperscale-ready campuses.", diligenced: false },
+          { company: "STACK Infrastructure", notes: "Data center developer and operator backed by IPI Partners.", diligenced: false }
+        ]},
+        { category: "Power-Colocated / AI-Native Infrastructure", companies: [
+          { company: "Crusoe", notes: "AI-focused data center developer, notable for co-locating compute with stranded or flared energy sources.", diligenced: false }
+        ]}
+      ]
+    },
+    cloud: {
+      overview: "Private AI cloud providers are all reselling or optimizing access to GPU capacity, differentiated mainly by whether they compete on raw compute access, inference-serving performance, or open-model hosting.",
+      categories: [
+        { category: "AI Cloud / GPU Infrastructure", companies: [
+          { company: "Lambda", notes: "AI cloud and GPU infrastructure provider, reportedly pursuing further pre-IPO fundraising.", diligenced: false },
+          { company: "Voltage Park", notes: "GPU cloud infrastructure provider.", diligenced: false }
+        ]},
+        { category: "Inference & Model-Serving Platforms", companies: [
+          { company: "Together AI", notes: "AI cloud platform providing inference and fine-tuning infrastructure for open models.", diligenced: false },
+          { company: "Fireworks AI", notes: "Inference cloud platform optimized for serving open-weight and custom models.", diligenced: false }
+        ]}
+      ]
+    },
+    applications: {
+      overview: "The private applications landscape has two tiers: frontier labs racing on raw model capability and compute access, and vertical or consumer application companies racing to build defensible products on top of those models.",
+      categories: [
+        { category: "Frontier Labs", companies: [
+          { company: "OpenAI", notes: "Frontier AI lab (GPT / ChatGPT); privately held with a nonprofit / capped-profit corporate structure.", diligenced: false },
+          { company: "Anthropic", notes: "Frontier AI lab (Claude); privately held.", diligenced: false },
+          { company: "xAI", notes: "Frontier AI lab (Grok), founded by Elon Musk.", diligenced: false },
+          { company: "Mistral AI", notes: "French developer of open-weight and commercial large language models.", diligenced: false }
+        ]},
+        { category: "Enterprise AI", companies: [
+          { company: "Harvey", notes: "Legal AI platform for law firms and corporate legal teams.", diligenced: false },
+          { company: "Glean", notes: "Enterprise search and AI assistant platform for internal company knowledge.", diligenced: false }
+        ]},
+        { category: "Consumer AI", companies: [
+          { company: "Perplexity AI", notes: "AI-powered search and answer engine.", diligenced: false }
+        ]}
+      ]
+    }
   }
 };
 
@@ -812,18 +879,15 @@ function renderPmTabs(activeId){
   });
 }
 
-function showPmPanel(id){
-  activePmLayer = id;
-  renderPmTabs(id);
-  const rows = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || [];
-  pmPanel.innerHTML = `
-    <div class="panel-head">
-      <h2>${LAYER_LABELS[id]}</h2>
+function renderPmCategoryTable(cat){
+  return `
+    <div class="table-label-row">
+      <div class="table-label">${cat.category}</div>
     </div>
     <table class="comp">
       <thead><tr><th>Company</th><th>Notes</th></tr></thead>
       <tbody>
-        ${rows.length ? rows.map(row => `
+        ${(cat.companies || []).length ? cat.companies.map(row => `
           <tr>
             <td class="cat">${row.company}${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''}</td>
             <td>${row.notes}${row.url ? `<div class="signal-source">${row.source || 'source'} &middot; <a href="${row.url}" target="_blank" rel="noopener">source</a></div>` : ''}</td>
@@ -831,6 +895,19 @@ function showPmPanel(id){
         `).join('') : `<tr><td colspan="2" class="empty-note">No entries yet.</td></tr>`}
       </tbody>
     </table>
+  `;
+}
+
+function showPmPanel(id){
+  activePmLayer = id;
+  renderPmTabs(id);
+  const layer = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || { overview: '', categories: [] };
+  pmPanel.innerHTML = `
+    <div class="panel-head">
+      <h2>${LAYER_LABELS[id]}</h2>
+    </div>
+    ${layer.overview ? `<p class="panel-synthesis">${layer.overview}</p>` : ''}
+    ${(layer.categories || []).length ? layer.categories.map(renderPmCategoryTable).join('') : '<p class="empty-note">No landscape data yet.</p>'}
   `;
 }
 
@@ -853,7 +930,7 @@ function renderCombinedLayers(){
   if(!container) return;
   container.innerHTML = LAYER_ORDER.map(id => {
     const seg = SEGMENTS.find(s => s.id === id);
-    const privRows = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || [];
+    const privLayer = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || { overview: '', categories: [] };
     return `
       <div class="combo-row">
         <div class="combo-head">
@@ -867,8 +944,11 @@ function renderCombinedLayers(){
           </div>
           <div class="combo-col private">
             <span class="label">Private &middot; automated + diligenced</span>
-            ${privRows.length ? privRows.map(row => `
-              <p><strong>${row.company}</strong>${!row.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''} &mdash; ${row.notes}${row.url ? ` <a href="${row.url}" target="_blank" rel="noopener" class="mono" style="font-size:11px;color:var(--text-faint);">(source)</a>` : ''}</p>
+            ${privLayer.overview ? `<p>${privLayer.overview}</p>` : ''}
+            ${(privLayer.categories || []).length ? privLayer.categories.map(cat => `
+              <p><strong>${cat.category}:</strong> ${(cat.companies || []).map(c =>
+                `${c.company}${!c.diligenced ? '<span class="pending-badge">pending diligence</span>' : ''}`
+              ).join(', ')}</p>
             `).join('') : '<p class="empty-note">No entries yet.</p>'}
           </div>
         </div>

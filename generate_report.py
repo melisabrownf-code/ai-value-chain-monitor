@@ -7,10 +7,12 @@ What this does:
 2. Asks it to return ONLY structured JSON: a momentum score, a one-line tag,
    a deployment timeline (today / ~2yr / ~4yr per sub-category), a 2030 bull/bear
    outlook specific to that layer, 5 sourced PUBLIC-company signals -- the most
-   important news for that layer over the prior two weeks -- and up to 4 sourced
-   PRIVATE-company signals from startup/venture press (TechCrunch, The Information,
-   Axios Pro Rata, Crunchbase News). Same web search, no extra API calls; the model
-   just buckets what it finds by whether the company is publicly traded.
+   important news for that layer over the prior two weeks -- and a PRIVATE-company
+   landscape (an overview paragraph plus companies grouped by technology
+   sub-category), weighted toward startup/venture press (TechCrunch, The
+   Information, Axios Pro Rata, Crunchbase News). Same web search, no extra API
+   calls; the model just buckets what it finds by whether the company is
+   publicly traded.
 3. Assembles all layers plus an overall thesis into report_data.json. (Bull/bear
    used to be a single sector-wide "commentary sentiment" block; it's now per-layer
    and forward-looking to 2030 instead of a snapshot of current commentary.)
@@ -19,11 +21,15 @@ What this does:
    reused as-is, so the Newsletter tab reads as a running "most important news"
    archive per category, linked edition-by-edition, rather than an app/feature
    changelog. Private companies never appear here -- see private_markets.json.
-6. Merges each layer's private-company findings into private_markets.json.
-   Merge is additive and never destructive to human review: any row a person has
-   flipped to "diligenced": true is left untouched no matter what the search
-   finds; newly-found companies are added as "diligenced": false; a company from
-   a prior cycle that doesn't turn up again this cycle is kept, not dropped.
+6. Merges each layer's private-company landscape into private_markets.json.
+   Merge is additive and never destructive to human review: any company a person
+   has flipped to "diligenced": true (or any not-yet-diligenced company already
+   present) is left completely untouched no matter what the search finds;
+   genuinely new companies are added under a matching (or new) technology
+   category as "diligenced": false; a company from a prior cycle that doesn't
+   turn up again this cycle is kept, not dropped. Each layer's overview
+   paragraph does refresh every cycle, since it's a categorical summary rather
+   than a specific company's diligence.
 
 This script is meant to be run on a schedule (see .github/workflows/biweekly-report.yml)
 by a runner that has ANTHROPIC_API_KEY set as a secret. It does NOT publish anything
@@ -89,14 +95,22 @@ Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
     layer's entry in the biweekly news digest (the Newsletter tab), so they should read as
     the 5 most important things that happened in this layer over the last two weeks, not filler
   ],
-  "privateCompanies": [
-    {"company": "<name>", "notes": "<one sentence, your own words: what they do and the most notable recent development>", "source": "<publication name>", "url": "<source url>"},
-    ... up to 4 of these, PRIVATE (not publicly traded) companies only, most notable/newest first.
-    Weight toward startup/venture press specifically -- TechCrunch, The Information, Axios Pro Rata,
-    Crunchbase News, PitchBook News -- over generic aggregators. A company with a concrete recent
-    signal (funding round, notable launch, partnership, executive hire) beats one included for
-    completeness. Return an empty array if nothing notable turned up for this layer.
-  ]
+  "privateLandscape": {
+    "overview": "<2-3 sentences: the shape of the PRIVATE company landscape in this layer right now -- what different technology bets/approaches exist among private companies here, and how mature each approach is>",
+    "categories": [
+      {
+        "category": "<a technology sub-category name for grouping private companies in this layer, e.g. 'Fusion' or 'Immersion Cooling'>",
+        "companies": [
+          {"company": "<name>", "notes": "<one sentence, your own words: what they do, and the most notable recent development if there is one>", "source": "<publication name>", "url": "<source url>"},
+          ... every notable PRIVATE (not publicly traded) company you can identify in this sub-category
+        ]
+      },
+      ... 2-4 categories, covering the main technology approaches/sub-segments among PRIVATE companies
+      in this layer (they don't need to match the timeline's sub-categories, but may overlap).
+      Weight discovery toward startup/venture press specifically -- TechCrunch, The Information,
+      Axios Pro Rata, Crunchbase News, PitchBook News -- over generic aggregators.
+    ]
+  }
 }
 Rules:
 - Use web search to find developments from roughly the last 14 days where possible (this job runs biweekly),
@@ -107,8 +121,10 @@ Rules:
   reputable outlets over aggregators. Note real uncertainty rather than inventing precision, especially for the
   further-out timeline columns and the 2030 outlook.
 - `signals` is PUBLIC companies only, full stop -- never name a private/venture-stage company there, not even
-  for a funding round or a named deal. Any private-company news, including funding rounds, belongs in
-  `privateCompanies` instead. This keeps the two tabs' data cleanly separated.
+  for a funding round or a named deal. Double check every company in `signals` is actually publicly traded on
+  a stock exchange before including it; if genuinely unsure, leave it out of signals rather than guess. Any
+  private-company activity, including funding rounds, belongs in `privateLandscape` instead. This keeps the
+  two tabs' data cleanly separated.
 - Timeline sub-category names (e.g. "Nuclear & SMR (GE Vernova, NuScale, Helion)") may still name private
   companies as examples of who operates in that space -- that's categorical grouping, not a news signal.
 - "Trend" tag must be exactly one of: Accelerating, Constrained, Steady.
@@ -227,9 +243,9 @@ def generate_segment(client, seg):
 
     # Private-company findings never belong in the public report_data.json --
     # pulled out here and returned separately for the Private Markets merge.
-    private_companies = data.pop("privateCompanies", []) or []
+    private_landscape = data.pop("privateLandscape", None) or {"overview": "", "categories": []}
 
-    return data, private_companies
+    return data, private_landscape
 
 
 def generate_thesis(client, segments):
@@ -276,15 +292,22 @@ def append_newsletter_entry(edition):
         json.dump(newsletter, f, indent=2)
 
 
-def update_private_markets(private_by_layer):
-    """Merge this cycle's private-company findings into private_markets.json.
+def update_private_markets(private_landscape_by_layer):
+    """Merge this cycle's private-company landscape into private_markets.json.
 
-    Additive and non-destructive: a row a human has flipped to diligenced=true
-    is never touched, regardless of what this cycle's search finds. A company
-    found again is left as-is (not overwritten) to avoid discarding any manual
-    edits to its notes; only genuinely new companies are added. A company from
-    a prior cycle that doesn't resurface this cycle is kept, not dropped --
-    the landscape only grows unless a human removes something.
+    Each layer is {"overview": str, "categories": [{"category": str, "companies": [...]}]}.
+
+    Additive and non-destructive: a company already present anywhere in a layer
+    (in any category, diligenced or not) is left completely untouched -- this
+    both protects human diligence and avoids discarding any manual edits made
+    to a not-yet-diligenced row. Only genuinely new companies are added, under
+    a matching existing category (created if it doesn't exist yet; matched
+    case-insensitively so a slightly different label from the model doesn't
+    spawn a duplicate category). A company from a prior cycle that doesn't
+    resurface this cycle is kept, not dropped -- the landscape only grows
+    unless a human removes something. The overview paragraph is refreshed
+    every cycle since it's a categorical summary, not a specific company's
+    diligence.
     """
     path = "private_markets.json"
     try:
@@ -296,24 +319,46 @@ def update_private_markets(private_by_layer):
     pm.setdefault("layers", {})
     pm["status"] = "automated landscape (TechCrunch, The Information, etc.) + manual diligence overlay"
 
-    for layer_id, found in private_by_layer.items():
-        existing = pm["layers"].get(layer_id, [])
-        existing_names = {row["company"].strip().lower() for row in existing}
+    for layer_id, landscape in private_landscape_by_layer.items():
+        existing_layer = pm["layers"].get(layer_id) or {"overview": "", "categories": []}
+        # Migrate the pre-landscape flat-list format if this is the first run since the upgrade.
+        if isinstance(existing_layer, list):
+            existing_layer = {"overview": "", "categories": [{"category": "Companies", "companies": existing_layer}]}
 
-        for item in found:
-            name_key = item["company"].strip().lower()
-            if name_key in existing_names:
-                continue  # already present (diligenced or not) -- don't clobber it
-            existing.append({
-                "company": item["company"],
-                "notes": item.get("notes", ""),
-                "source": item.get("source"),
-                "url": item.get("url"),
-                "diligenced": False,
-            })
-            existing_names.add(name_key)
+        existing_categories = existing_layer.setdefault("categories", [])
+        known_names = {
+            comp["company"].strip().lower()
+            for cat in existing_categories
+            for comp in cat.get("companies", [])
+        }
 
-        pm["layers"][layer_id] = existing
+        for new_cat in landscape.get("categories", []):
+            cat_name = (new_cat.get("category") or "Other").strip()
+            target = next(
+                (c for c in existing_categories if c["category"].strip().lower() == cat_name.lower()),
+                None,
+            )
+            if target is None:
+                target = {"category": cat_name, "companies": []}
+                existing_categories.append(target)
+
+            for comp in new_cat.get("companies", []):
+                name_key = comp["company"].strip().lower()
+                if name_key in known_names:
+                    continue  # already present somewhere in this layer -- never touch it
+                target["companies"].append({
+                    "company": comp["company"],
+                    "notes": comp.get("notes", ""),
+                    "source": comp.get("source"),
+                    "url": comp.get("url"),
+                    "diligenced": False,
+                })
+                known_names.add(name_key)
+
+        if landscape.get("overview"):
+            existing_layer["overview"] = landscape["overview"]
+
+        pm["layers"][layer_id] = existing_layer
 
     pm["lastUpdated"] = datetime.date.today().isoformat()
 
@@ -331,12 +376,12 @@ def main():
 
     print("Generating segments...")
     segments = []
-    private_by_layer = {}
+    private_landscape_by_layer = {}
     for seg in SEGMENTS:
         print(f"  - {seg['label']}")
-        seg_data, private_companies = generate_segment(client, seg)
+        seg_data, private_landscape = generate_segment(client, seg)
         segments.append(seg_data)
-        private_by_layer[seg["id"]] = private_companies
+        private_landscape_by_layer[seg["id"]] = private_landscape
 
     print("Synthesizing overall thesis...")
     thesis_block = generate_thesis(client, segments)
@@ -358,9 +403,13 @@ def main():
         json.dump(edition, f, indent=2)
 
     append_newsletter_entry(edition)
-    update_private_markets(private_by_layer)
+    update_private_markets(private_landscape_by_layer)
 
-    total_private_found = sum(len(v) for v in private_by_layer.values())
+    total_private_found = sum(
+        len(cat.get("companies", []))
+        for landscape in private_landscape_by_layer.values()
+        for cat in landscape.get("categories", [])
+    )
     print(
         f"Wrote report_data.json, {history_path}, appended to newsletter.json, "
         f"and merged {total_private_found} private-company findings into private_markets.json"
