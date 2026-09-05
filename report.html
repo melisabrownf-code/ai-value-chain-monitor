@@ -224,6 +224,33 @@
   .newsletter-bullets{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
   .newsletter-bullets li{font-size:13px;line-height:1.55;color:#c9cdd4;}
 
+  /* ---- Market Map ---- */
+  .mm-legend{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:22px;}
+  .mm-legend-item{
+    display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;color:var(--text-dim);
+  }
+  .mm-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .mm-dot.public{background:var(--amber);}
+  .mm-dot.private{background:var(--violet);}
+  .mm-dot.private.pending{background:transparent;border:1.5px dashed var(--violet);}
+  .mm-columns{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .mm-col-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--text-faint);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .mm-group{margin-bottom:20px;}
+  .mm-group:last-child{margin-bottom:0;}
+  .mm-group-label{font-size:12.5px;color:var(--text-dim);margin-bottom:9px;font-weight:500;}
+  .chip-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .company-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 13px;border-radius:20px;
+    border:1px solid;white-space:nowrap;line-height:1.3;
+  }
+  .company-chip.public{color:var(--amber);border-color:var(--amber-dim);background:var(--amber-dim);}
+  .company-chip.private{color:var(--violet);border-color:var(--violet);background:var(--violet-dim);}
+  .company-chip.private.pending{border-style:dashed;background:transparent;}
+
   footer{margin-top:30px;font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--text-faint);text-align:center;line-height:1.6;}
 
   @media (max-width:900px){
@@ -233,6 +260,7 @@
     .sent-cols{grid-template-columns:1fr;}
     .combo-cols{grid-template-columns:1fr;}
     .newsletter-categories{grid-template-columns:1fr;}
+    .mm-columns{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -251,6 +279,7 @@
     <button class="main-tab active" data-view="public">Public Markets</button>
     <button class="main-tab" data-view="private">Private Markets</button>
     <button class="main-tab" data-view="combined">Combined / Value Chain</button>
+    <button class="main-tab" data-view="marketmap">Market Map</button>
     <button class="main-tab" data-view="newsletter">Newsletter</button>
   </nav>
 
@@ -297,6 +326,18 @@
     <div class="view-head"><h2>Combined / Value Chain</h2></div>
     <p class="view-intro">Pairs each layer's automated Public Markets read with what we know privately, so you can see who the public leaders are and who they're actually working with. Both sides are automated discovery; the private side additionally carries a manual diligence overlay as entries get reviewed.</p>
     <div id="combined-layers"></div>
+  </section>
+
+  <section class="view" id="view-marketmap" hidden>
+    <div class="view-head"><h2>Market Map</h2></div>
+    <p class="view-intro">Who's active in this layer, public and private side by side &mdash; public companies grouped the same way as the Public Markets timeline, private companies grouped by technology sub-category. Color marks which side; a dashed chip means the private company hasn't been diligenced yet.</p>
+    <div class="mm-legend">
+      <span class="mm-legend-item"><span class="mm-dot public"></span>Public</span>
+      <span class="mm-legend-item"><span class="mm-dot private"></span>Private &middot; diligenced</span>
+      <span class="mm-legend-item"><span class="mm-dot private pending"></span>Private &middot; pending diligence</span>
+    </div>
+    <div class="tab-bar" id="mm-tab-bar"></div>
+    <div class="panel" id="mm-panel"></div>
   </section>
 
   <section class="view" id="view-newsletter" hidden>
@@ -706,6 +747,7 @@ async function loadSegments(){
   renderTabs(null);
   showPanel(SEGMENTS[0].id);
   renderCombinedLayers();
+  renderMarketMap();
 }
 
 // ---- Main nav (Public Markets / Private Markets / Combined / Newsletter) ----
@@ -714,6 +756,7 @@ const VIEWS = {
   public: document.getElementById('view-public'),
   private: document.getElementById('view-private'),
   combined: document.getElementById('view-combined'),
+  marketmap: document.getElementById('view-marketmap'),
   newsletter: document.getElementById('view-newsletter')
 };
 
@@ -922,6 +965,7 @@ async function loadPrivateMarkets(){
   }
   showPmPanel(activePmLayer);
   renderCombinedLayers();
+  renderMarketMap();
 }
 
 // ---- Combined / Value Chain (public leaders + private companies, per layer) ----
@@ -955,6 +999,100 @@ function renderCombinedLayers(){
       </div>
     `;
   }).join('');
+}
+
+// ---- Market Map (visual public + private company map, per layer) ----
+// Public groups are parsed straight out of the Public Markets timeline sub-category
+// labels (e.g. "Nuclear & SMR (GE Vernova, NuScale, Helion)" -> group "Nuclear & SMR"
+// with companies [GE Vernova, NuScale, Helion]) -- no new backend field needed.
+function parsePublicGroups(seg){
+  if(!seg || !seg.timeline || !Array.isArray(seg.timeline.rows)) return [];
+  return seg.timeline.rows.map(row => {
+    const label = row[0] || '';
+    const match = label.match(/\(([^)]+)\)\s*$/);
+    // The model isn't consistent about separator style inside the parenthetical
+    // (comma-separated in some editions, slash-separated in others) -- split on either.
+    const companies = match ? match[1].split(/[,/]/).map(s => s.trim()).filter(Boolean) : [];
+    const group = match ? label.slice(0, match.index).trim() : label.trim();
+    return { group, companies };
+  }).filter(g => g.companies.length);
+}
+
+const mmTabBar = document.getElementById('mm-tab-bar');
+const mmPanel = document.getElementById('mm-panel');
+let activeMmLayer = LAYER_ORDER[0];
+
+function renderMmTabs(activeId){
+  mmTabBar.innerHTML = LAYER_ORDER.map(id => `
+    <div class="tab ${id===activeId?'active':''}" data-id="${id}">
+      <div class="tab-label">${LAYER_LABELS[id]}</div>
+    </div>
+  `).join('');
+  mmTabBar.querySelectorAll('.tab').forEach(el=>{
+    el.addEventListener('click', ()=> showMmPanel(el.dataset.id));
+  });
+}
+
+function showMmPanel(id){
+  activeMmLayer = id;
+  renderMmTabs(id);
+  const seg = SEGMENTS.find(s => s.id === id);
+  const privLayer = (PRIVATE_MARKETS.layers && PRIVATE_MARKETS.layers[id]) || { categories: [] };
+
+  // Timeline sub-category labels are allowed to name private companies as
+  // categorical examples (e.g. "Fusion (Helion, Commonwealth Fusion)"), so
+  // cross-reference against the private landscape and drop any name we
+  // already know is private -- the whole point of this tab is not to mix
+  // the two up. Substring match both ways since names are often shortened in
+  // the timeline (e.g. "Helion" there vs "Helion Energy" in private_markets.json).
+  const knownPrivateNames = (privLayer.categories || [])
+    .flatMap(cat => (cat.companies || []).map(c => c.company.trim().toLowerCase()))
+    .filter(Boolean);
+  const isKnownPrivate = (name) => {
+    const n = name.trim().toLowerCase();
+    return knownPrivateNames.some(p => n.length >= 3 && p.length >= 3 && (n.includes(p) || p.includes(n)));
+  };
+  const publicGroups = parsePublicGroups(seg)
+    .map(g => ({ group: g.group, companies: g.companies.filter(c => !isKnownPrivate(c)) }))
+    .filter(g => g.companies.length);
+
+  mmPanel.innerHTML = `
+    <div class="panel-head">
+      <h2>${LAYER_LABELS[id]}</h2>
+      ${seg ? `<span class="tab-tag ${seg.tagClass}">${seg.tag}</span>` : ''}
+    </div>
+    <div class="mm-columns">
+      <div>
+        <div class="mm-col-label">Public companies</div>
+        ${publicGroups.length ? publicGroups.map(g => `
+          <div class="mm-group">
+            <div class="mm-group-label">${g.group}</div>
+            <div class="chip-grid">
+              ${g.companies.map(c => `<span class="company-chip public">${c}</span>`).join('')}
+            </div>
+          </div>
+        `).join('') : '<p class="empty-note">No public companies parsed yet.</p>'}
+      </div>
+      <div>
+        <div class="mm-col-label">Private companies</div>
+        ${(privLayer.categories || []).length ? privLayer.categories.map(cat => `
+          <div class="mm-group">
+            <div class="mm-group-label">${cat.category}</div>
+            <div class="chip-grid">
+              ${(cat.companies || []).map(c =>
+                `<span class="company-chip private${!c.diligenced ? ' pending' : ''}">${c.company}</span>`
+              ).join('')}
+            </div>
+          </div>
+        `).join('') : '<p class="empty-note">No private companies yet.</p>'}
+      </div>
+    </div>
+  `;
+}
+
+function renderMarketMap(){
+  if(!mmTabBar || !mmPanel) return;
+  showMmPanel(activeMmLayer);
 }
 
 // ---- Newsletter (biweekly news digest, 5 bullets per layer -- no app updates here) ----

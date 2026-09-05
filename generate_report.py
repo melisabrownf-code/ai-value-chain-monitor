@@ -81,7 +81,7 @@ Return ONLY valid JSON (no markdown fences, no commentary) matching this shape:
   "synthesis": "<2-3 sentences in your own words explaining what's shifting and why it matters, no direct quotes>",
   "timeline": {
     "rows": [
-      ["<sub-category / layer name>", "<status deployed TODAY, i.e. roughly this year>", "<status/expectation ~2 years out>", "<status/expectation ~4 years out>"],
+      ["<sub-category / layer name, with example companies in parentheses, COMMA-separated -- e.g. 'Custom ASICs (Google TPU, AWS Trainium, Meta MTIA)', never slash-separated>", "<status deployed TODAY, i.e. roughly this year>", "<status/expectation ~2 years out>", "<status/expectation ~4 years out>"],
       ... 2-4 rows covering the main sub-categories in this layer
     ]
   },
