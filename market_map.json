@@ -699,13 +699,6 @@
               "diligenced": true
             },
             {
-              "company": "SMIC",
-              "notes": "HKEX/SSE STAR: 0981 / 688981",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "SkyWater",
               "notes": "NASDAQ: SKYT",
               "source": null,
@@ -821,13 +814,6 @@
               "diligenced": true
             },
             {
-              "company": "JCET",
-              "notes": "SSE: 600584",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "NHK Spring",
               "notes": "TSE: 5991",
               "source": null,
@@ -854,29 +840,8 @@
               "diligenced": true
             },
             {
-              "company": "JCET",
-              "notes": "SSE: 600584",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "Powertech",
               "notes": "TWSE: 6239",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "Tongfu Microelectronics",
-              "notes": "SZSE: 002156",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "Huatian",
-              "notes": "SZSE: 002185",
               "source": null,
               "url": null,
               "diligenced": true
@@ -988,13 +953,6 @@
               "diligenced": true
             },
             {
-              "company": "Alibaba",
-              "notes": "NYSE/HKEX: BABA / 9988",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "IBM Cloud",
               "notes": "Segment of IBM (NYSE: IBM)",
               "source": null,
@@ -1002,22 +960,8 @@
               "diligenced": true
             },
             {
-              "company": "Tencent",
-              "notes": "HKEX: 0700",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "CoreWeave",
               "notes": "NASDAQ: CRWV (IPO March 2025)",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "Baidu",
-              "notes": "NASDAQ/HKEX: BIDU / 9888",
               "source": null,
               "url": null,
               "diligenced": true
@@ -1084,13 +1028,6 @@
             {
               "company": "Ciena",
               "notes": "NYSE: CIEN",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "ZTE",
-              "notes": "SZSE/HKEX: 000063 / 0763",
               "source": null,
               "url": null,
               "diligenced": true
@@ -1168,7 +1105,7 @@
       ]
     },
     "serversdc": {
-      "overview": "Enterprise server/compute hardware is dominated by public OEMs (Dell, HPE, Supermicro, Lenovo, Foxconn); Equinix and Digital Realty remain the large public datacenter REITs.",
+      "overview": "Enterprise server/compute hardware is dominated by public OEMs (Dell, HPE, Supermicro, Foxconn, Quanta, Wistron); Equinix and Digital Realty remain the large public datacenter REITs.",
       "categories": [
         {
           "category": "Enterprise servers & compute hardware",
@@ -1195,22 +1132,8 @@
               "diligenced": true
             },
             {
-              "company": "Lenovo",
-              "notes": "HKEX: 0992",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "Cisco",
               "notes": "NASDAQ: CSCO",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "Inspur",
-              "notes": "SSE: 000977 (Inspur Electronic Information; parent Inspur Group is state-owned)",
               "source": null,
               "url": null,
               "diligenced": true
@@ -1288,7 +1211,7 @@
       ]
     },
     "cloud": {
-      "overview": "Hyperscale cloud is overwhelmingly public-company territory (AWS/Amazon, Azure/Microsoft, Google Cloud/Alphabet, Oracle Cloud, Alibaba, Tencent, Baidu) alongside newly-public CoreWeave (NASDAQ: CRWV, IPO March 2025).",
+      "overview": "Hyperscale cloud is overwhelmingly public-company territory (AWS/Amazon, Azure/Microsoft, Google Cloud/Alphabet, Oracle Cloud) alongside newly-public CoreWeave (NASDAQ: CRWV, IPO March 2025).",
       "categories": [
         {
           "category": "Hyperscale cloud platforms",
@@ -1322,13 +1245,6 @@
               "diligenced": true
             },
             {
-              "company": "Alibaba",
-              "notes": "NYSE/HKEX: BABA / 9988",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "IBM Cloud",
               "notes": "Segment of IBM (NYSE: IBM)",
               "source": null,
@@ -1336,22 +1252,8 @@
               "diligenced": true
             },
             {
-              "company": "Tencent",
-              "notes": "HKEX: 0700",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "CoreWeave",
               "notes": "NASDAQ: CRWV (IPO March 2025)",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "Baidu",
-              "notes": "NASDAQ/HKEX: BIDU / 9888",
               "source": null,
               "url": null,
               "diligenced": true

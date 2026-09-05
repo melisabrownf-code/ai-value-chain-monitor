@@ -170,6 +170,11 @@ Rules:
 - "Trend" tag must be exactly one of: Accelerating, Constrained, Steady.
 - outlook2030 must be specific to this layer's own dynamics (its own bottleneck, technology transition, or
   financing structure), not a restatement of generic AI-market bullishness or skepticism.
+- Exclude mainland-China-headquartered or mainland-China-controlled companies entirely -- don't name one in
+  `signals`, `privateLandscape`, `collaborationSignals`, or as a timeline sub-category example (e.g. no
+  Alibaba, Tencent, Baidu, Huawei, SMIC, ZTE, Inspur, Lenovo, JCET, YMTC, CXMT, or similar). Taiwan-based
+  companies (TSMC, Foxconn, Quanta, MediaTek, UMC, etc.) are NOT covered by this exclusion and should be
+  included normally.
 """
 
 # Static reference tables don't need re-generation every cycle — the underlying technology
@@ -473,6 +478,24 @@ def append_newsletter_entry(edition, private_landscape_by_layer, collaboration_b
         json.dump(newsletter, f, indent=2)
 
 
+# Mainland-China-headquartered/controlled companies are excluded from this app's coverage
+# (see the exclusion rule in SEGMENT_SCHEMA_INSTRUCTIONS). Filtered again here as a defensive
+# backstop -- this function is where a future biweekly refresh's findings get merged onto
+# disk, so an excluded name that slips past the prompt instruction still can't land in
+# market_map.json or private_markets.json. Taiwan (TSMC, Foxconn, Quanta, etc.) is NOT
+# covered by this list.
+EXCLUDED_CHINA_COMPANIES = [
+    "alibaba", "tencent", "baidu", "zte", "inspur", "lenovo", "smic",
+    "jcet", "tongfu", "huatian", "state grid", "cxmt", "ymtc", "omnivision",
+    "nexchip", "huawei",
+]
+
+
+def is_excluded_china_company(name):
+    n = name.strip().lower()
+    return any(term in n for term in EXCLUDED_CHINA_COMPANIES)
+
+
 def merge_landscape_layer(existing_layer, fresh_landscape):
     """Merge one cycle's findings for one layer into its on-file landscape.
 
@@ -526,6 +549,8 @@ def merge_landscape_layer(existing_layer, fresh_landscape):
             existing_categories.append(target)
 
         for comp in new_cat.get("companies", []):
+            if is_excluded_china_company(comp["company"]):
+                continue
             existing_comp = find_existing(comp["company"])
 
             if existing_comp is not None:

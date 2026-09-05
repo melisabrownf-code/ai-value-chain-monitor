@@ -4,7 +4,7 @@
   "lastUpdated": "2026-09-05",
   "layers": {
     "energy": {
-      "overview": "Several major global utilities (EDF, State Grid, TVA) sit structurally outside public markets as nationalized or government-owned entities, not as venture-backed private companies.",
+      "overview": "EDF and TVA sit structurally outside public markets as nationalized or government-owned entities, not as venture-backed private companies.",
       "categories": [
         {
           "category": "Baseload & renewable generation",
@@ -12,13 +12,6 @@
             {
               "company": "EDF",
               "notes": "Fully nationalized by the French state, delisted from Euronext Paris 2023",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "State Grid",
-              "notes": "Chinese state-owned enterprise; not publicly traded",
               "source": null,
               "url": null,
               "diligenced": true
@@ -140,20 +133,6 @@
           "category": "Memory (DRAM & NAND)",
           "companies": [
             {
-              "company": "CXMT",
-              "notes": "Chinese state-linked; not publicly listed",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
-              "company": "YMTC",
-              "notes": "Chinese state-linked; not publicly listed",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
-            {
               "company": "Solidigm",
               "notes": "Subsidiary of SK Hynix (public parent: KRX 000660)",
               "source": null,
@@ -217,13 +196,6 @@
         {
           "category": "Optoelectronics",
           "companies": [
-            {
-              "company": "OmniVision",
-              "notes": "Went private 2016; held via Chinese consortium (Will Semiconductor group)",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            },
             {
               "company": "Ayar Labs",
               "notes": "VC-backed startup",
@@ -390,13 +362,6 @@
               "source": null,
               "url": null,
               "diligenced": true
-            },
-            {
-              "company": "Nexchip",
-              "notes": "Chinese state/investor-backed; not publicly listed",
-              "source": null,
-              "url": null,
-              "diligenced": true
             }
           ]
         },
@@ -510,20 +475,8 @@
       ]
     },
     "networking": {
-      "overview": "Huawei is the one large private exception here, structurally outside public markets as an employee-owned Chinese company; Juniper moved private-adjacent via its 2025 acquisition by HPE.",
+      "overview": "Juniper is the one notable name here, having moved private-adjacent via its 2025 acquisition by HPE.",
       "categories": [
-        {
-          "category": "Telecom & data communication grid",
-          "companies": [
-            {
-              "company": "Huawei",
-              "notes": "Employee-owned; not publicly traded",
-              "source": null,
-              "url": null,
-              "diligenced": true
-            }
-          ]
-        },
         {
           "category": "Network & application security/delivery",
           "companies": [
