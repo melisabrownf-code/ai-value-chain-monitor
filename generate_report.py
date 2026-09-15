@@ -83,7 +83,10 @@ SEGMENTS = [
                      "switchgear/transformer lead times, and on-board power delivery silicon (Vicor, AmberSemi, "
                      "backside power delivery nodes)"},
     {"id": "silicon", "label": "Silicon (Fabs/Memory)", "prompt_focus": "leading-edge fabs (TSMC, Samsung, Intel Foundry) "
-                     "and memory makers (SK Hynix, Samsung, Micron), process node roadmaps, and HBM supply/demand"},
+                     "and memory makers (SK Hynix, Samsung, Micron, Kioxia, SanDisk), process node roadmaps, and "
+                     "the AI-driven DRAM/NAND/HBM supply-demand cycle (pricing, capacity allocation, and capex "
+                     "response) -- memory is not a side note to compute, it is one of the tightest constraints "
+                     "on AI infrastructure buildout right now"},
     {"id": "compute", "label": "Compute (GPU/ASIC)", "prompt_focus": "merchant GPUs (Nvidia, AMD), custom ASICs "
                      "(Google TPU, AWS Trainium, Microsoft Maia, Meta MTIA, Groq), and co-design partners "
                      "(Broadcom, Marvell, EnCharge AI)"},
