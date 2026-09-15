@@ -121,6 +121,20 @@
               "source": null,
               "url": null,
               "diligenced": false
+            },
+            {
+              "company": "Fluence Energy",
+              "notes": "NASDAQ: FLNC. Utility-scale battery storage systems with AI-enabled software for grid integration; majority-owned by AES and Siemens, remainder publicly traded since its 2021 IPO. One of the largest pure-play public grid-scale storage integrators.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Tesla",
+              "notes": "NASDAQ: TSLA. Megapack grid-scale battery storage business, competing directly with Fluence in utility-scale deployments.",
+              "source": null,
+              "url": null,
+              "diligenced": false
             }
           ]
         },

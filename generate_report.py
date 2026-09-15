@@ -76,7 +76,10 @@ MODEL = "claude-sonnet-5"
 SEGMENTS = [
     {"id": "energy", "label": "Energy", "prompt_focus": "renewables (NextEra, Duke, Enphase), nuclear restarts and PPAs, "
                      "small modular reactors (NuScale, Oklo, X-energy, Kairos, GE Vernova), fusion (Helion), "
-                     "grid-scale storage (Form Energy, 4th Power), and behind-the-meter power -- fuel cells "
+                     "grid-scale storage -- both public (Fluence Energy, Tesla Energy/Megapack) and private (Form "
+                     "Energy, 4th Power) players, since the private-only examples used before left this category "
+                     "with no public representation at all on a public-markets page -- and behind-the-meter power "
+                     "-- fuel cells "
                      "(Bloom Energy's solid oxide fuel cells, Plug Power, FuelCell Energy) and other on-site "
                      "generation that lets a data center add power without waiting in the grid interconnection "
                      "queue -- for AI data centers. Keep in view that new generation is only half the story: even "
@@ -184,6 +187,11 @@ Rules:
   two tabs' data cleanly separated.
 - Timeline sub-category names (e.g. "Nuclear & SMR (GE Vernova, NuScale, Helion)") may still name private
   companies as examples of who operates in that space -- that's categorical grouping, not a news signal.
+  But before finalizing a sub-category's example list, check whether a genuinely relevant PUBLIC company
+  belongs in it too -- this is a public-markets report, and a category example list that's 100% private
+  companies by omission (rather than because the space genuinely has no public player) reads as if private
+  activity leaked onto the public page. Don't force a public company in if none actually fits the category;
+  do include one if it's simply been left out.
 - If the prompt below lists private companies already tracked in `privateLandscape`, actively search for recent
   news specifically about each of them (not just whatever you'd have found anyway) and include an updated entry
   with fresh notes/source/url if you find something. Still include any genuinely new companies you find too.
