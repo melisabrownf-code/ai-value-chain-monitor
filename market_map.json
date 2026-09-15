@@ -4,7 +4,7 @@
   "lastUpdated": "2026-09-05",
   "layers": {
     "energy": {
-      "overview": "Nuclear is the dominant story: restart projects (Crane/Three Mile Island, Duane Arnold) are running ahead of schedule while SMR developers rack up federal funding, IPOs, and mega-scale utility deals (TVA-ENTRA1's prospective 6-8 GW), even as pre-revenue SMR stocks have sold off sharply this year on execution-risk concerns. Long-duration storage (Form Energy, Antora) and utility M&A (NextEra-Dominion) show capital continuing to flood toward firm, always-on power for data centers, but grid interconnection queues and first-of-a-kind cost risk remain the binding constraints on how fast any of this actually reaches AI campuses.",
+      "overview": "Nuclear is the dominant story: restart projects (Crane/Three Mile Island, Duane Arnold) are running ahead of schedule while SMR developers rack up federal funding, IPOs, and mega-scale utility deals (TVA-ENTRA1's prospective 6-8 GW), even as pre-revenue SMR stocks have sold off sharply this year on execution-risk concerns. Long-duration storage (Form Energy, Antora) and utility M&A (NextEra-Dominion) show capital continuing to flood toward firm, always-on power for data centers, but grid interconnection queues and first-of-a-kind cost risk remain the binding constraints on how fast any of this actually reaches AI campuses. A separate lane worth tracking: behind-the-meter fuel cells (Bloom Energy, and adjacent players Plug Power and FuelCell Energy) sidestep the interconnection queue entirely by generating on-site, which is exactly why Bloom in particular has found traction with hyperscalers.",
       "categories": [
         {
           "category": "Baseload & renewable generation",
@@ -118,6 +118,32 @@
             {
               "company": "Enphase",
               "notes": "Public company operating in Grid-Scale Storage & Renewables Baseload Complement for Energy.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Behind-the-Meter Power (Fuel Cells)",
+          "companies": [
+            {
+              "company": "Bloom Energy",
+              "notes": "NYSE: BE. Solid oxide fuel cells (SOFC); the dominant vendor in behind-the-meter power for AI data centers, letting hyperscalers add on-site generation without waiting in the grid interconnection queue -- estimated 90%+ share of this fuel-cell niche. Scandium (a key SOFC input) has drawn short-seller scrutiny over China's mining dominance; Bloom says it sources scandium as a byproduct of titanium dioxide waste processing rather than primary mining.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Plug Power",
+              "notes": "NASDAQ: PLUG. PEM fuel cells, historically focused on hydrogen mobility and material handling (forklifts) rather than data-center behind-the-meter power -- an adjacent category to Bloom's SOFC business, not a direct competitor for AI data-center power today.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "FuelCell Energy",
+              "notes": "NASDAQ: FCEL. Molten carbonate fuel cells -- another adjacent fuel-cell technology, without Bloom's specific traction in hyperscale data-center behind-the-meter deals to date.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -1020,14 +1046,6 @@
           ]
         },
         {
-          "category": "Leading-edge Logic Foundries",
-          "companies": []
-        },
-        {
-          "category": "HBM & AI DRAM",
-          "companies": []
-        },
-        {
           "category": "Enterprise NAND/SSD",
           "companies": [
             {
@@ -1038,10 +1056,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Advanced Packaging & Lithography Ecosystem",
-          "companies": []
         }
       ]
     },
@@ -1148,10 +1162,6 @@
               "diligenced": true
             }
           ]
-        },
-        {
-          "category": "Merchant GPUs",
-          "companies": []
         },
         {
           "category": "Hyperscaler Custom ASICs",
@@ -1371,10 +1381,6 @@
           ]
         },
         {
-          "category": "Switches",
-          "companies": []
-        },
-        {
           "category": "Edge/quantum compute",
           "companies": [
             {
@@ -1491,18 +1497,6 @@
               "diligenced": true
             }
           ]
-        },
-        {
-          "category": "OEM AI Servers",
-          "companies": []
-        },
-        {
-          "category": "Colocation & AI Interconnection",
-          "companies": []
-        },
-        {
-          "category": "Space & Novel Compute",
-          "companies": []
         }
       ]
     },
@@ -1555,14 +1549,6 @@
               "diligenced": true
             }
           ]
-        },
-        {
-          "category": "Hyperscaler Cloud Platforms",
-          "companies": []
-        },
-        {
-          "category": "Enterprise/Database-anchored Cloud",
-          "companies": []
         },
         {
           "category": "Public AI-Native Neoclouds",

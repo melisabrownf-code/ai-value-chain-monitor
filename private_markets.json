@@ -116,10 +116,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "State-Backed Nuclear Utilities & Public Power (tracked)",
-          "companies": []
         }
       ]
     },
@@ -210,10 +206,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Air / hybrid & rack-level specialists",
-          "companies": []
         }
       ]
     },
@@ -271,10 +263,6 @@
           ]
         },
         {
-          "category": "Non-Lithium / Long-Life Storage",
-          "companies": []
-        },
-        {
           "category": "Backside / Vertical Power Delivery Silicon",
           "companies": [
             {
@@ -289,7 +277,7 @@
       ]
     },
     "silicon": {
-      "overview": "Private companies in this layer split into three distinct bets: alternative AI-compute architectures (Groq, Tenstorrent, SambaNova) that depend entirely on foundry allocation rather than owning fabs and are increasingly pivoting toward cloud/inference services; optical interconnect and co-packaged-optics startups (Ayar Labs, Lightmatter, Celestial AI) racing to commercialize technology that ranges from early customer integration to full acquisition by incumbents; and supply-chain diversification plays \u2014 a state-backed alternative foundry (Rapidus) and specialized packaging/equipment vendors (Deca Technologies, ZEISS SMT) \u2014 trying to loosen TSMC's and the Korean memory duopoly's grip on the leading edge.",
+      "overview": "Private companies in this layer split into three distinct bets: alternative AI-compute architectures (Groq, Tenstorrent, SambaNova) that depend entirely on foundry allocation rather than owning fabs and are increasingly pivoting toward cloud/inference services; optical interconnect and co-packaged-optics startups (Ayar Labs, Lightmatter, Celestial AI) racing to commercialize technology that ranges from early customer integration to full acquisition by incumbents; and supply-chain diversification plays \u2014 a state-backed alternative foundry (Rapidus) and specialized packaging/equipment vendors (Deca Technologies, ZEISS SMT) \u2014 trying to loosen TSMC's and the Korean memory duopoly's grip on the leading edge. A fourth, longer-horizon bet worth tracking separately: in-memory-compute startups (EnCharge AI) whose 2028+ thesis is fusing with DRAM makers stacked-memory roadmaps to build genuinely in-memory HBM, rather than a discrete accelerator sitting next to memory.",
       "categories": [
         {
           "category": "GPU/CPU/ASSP/ASIC",
@@ -618,20 +606,16 @@
           ]
         },
         {
-          "category": "AI Inference/Accelerator Silicon",
-          "companies": []
-        },
-        {
-          "category": "Optical Interconnect / Co-Packaged Optics",
-          "companies": []
-        },
-        {
-          "category": "Alternative Foundries & Advanced Packaging",
-          "companies": []
-        },
-        {
-          "category": "Custom Networking & Connectivity Silicon",
-          "companies": []
+          "category": "In-Memory Compute (2028+ thesis)",
+          "companies": [
+            {
+              "company": "EnCharge AI",
+              "notes": "Princeton-spinout analog in-memory-compute chip designer, claiming up to 20x performance-per-watt over digital accelerators by doing multiply-accumulate directly inside a capacitor-based memory array rather than shuttling data to a separate logic die. The working 2028+ thesis for this category: in-memory-compute architectures like this fusing with DRAM makers own stacked-memory roadmaps (Samsung, SK Hynix, Micron) to build genuinely in-memory HBM -- collapsing the logic/memory boundary rather than just accelerating inference at the edge. No DRAM-maker partnership has been publicly announced as of this writing; this is a forward-looking direction to track each cycle, not a confirmed deal.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
@@ -675,18 +659,6 @@
               "diligenced": true
             }
           ]
-        },
-        {
-          "category": "Custom Inference Silicon + Cloud (Groq, SambaNova)",
-          "companies": []
-        },
-        {
-          "category": "GPU Neoclouds (Lambda)",
-          "companies": []
-        },
-        {
-          "category": "Alternative Compute Architectures (Tenstorrent)",
-          "companies": []
         },
         {
           "category": "Analog/In-Memory Compute (EnCharge AI)",
@@ -841,10 +813,6 @@
           ]
         },
         {
-          "category": "Enterprise Colocation & Edge Providers",
-          "companies": []
-        },
-        {
           "category": "Consolidation & Cross-Border Plays",
           "companies": [
             {
@@ -984,14 +952,6 @@
               "url": "https://www.perplexity.ai/hub/blog/category/news"
             }
           ]
-        },
-        {
-          "category": "Frontier Model Labs",
-          "companies": []
-        },
-        {
-          "category": "Enterprise Vertical AI (Legal & Knowledge Work)",
-          "companies": []
         },
         {
           "category": "Consumer Answer Engines & Creative AI",
