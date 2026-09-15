@@ -119,6 +119,7 @@
   }
   .badge-dynamic{color:var(--cyan);background:var(--cyan-dim);}
   .badge-static{color:var(--text-faint);background:#262b33;}
+  .badge-snapshot{color:var(--amber);background:var(--amber-dim);}
   .table-note{font-size:12px;color:var(--text-faint);line-height:1.5;margin:0 0 12px;font-style:italic;}
   .diagram-frame{background:var(--panel-raised);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:8px;overflow-x:auto;}
   .diagram-frame svg{display:block;width:100%;height:auto;min-width:520px;}
@@ -480,6 +481,19 @@ const DEMO_SEGMENTS = [
         ["On-board power delivery (Vicor, AmberSemi, Monolithic Power)", "Supporting current-generation GPU racks on existing architectures", "Redesigned around backside power delivery silicon as it enters volume", "Standardized around backside-power silicon across leading vendors"]
       ]
     },
+    tables: [
+      {
+        title: "Transformer & switchgear comps",
+        refreshed: "snapshot", trendColumn: false,
+        note: "Hand-pulled from Q1-Q3 FY2026 earnings releases and SEC filings around Forgent Power Solutions' Feb 2026 IPO. This is a dated snapshot, not a live feed -- these figures age fast in a market this hot, so revisit and refresh periodically rather than treating them as current.",
+        columns: ["Company", "Ticker", "Latest reported backlog", "Latest reported growth", "Note"],
+        rows: [
+          ["Forgent Power Solutions", "NYSE: FPS", "$1.98B (Q3 FY26, +157% YoY, +33% seq.)", "Q3 FY26 revenue $379M (+103% YoY); book-to-bill 2.3x", "Newest public pure-play -- IPO'd Feb 2026 (~$1.7B offering). FY26 guidance raised to $1.35-1.39B revenue."],
+          ["Powell Industries", "NASDAQ: POWL", "$2.4B (Q3 FY26, record)", "Q3 FY26 revenue +9% YoY; record orders of $934M in the quarter", "Established mid-cap pure-play (medium-voltage switchgear, 480V-38kV circuit breakers). Backlog gives visibility through FY2028."],
+          ["GE Vernova (Electrification segment)", "NYSE: GEV", "$40.6B segment backlog (Q2 FY26, +69% YoY)", "Q2 FY26 segment revenue $3.6B (+68% YoY, +29% organic); book-to-bill ~1.7x", "A segment of a much larger diversified company, not a pure play -- included for scale context against the two above."]
+        ]
+      }
+    ],
     signals: [
       {text: "TSMC's A16 node — which introduces backside power delivery (\"Super Power Rail\") — is planned for mass production in Q4 2026, with actual products expected in the 2027-2028 window.", source: "Digital Citizen", url: "https://www.digitalcitizen.life/tsmcs-a16-node-brings-backside-power-to-its-angstrom-era-chips/"},
       {text: "A16 wafers are estimated to cost between $45,000 and $50,000 each, reflecting the capital intensity of scaling advanced power delivery alongside compute density.", source: "FinancialContent", url: "https://markets.financialcontent.com/wedbush/article/tokenring-2026-1-21-the-angstrom-era-arrives-tsmc-enters-2nm-mass-production-and-unveils-16nm-roadmap"},
@@ -731,16 +745,24 @@ function renderTimeline(timeline){
   `;
 }
 
+function refreshBadge(refreshed){
+  // 'static' = unchanging reference facts (e.g. memory technology characteristics).
+  // 'snapshot' = real figures that WERE current as of some date but aren't wired to any
+  // automated refresh -- distinct from 'static' so a dated financial comps table doesn't
+  // read as if it's evergreen, and distinct from 'dynamic' since nothing regenerates it
+  // every cycle the way the timeline/signals are.
+  if(refreshed === 'static') return `<span class="refresh-badge badge-static">Static reference</span>`;
+  if(refreshed === 'snapshot') return `<span class="refresh-badge badge-snapshot">Dated snapshot</span>`;
+  return `<span class="refresh-badge badge-dynamic">Refreshed biweekly</span>`;
+}
+
 function renderTable(table){
   const lastCol = table.columns.length - 1;
   const hasTrend = table.trendColumn !== false;
-  const badge = table.refreshed === 'static'
-    ? `<span class="refresh-badge badge-static">Static reference</span>`
-    : `<span class="refresh-badge badge-dynamic">Refreshed biweekly</span>`;
   return `
     <div class="table-label-row">
       <div class="table-label">${table.title}</div>
-      ${badge}
+      ${refreshBadge(table.refreshed)}
     </div>
     ${table.note ? `<p class="table-note">${table.note}</p>` : ''}
     <table class="comp">
@@ -759,13 +781,10 @@ function renderTable(table){
 }
 
 function renderDiagram(diagram){
-  const badge = diagram.refreshed === 'static'
-    ? `<span class="refresh-badge badge-static">Static reference</span>`
-    : `<span class="refresh-badge badge-dynamic">Refreshed biweekly</span>`;
   return `
     <div class="table-label-row">
       <div class="table-label">${diagram.title}</div>
-      ${badge}
+      ${refreshBadge(diagram.refreshed)}
     </div>
     ${diagram.note ? `<p class="table-note">${diagram.note}</p>` : ''}
     <div class="diagram-frame">${diagram.svg}</div>
