@@ -79,12 +79,20 @@ SEGMENTS = [
                      "grid-scale storage (Form Energy, 4th Power), and behind-the-meter power -- fuel cells "
                      "(Bloom Energy's solid oxide fuel cells, Plug Power, FuelCell Energy) and other on-site "
                      "generation that lets a data center add power without waiting in the grid interconnection "
-                     "queue -- for AI data centers"},
+                     "queue -- for AI data centers. Keep in view that new generation is only half the story: even "
+                     "signed PPAs and new capacity have to clear the same downstream transformer/interconnection "
+                     "bottleneck (see the Power layer) before they reach a campus, since several hyperscalers hitting "
+                     "operational readiness in the same window strains that equipment regardless of how much power "
+                     "was actually contracted"},
     {"id": "cooling", "label": "Cooling", "prompt_focus": "air/RDHX cooling (Vertiv, Schneider, Siemens), direct-to-chip "
                      "liquid cooling (JetCool, CoolIT), and immersion cooling (Iceotope, LiquidStack, Submer) adoption"},
     {"id": "power", "label": "Power (Grid/UPS)", "prompt_focus": "grid and UPS equipment (ABB, Eaton, Siemens, Schneider), "
-                     "switchgear/transformer lead times, and on-board power delivery silicon (Vicor, AmberSemi, "
-                     "backside power delivery nodes)"},
+                     "switchgear/transformer lead times (including newer public entrant Forgent Power Solutions, "
+                     "NYSE: FPS), and on-board power delivery silicon (Vicor, AmberSemi, backside power delivery "
+                     "nodes). Frame the transformer bottleneck structurally, not just as one project's scale problem: "
+                     "multiple gigawatt-scale hyperscaler campuses reaching operational readiness in the same window "
+                     "is what actually overwhelms lead times that can run years for the largest EHV units -- capital "
+                     "availability doesn't fix a physics-and-manufacturing-capacity constraint"},
     {"id": "silicon", "label": "Silicon (Fabs/Memory)", "prompt_focus": "leading-edge fabs (TSMC, Samsung, Intel Foundry) "
                      "and memory makers (SK Hynix, Samsung, Micron, Kioxia, SanDisk), process node roadmaps, and "
                      "the AI-driven DRAM/NAND/HBM supply-demand cycle (pricing, capacity allocation, and capex "

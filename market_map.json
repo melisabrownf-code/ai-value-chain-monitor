@@ -239,7 +239,7 @@
       ]
     },
     "power": {
-      "overview": "Order books and capex commitments across switchgear, transformer, and UPS makers are accelerating faster than physical capacity can be added, with book-to-bills above 2x at several vendors and record backlogs, even as multi-year lead times on high-voltage transformers and medium-voltage switchgear remain the single biggest gating factor on data center energization. Meanwhile, on-board power delivery is entering a genuine architecture race, as Vicor's second-generation vertical power delivery and AmberSemi's backside PowerTile approach both push toward production this year, promising to relieve the 'last inch' bottleneck between rack power and the chip. The net effect is a layer where financial momentum is unambiguously up, but physical throughput is still catching up to demand.",
+      "overview": "Order books and capex commitments across switchgear, transformer, and UPS makers are accelerating faster than physical capacity can be added, with book-to-bills above 2x at several vendors and record backlogs, even as multi-year lead times on high-voltage transformers and medium-voltage switchgear remain the single biggest gating factor on data center energization. Meanwhile, on-board power delivery is entering a genuine architecture race, as Vicor's second-generation vertical power delivery and AmberSemi's backside PowerTile approach both push toward production this year, promising to relieve the 'last inch' bottleneck between rack power and the chip. The net effect is a layer where financial momentum is unambiguously up, but physical throughput is still catching up to demand. A newer public entrant worth tracking: Forgent Power Solutions (NYSE: FPS), which IPO'd February 2026 supplying the switchgear/transformer/PDU layer directly between the grid and a data center's power management. The deeper structural point behind this whole category: the bottleneck isn't any single project's scale, it's that multiple gigawatt-scale campuses across different hyperscalers are trying to reach operational capacity in the same window, and transformer lead times (reportedly up to 7 years for the largest EHV units) can't absorb that kind of synchronized demand no matter how much capital is available.",
       "categories": [
         {
           "category": "Power delivery & backup",
@@ -304,6 +304,20 @@
               "source": null,
               "url": null,
               "diligenced": false
+            },
+            {
+              "company": "Powell Industries",
+              "notes": "Public company operating in Switchgear & Transformers for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Forgent Power Solutions",
+              "notes": "NYSE: FPS. IPO'd February 2026 (~$1.7B offering). Makes the custom switchgear, transformers, and power distribution units that sit between the utility grid and in-building power management -- the first layer of the power chain for any data center pulling more than 50 MW. Order book of over $1B as of late 2025, already exceeding a full year of revenue.",
+              "source": null,
+              "url": null,
+              "diligenced": false
             }
           ]
         },
@@ -339,30 +353,6 @@
             {
               "company": "Intel",
               "notes": "Intel: developing backside power delivery network (PDN) nodes.",
-              "source": null,
-              "url": null,
-              "diligenced": false
-            }
-          ]
-        },
-        {
-          "category": "Switchgear & Transformers",
-          "companies": [
-            {
-              "company": "Powell Industries",
-              "notes": "Public company operating in Switchgear & Transformers for Power (Grid/UPS).",
-              "source": null,
-              "url": null,
-              "diligenced": false
-            }
-          ]
-        },
-        {
-          "category": "On-board/Vertical Power Delivery Silicon",
-          "companies": [
-            {
-              "company": "backside power delivery nodes",
-              "notes": "Public company operating in On-board/Vertical Power Delivery Silicon for Power (Grid/UPS).",
               "source": null,
               "url": null,
               "diligenced": false
