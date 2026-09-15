@@ -86,7 +86,11 @@ SEGMENTS = [
                      "and memory makers (SK Hynix, Samsung, Micron, Kioxia, SanDisk), process node roadmaps, and "
                      "the AI-driven DRAM/NAND/HBM supply-demand cycle (pricing, capacity allocation, and capex "
                      "response) -- memory is not a side note to compute, it is one of the tightest constraints "
-                     "on AI infrastructure buildout right now"},
+                     "on AI infrastructure buildout right now. Also worth tracking for the 2030 outlook "
+                     "specifically: Nvidia's deepening co-design relationship with memory makers (e.g. custom "
+                     "next-gen DRAM), and the longer-run architectural question of memory-centric computing "
+                     "(processing-in-memory) as a potential break from the logic/memory split that's defined "
+                     "chip design for decades"},
     {"id": "compute", "label": "Compute (GPU/ASIC)", "prompt_focus": "merchant GPUs (Nvidia, AMD), custom ASICs "
                      "(Google TPU, AWS Trainium, Microsoft Maia, Meta MTIA, Groq), and co-design partners "
                      "(Broadcom, Marvell, EnCharge AI)"},
@@ -191,7 +195,7 @@ STATIC_TABLES = {
             "title": "Memory technology comparison (vs. DRAM baseline)",
             "refreshed": "static",
             "trendColumn": False,
-            "note": "Technology characteristics, not company-specific — this reference table doesn't need to move every cycle the way the timeline does.",
+            "note": "Technology characteristics, not company-specific — this reference table doesn't need to move every cycle the way the timeline does. CXL (Compute Express Link) is a related but separate development worth tracking: an interconnect/pooling standard for treating external DRAM as expandable, shared capacity, not a new memory cell technology, so it doesn't get its own row here.",
             "columns": ["Memory type", "Speed", "Density", "Power efficiency", "Endurance", "Cost vs. DRAM", "Maturity"],
             "rows": [
                 ["DRAM", "Med", "High", "Med", "Med", "Baseline", "Mainstream / production"],
@@ -203,6 +207,9 @@ STATIC_TABLES = {
                 ["FeRAM", "Med", "Low", "High", "High", "Targeting parity (higher mfg cost)", "Niche — embedded/industrial use"],
                 ["Optical / photonic memory", "High", "Med", "High", "High", "Premium", "Early R&D"],
                 ["Memristors / synaptic RAM", "High", "High", "High", "High", "Low (in theory)", "Early R&D — neuromorphic angle"],
+                ["HBF (High Bandwidth Flash)", "Med", "High", "Med", "Low", "Below baseline", "Proposed 2025 (SanDisk/SK Hynix); NAND-based, targets AI-inference capacity at lower cost than HBM, not yet in production"],
+                ["Z-NAND", "Med", "High", "Med", "Med", "Below baseline (premium vs. standard NAND)", "Mainstream — Samsung's ultra-low-latency NAND, positioned between DRAM and standard NAND for latency-sensitive enterprise SSDs"],
+                ["PIM / CIM (processing-in-memory)", "High (for supported ops)", "Same as host medium", "High (cuts data movement)", "Depends on host medium", "Premium (added logic)", "Early R&D — mixes logic into DRAM/NAND, a break from Von Neumann architecture; requires processor/software/system redesign so adoption has been very limited despite years of exploration (e.g. Samsung)"],
             ],
         }
     ]
