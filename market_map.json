@@ -1,10 +1,10 @@
 {
   "status": "derived from Public Markets' own timeline data (not a separate pull) + manual review overlay",
   "note": "Public-side companies for Energy, Power, Cooling, Silicon, Compute, Networking, Servers/DC, and Cloud were imported from a user-provided market map spreadsheet (AI_Infrastructure_Market_Map_1.xlsx) and marked diligenced: true, since that's real curated data, not an automated guess -- the biweekly pull will never overwrite these entries. Applications wasn't covered by that source and is left as whatever this file already had. New companies the biweekly pull discovers going forward are added alongside these, starting as diligenced: false.",
-  "lastUpdated": "2026-09-05",
+  "lastUpdated": "2026-09-15",
   "layers": {
     "energy": {
-      "overview": "Nuclear is the dominant story: restart projects (Crane/Three Mile Island, Duane Arnold) are running ahead of schedule while SMR developers rack up federal funding, IPOs, and mega-scale utility deals (TVA-ENTRA1's prospective 6-8 GW), even as pre-revenue SMR stocks have sold off sharply this year on execution-risk concerns. Long-duration storage (Form Energy, Antora) and utility M&A (NextEra-Dominion) show capital continuing to flood toward firm, always-on power for data centers, but grid interconnection queues and first-of-a-kind cost risk remain the binding constraints on how fast any of this actually reaches AI campuses. A separate lane worth tracking: behind-the-meter fuel cells (Bloom Energy, and adjacent players Plug Power and FuelCell Energy) sidestep the interconnection queue entirely by generating on-site, which is exactly why Bloom in particular has found traction with hyperscalers.",
+      "overview": "Behind-the-meter power is the fastest-moving piece of this layer: Bloom Energy's S&P 500 inclusion and FuelCell Energy's first-ever data-center capacity reservation show fuel cells converting from pilot to real backlog, even as FuelCell's own earnings miss triggered a sharp share drop. Nuclear is bifurcating into near-term wins (DOE closing a $1.9B loan for NextEra's Duane Arnold restart) and longer-dated optionality (SMR and fusion equities swinging hard on sentiment even as underlying construction and PPA milestones, like ENTRA1-TVA and Kairos Power's hardware progress, keep advancing). Grid-scale storage and fusion remain earlier-stage but are attracting outsized private capital, signaling investors expect this bottleneck to persist well past 2026.",
       "categories": [
         {
           "category": "Baseload & renewable generation",
@@ -84,28 +84,28 @@
           "companies": [
             {
               "company": "NuScale",
-              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "notes": "Public company operating in Nuclear Restarts & SMRs for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "Oklo",
-              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "notes": "Public company operating in Nuclear Restarts & SMRs for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "X-energy",
-              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "notes": "Public company operating in Nuclear Restarts & SMRs for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "GE Vernova",
-              "notes": "Public company operating in SMRs & Advanced Fission for Energy.",
+              "notes": "Public company operating in Nuclear Restarts & SMRs for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -129,31 +129,39 @@
           "companies": [
             {
               "company": "Bloom Energy",
-              "notes": "NYSE: BE. Solid oxide fuel cells (SOFC); the dominant vendor in behind-the-meter power for AI data centers, letting hyperscalers add on-site generation without waiting in the grid interconnection queue -- estimated 90%+ share of this fuel-cell niche. Scandium (a key SOFC input) has drawn short-seller scrutiny over China's mining dominance; Bloom says it sources scandium as a byproduct of titanium dioxide waste processing rather than primary mining.",
+              "notes": "Public company operating in Behind-the-Meter Fuel Cells & On-Site Generation for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "Plug Power",
-              "notes": "NASDAQ: PLUG. PEM fuel cells, historically focused on hydrogen mobility and material handling (forklifts) rather than data-center behind-the-meter power -- an adjacent category to Bloom's SOFC business, not a direct competitor for AI data-center power today.",
+              "notes": "Public company operating in Behind-the-Meter Fuel Cells & On-Site Generation for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "FuelCell Energy",
-              "notes": "NASDAQ: FCEL. Molten carbonate fuel cells -- another adjacent fuel-cell technology, without Bloom's specific traction in hyperscale data-center behind-the-meter deals to date.",
+              "notes": "Public company operating in Behind-the-Meter Fuel Cells & On-Site Generation for Energy.",
               "source": null,
               "url": null,
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Nuclear Restarts & SMRs",
+          "companies": []
+        },
+        {
+          "category": "Behind-the-Meter Fuel Cells & On-Site Generation",
+          "companies": []
         }
       ]
     },
     "cooling": {
-      "overview": "Cooling has flipped from a supporting infrastructure line to the AI buildout's central bottleneck, evidenced by a wave of multibillion-dollar strategic consolidation (Ecolab-CoolIT, Eaton-Boyd Thermal, Trane-LiquidStack) and record public-company results at Vertiv, Schneider Electric and Modine. Single-phase direct-to-chip cooling has become the default architecture for new AI clusters while air cooling is pushed into a hybrid, supporting role, and two-phase/immersion technologies are racing to prove themselves for the next density tier above 200kW racks.",
+      "overview": "Cooling has moved from a component market to a consolidation battleground: Ecolab, Trane, and Eaton have all closed multi-billion-dollar acquisitions of liquid-cooling specialists in 2026, while Vertiv and Schneider Electric keep raising guidance and rolling out silicon-co-validated reference designs with Nvidia and AMD. Direct-to-chip single-phase cooling has become the default architecture for new AI builds, but two-phase and microfluidic approaches from venture-backed players are still racing to prove out beyond niche deployments as chip TDPs push past 4,000W. The bottleneck is shifting from technology risk to manufacturing and integration capacity, as incumbents scramble to industrialize supply chains fast enough to match GPU shipment growth.",
       "categories": [
         {
           "category": "Thermal management",
@@ -210,17 +218,25 @@
           "companies": [
             {
               "company": "LiquidStack/Trane",
-              "notes": "Public company operating in Immersion cooling for Cooling.",
+              "notes": "Public company operating in Immersion Cooling for Cooling.",
               "source": null,
               "url": null,
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Air Cooling & Rear-Door Heat Exchangers",
+          "companies": []
+        },
+        {
+          "category": "Direct-to-Chip Liquid Cooling, single-phase",
+          "companies": []
         }
       ]
     },
     "power": {
-      "overview": "Order books and backlogs at the major electrical-equipment OEMs are expanding at a pace few industrials have ever seen -- GE Vernova's backlog hit $176B and Siemens Energy's grid unit hit a record \u20ac51B backlog -- but physical throughput hasn't caught up, with switchgear and large power transformers still quoting multi-year lead times. That mismatch is pushing power delivery further downstream into silicon (Vicor's vertical power delivery, AmberSemi's backside PowerTile) and into software that squeezes more out of the existing grid (Emerald AI, Verrus, Amperon), rather than waiting for new copper and steel capacity. Net effect: demand-side momentum is accelerating even as the physical bottleneck keeps a lid on how fast gigawatts actually get energized.",
+      "overview": "Order books and capex commitments across switchgear, transformer, and UPS makers are accelerating faster than physical capacity can be added, with book-to-bills above 2x at several vendors and record backlogs, even as multi-year lead times on high-voltage transformers and medium-voltage switchgear remain the single biggest gating factor on data center energization. Meanwhile, on-board power delivery is entering a genuine architecture race, as Vicor's second-generation vertical power delivery and AmberSemi's backside PowerTile approach both push toward production this year, promising to relieve the 'last inch' bottleneck between rack power and the chip. The net effect is a layer where financial momentum is unambiguously up, but physical throughput is still catching up to demand.",
       "categories": [
         {
           "category": "Power delivery & backup",
@@ -267,7 +283,7 @@
           "companies": [
             {
               "company": "Siemens Energy",
-              "notes": "Public company operating in Switchgear & Large Power Transformers for Power (Grid/UPS).",
+              "notes": "Public company operating in UPS & Power Distribution for Power (Grid/UPS).",
               "source": null,
               "url": null,
               "diligenced": false
@@ -281,7 +297,7 @@
             },
             {
               "company": "GE Vernova/Prolec",
-              "notes": "Public company operating in Switchgear & Large Power Transformers for Power (Grid/UPS).",
+              "notes": "Public company operating in Switchgear & Transformers for Power (Grid/UPS).",
               "source": null,
               "url": null,
               "diligenced": false
@@ -293,7 +309,7 @@
           "companies": [
             {
               "company": "ABB",
-              "notes": "Public company operating in UPS & Rack/Row Power Architecture for Power (Grid/UPS).",
+              "notes": "Public company operating in UPS & Power Distribution for Power (Grid/UPS).",
               "source": null,
               "url": null,
               "diligenced": false
@@ -305,7 +321,7 @@
           "companies": [
             {
               "company": "Vicor",
-              "notes": "Public company operating in On-board / Backside Power Delivery Silicon for Power (Grid/UPS).",
+              "notes": "Public company operating in On-board/Vertical Power Delivery Silicon for Power (Grid/UPS).",
               "source": null,
               "url": null,
               "diligenced": false
@@ -318,11 +334,39 @@
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Switchgear & Transformers",
+          "companies": [
+            {
+              "company": "Powell Industries",
+              "notes": "Public company operating in Switchgear & Transformers for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "UPS & Power Distribution",
+          "companies": []
+        },
+        {
+          "category": "On-board/Vertical Power Delivery Silicon",
+          "companies": [
+            {
+              "company": "backside power delivery nodes",
+              "notes": "Public company operating in On-board/Vertical Power Delivery Silicon for Power (Grid/UPS).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "silicon": {
-      "overview": "The leading-edge fab and memory layer is in the middle of a structural supercycle: TSMC is pulling further ahead on 2nm yield and share while pouring another $100B into Arizona, and HBM/DRAM capacity is sold out for years as AI accelerators eat an ever-larger share of every wafer. Samsung and Intel are showing real technical progress (Samsung's HBM4 recovery, Intel's 18A-P risk production) but remain structurally behind, while SK Hynix and Micron are converting scarcity into record profits, buybacks, and a possible Solidigm IPO. The main tension for the next few years is whether the wave of new fabs (TSMC Arizona, Micron New York, SK Hynix Indiana, Rapidus) arrives fast enough to cool prices, or whether the memory shortage genuinely persists toward 2030 as SK Hynix's own CEO now warns.",
+      "overview": "Memory has become the single tightest constraint in AI infrastructure: HBM, DRAM and NAND are effectively sold out into 2027-2028, prices for even legacy DDR5 and NAND have doubled or more, and Nvidia has now disclosed roughly $267 billion in forward memory commitments through fiscal 2029, forcing Samsung, SK Hynix and Micron into record, multi-year capex programs. At the same time TSMC's 2nm ramp is running flat-out and sold out through 2026, while Nvidia's push for custom, co-designed HBM base dies and early processing-in-memory bets hint at the first real cracks in the decades-old logic/memory split.",
       "categories": [
         {
           "category": "Chip design (overall)",
@@ -1050,17 +1094,33 @@
           "companies": [
             {
               "company": "SanDisk",
-              "notes": "Public company operating in Enterprise NAND/SSD for Silicon (Fabs/Memory).",
+              "notes": "Public company operating in Conventional DRAM, NAND & Enterprise SSD for Silicon (Fabs/Memory).",
               "source": null,
               "url": null,
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Leading-Edge Logic Fabs",
+          "companies": []
+        },
+        {
+          "category": "HBM",
+          "companies": []
+        },
+        {
+          "category": "Conventional DRAM, NAND & Enterprise SSD",
+          "companies": []
+        },
+        {
+          "category": "Memory-Centric Co-Design & Processing-in-Memory",
+          "companies": []
         }
       ]
     },
     "compute": {
-      "overview": "Compute demand keeps outrunning supply: Nvidia and Broadcom both just posted record AI quarters (Nvidia's data center revenue hit $89B, Broadcom's AI semiconductor revenue jumped 221% YoY) while Marvell's expanded Google custom-silicon warrant deal shows hyperscalers actively diversifying their ASIC supply base beyond any single vendor. The binding constraint has shifted from GPU/ASIC design itself to the memory and packaging supply chain \u2014 an HBM/DRAM shortage severe enough that Nvidia delayed its next gaming GPU generation to protect AI-chip memory allocation \u2014 even as inference-focused challengers (Groq, SambaNova) reshuffle their business models and capital structures to chase the same compute crunch.",
+      "overview": "Custom silicon is scaling faster than the merchant GPU market can supply memory for it: Broadcom and Marvell both raised guidance this cycle on the strength of Google TPU, Anthropic, and Meta ASIC ramps, while AMD's MI450/Helios order book (Anthropic, OpenAI, Meta) is filling out ahead of shipments. The binding constraint has shifted from GPU logic dies to HBM4/CoWoS packaging capacity, which is now so tight it's delaying Nvidia's own consumer GPU roadmap and reshuffling which foundry/design partners (Broadcom, MediaTek, Marvell, now possibly AMD) win each hyperscaler's next TPU generation.",
       "categories": [
         {
           "category": "GPU/CPU/ASSP/ASIC (AI accelerators)",
@@ -1168,21 +1228,21 @@
           "companies": [
             {
               "company": "Google TPU",
-              "notes": "Public company operating in Hyperscaler Custom ASICs for Compute (GPU/ASIC).",
+              "notes": "Public company operating in Custom ASICs for Compute (GPU/ASIC).",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "Microsoft Maia",
-              "notes": "Public company operating in Hyperscaler Custom ASICs for Compute (GPU/ASIC).",
+              "notes": "Public company operating in Custom ASICs for Compute (GPU/ASIC).",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "Meta MTIA",
-              "notes": "Public company operating in Hyperscaler Custom ASICs for Compute (GPU/ASIC).",
+              "notes": "Public company operating in Custom ASICs for Compute (GPU/ASIC).",
               "source": null,
               "url": null,
               "diligenced": false
@@ -1194,7 +1254,7 @@
           "companies": [
             {
               "company": "Marvell",
-              "notes": "Public company operating in Frontier-Lab Co-design & ASIC Enablers for Compute (GPU/ASIC).",
+              "notes": "Public company operating in Co-design & packaging partners for Compute (GPU/ASIC).",
               "source": null,
               "url": null,
               "diligenced": false
@@ -1207,11 +1267,27 @@
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Merchant GPUs",
+          "companies": []
+        },
+        {
+          "category": "Custom ASICs",
+          "companies": []
+        },
+        {
+          "category": "Inference-specialist chips",
+          "companies": []
+        },
+        {
+          "category": "Co-design & packaging partners",
+          "companies": []
         }
       ]
     },
     "networking": {
-      "overview": "Every layer of the AI networking stack is re-rating upward simultaneously: transceiver makers are raising guidance mid-quarter on 1.6T ramp demand, co-packaged optics has crossed from demo to shipping product on Broadcom and Nvidia platforms, and switch vendors are posting record quarters as Ethernet displaces InfiniBand in AI back-ends. The key structural shift is that networking capex is increasingly gating AI buildouts as much as GPU supply, pushing hyperscalers and chipmakers to lock in optics capacity years in advance via direct equity investment rather than pure purchase orders.",
+      "overview": "Optical interconnect demand keeps outrunning supply as hyperscalers push through the 800G-to-1.6T transition, forcing capacity expansion at Lumentum and Coherent while co-packaged optics startups like Ayar Labs and Lightmatter cross from prototypes into paid production runs. Switching is being reshaped by Arista's continued share gains over Cisco and by HPE's Juniper integration landing marquee deals like Oracle's gigawatt-scale buildout, even as edge/quantum compute matures with Cerebras now public and SEEQC pushing cryogenic control chips toward commercial supply chains. The picture isn't uniformly bullish: a mid-September equity-offering scare at Corning knocked the whole optics complex down double digits, a reminder that valuations have run well ahead of proven CPO yields.",
       "categories": [
         {
           "category": "Telecom & data communication grid",
@@ -1365,6 +1441,20 @@
               "source": null,
               "url": null,
               "diligenced": false
+            },
+            {
+              "company": "Fabrinet",
+              "notes": "Public company operating in Optical transceivers for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Applied Optoelectronics",
+              "notes": "Public company operating in Optical transceivers for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
             }
           ]
         },
@@ -1374,6 +1464,13 @@
             {
               "company": "Broadcom",
               "notes": "Public company operating in Switches for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Nvidia photonic switches",
+              "notes": "Public company operating in Co-packaged optics for Networking.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -1391,11 +1488,23 @@
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Switches",
+          "companies": [
+            {
+              "company": "HPE-Juniper",
+              "notes": "Public company operating in Switches for Networking.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "serversdc": {
-      "overview": "Server OEMs and data center operators are riding a second wave of AI capex upgrades: Dell and HPE both raised full-year guidance and saw double-digit stock pops on record AI server backlogs, while Equinix used its first-ever customer summit to push into AI inference and complete a $4B Nordic acquisition. Meanwhile the operator layer is being reshaped by a private-equity-to-public pivot, with Vantage, CyrusOne and Switch all lining up IPOs even as projects like QTS's $30B Virginia campus get killed by permitting and community pushback, showing capital availability is outrunning physical siting capacity.",
+      "overview": "Server OEMs are posting record AI backlogs even as margins swing wildly on component costs, while data center operators are absorbing unprecedented sovereign and private-equity capital to build gigawatt-scale campuses faster than power and permitting can keep pace. Consolidation is accelerating at the top of the market (the $40B Aligned and $4.1B atNorth deals) even as local opposition kills individual projects like QTS's Digital Gateway, showing capital abundance and physical/regulatory constraints are now the defining tension in this layer.",
       "categories": [
         {
           "category": "Enterprise servers & compute hardware",
@@ -1497,11 +1606,19 @@
               "diligenced": true
             }
           ]
+        },
+        {
+          "category": "OEM AI Servers",
+          "companies": []
+        },
+        {
+          "category": "Neutral Interconnection & Edge",
+          "companies": []
         }
       ]
     },
     "cloud": {
-      "overview": "Hyperscaler cloud growth reaccelerated sharply in Q2 CY2026, with Google Cloud and Microsoft Azure both posting their fastest growth in years while combined Big Tech AI capex guidance pushed toward $700-800B for 2026, yet free cash flow at Amazon and Alphabet is compressing hard as spending outruns revenue recognition. Neoclouds CoreWeave and Nebius rode the same wave with triple-digit revenue growth and swelling backlogs, but their debt-heavy financing models drew fresh scrutiny in mid-August when rising rates triggered a sharp, if brief, selloff. The layer's central tension is now financing structure rather than demand: backlogs are enormous and real, but converting them into cash without over-leveraging balance sheets is the swing factor for 2027-2028.",
+      "overview": "Hyperscaler cloud capex and backlogs are still compounding rather than plateauing: Oracle, Microsoft, Google Cloud and AWS all posted record remaining performance obligations this quarter even as capital spending keeps getting revised upward and increasingly funded with debt. The constraint has shifted from chips to power and shells, forcing Microsoft into a multi-year, multi-gigawatt buildout plan after losing customers to rivals, while neoclouds like CoreWeave keep growing backlog faster than they can deploy it. The one crack this cycle is financing structure \u2014 Nvidia's pullback on vendor-backed revenue-share deals is forcing neoclouds to prove they can fund growth without circular support.",
       "categories": [
         {
           "category": "Hyperscale cloud platforms",
@@ -1568,18 +1685,38 @@
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Hyperscaler core cloud",
+          "companies": []
+        },
+        {
+          "category": "AI-native GPU neoclouds",
+          "companies": []
+        },
+        {
+          "category": "Custom silicon platforms",
+          "companies": [
+            {
+              "company": "Google TPU",
+              "notes": "Public company operating in Custom silicon platforms for Cloud.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
     "applications": {
-      "overview": "The application layer is compounding on two axes at once: frontier labs are shipping new flagship models almost monthly (GPT-6 Astra, Claude Fable/Mythos 5.1, Gemini 3.7/3.8 Flash, Grok 4.6) while enterprise incumbents (Salesforce, ServiceNow, Adobe, Microsoft) are converting agentic AI into real, fast-growing recurring revenue lines rather than pilots. At the same time, two IPO trains \u2014 OpenAI toward a reported $1T target and Anthropic toward a rumored $2T target as soon as October \u2014 are forcing public markets to price frontier-lab economics for the first time, even as reports of enterprises defecting to 'good enough' open-weight models introduce a genuine margin-compression risk.",
+      "overview": "The applications layer is compounding on two fronts at once: frontier labs are racing toward simultaneous mega-IPOs and releasing new flagship models within days of each other, while enterprise and consumer app makers are converting that firepower into real, fast-growing revenue (Salesforce's Agentforce, Harvey, Glean, ServiceNow). The bottleneck is shifting from model capability to monetization proof and distribution, as incumbents like Microsoft, Google, and Salesforce embed multiple third-party frontier models directly into their platforms rather than picking one winner.",
       "categories": [
         {
           "category": "Platform Distribution",
           "companies": [
             {
               "company": "Microsoft",
-              "notes": "Public company operating in Enterprise Copilots & Agent Platforms for Applications.",
+              "notes": "Public company operating in Enterprise AI tools for Applications.",
               "diligenced": false,
               "source": null,
               "url": null
@@ -1601,7 +1738,7 @@
           "companies": [
             {
               "company": "Google DeepMind",
-              "notes": "Public company operating in Frontier Foundation Models for Applications.",
+              "notes": "Public company operating in Frontier labs for Applications.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -1613,14 +1750,14 @@
           "companies": [
             {
               "company": "Salesforce Agentforce",
-              "notes": "Public company operating in Enterprise Copilots & Agent Platforms for Applications.",
+              "notes": "Public company operating in Enterprise AI tools for Applications.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "ServiceNow",
-              "notes": "Public company operating in Enterprise Copilots & Agent Platforms for Applications.",
+              "notes": "Public company operating in Enterprise AI tools for Applications.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -1651,19 +1788,35 @@
           "companies": [
             {
               "company": "ChatGPT/Gemini apps",
-              "notes": "Public company operating in Consumer AI Apps for Applications.",
+              "notes": "Public company operating in Consumer AI apps for Applications.",
               "source": null,
               "url": null,
               "diligenced": false
             },
             {
               "company": "Grok",
-              "notes": "Public company operating in Consumer AI Apps for Applications.",
+              "notes": "Public company operating in Consumer AI apps for Applications.",
               "source": null,
               "url": null,
               "diligenced": false
             }
           ]
+        },
+        {
+          "category": "Frontier labs",
+          "companies": [
+            {
+              "company": "Meta AI",
+              "notes": "Public company operating in Frontier labs for Applications.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
+        },
+        {
+          "category": "Enterprise AI tools",
+          "companies": []
         }
       ]
     }

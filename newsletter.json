@@ -278,6 +278,199 @@
           ]
         }
       }
+    },
+    {
+      "date": "2026-09-15",
+      "categories": {
+        "energy": {
+          "public": [
+            "The U.S. Department of Energy closed a loan of up to $1.9 billion to support NextEra's restart of the shuttered Duane Arnold nuclear plant in Iowa.",
+            "Bloom Energy is set to join the S&P 500 on September 21, 2026, after record Q2 revenue growth of over 166% driven by AI data center demand for its fuel cells.",
+            "FuelCell Energy signed its first-ever data center capacity reservation agreement, a planned 75MW project in Texas, pushing total backlog to $3.6 billion even as shares plunged 17% on an earnings miss.",
+            "Oklo entered into an equity distribution agreement with Goldman Sachs, BofA, Citigroup, J.P. Morgan and Morgan Stanley on September 11, 2026, as its shares continued to swing sharply.",
+            "NuScale's exclusive commercialization partner ENTRA1 continues to advance discussions with the Tennessee Valley Authority toward a definitive power purchase agreement that could become the largest nuclear deployment program in U.S. history."
+          ],
+          "private": [
+            "Kairos Power: Developer of a fluoride salt-cooled reactor building the Hermes demonstration units in Oak Ridge; completed the first phase of its ETU-3 hardware demonstration and named a new CFO in early September 2026.",
+            "TerraPower: Sodium-cooled Natrium reactor developer that officially started construction at Kemmerer, Wyoming in April 2026 and continues adding executive leadership, including a new Chief Nuclear Officer.",
+            "Elementl Power: Acquired a canceled coal-plant site in Ohio and filed a PJM interconnection request for 600MW as TVA's second BWRX-300 site partner, targeting construction in 2030 and commercial operation in 2034.",
+            "ENTRA1 Energy: NuScale's exclusive global commercialization partner, in active negotiations with TVA to deploy up to roughly 6GW of NuScale SMR capacity across multiple 12-module plants.",
+            "Helion Energy: Its Polaris prototype recently achieved measurable deuterium-tritium fusion at 150 million degrees Celsius, part of its push toward a 2028 power delivery target under its Microsoft agreement."
+          ],
+          "collaboration": [
+            "NuScale Power's exclusive commercialization partner ENTRA1 Energy continues negotiating a definitive power purchase agreement with the Tennessee Valley Authority for what could become the largest nuclear deployment program in U.S. history.",
+            "GE Vernova signed an agreement with private developer Blue Energy to advance a 2.5GW gas-plus-nuclear power plant in Texas built around GE Vernova's BWRX-300 SMR technology.",
+            "Google's power purchase agreement with Kairos Power to supply up to 50MW to TVA's grid for Google data centers remains a template deal as Kairos advances its Hermes reactor hardware milestones."
+          ]
+        },
+        "cooling": {
+          "public": [
+            "Trane Technologies and Eaton jointly unveiled an integrated power-and-cooling reference design aligned with Nvidia's DSX AI factory platform, claiming up to 15% efficiency gains, 30% lower installation costs and 80% less copper use.",
+            "Vertiv reported second-quarter 2026 diluted EPS growth of 53% (adjusted +60%) and raised full-year guidance across all key metrics on accelerating thermal and liquid-cooling demand.",
+            "Schneider Electric and AMD released their first jointly validated Helios rack-scale reference design, with Motivair liquid cooling removing up to 84% of rack heat and targeting a PUE as low as roughly 1.12.",
+            "Trane's LiquidStack business brought its GigaModular coolant distribution unit platform to commercial availability with expanded capacity up to 14 MW.",
+            "Modine Manufacturing disclosed a roughly $4 billion multi-year deal reserving its cooling-equipment manufacturing capacity for a major AI infrastructure customer."
+          ],
+          "private": [
+            "ZutaCore: Waterless two-phase direct-to-chip cooling for chips above 4,000W; raised a $100M Series C in June 2026 from Mitsubishi Electric, Carrier Ventures and Samsung Ventures, bringing total funding to roughly $200M with more than 75 deployments.",
+            "Accelsius: Austin-based developer of two-phase direct-to-chip systems using dielectric refrigerant; has raised roughly $169M total, including backing from Johnson Controls.",
+            "Corintis: Lausanne-based maker of microfluidic cold plates that route coolant directly through chip-level channels; has raised $53.2M from investors including BlueYard and Applied Digital, and appointed a new CFO in mid-2026.",
+            "Submer: Barcelona-based immersion cooling manufacturer offering modular pods; has raised roughly $102M and ranks among the leading independent immersion platforms.",
+            "GRC (Green Revolution Cooling): Austin-based single-phase immersion cooling pioneer that rebranded from Green Revolution Cooling to GRC in mid-2026 and expanded its turnkey integration partnership with UNICOM Engineering."
+          ],
+          "collaboration": [
+            "Taiwan's LITEON Technology agreed to acquire approximately 25% of Warsaw-based DCX Liquid Cooling Systems for about $176 million, announced September 3, 2026.",
+            "Ecolab closed its $4.75 billion acquisition of CoolIT Systems on July 2, 2026, folding the direct-to-chip cooling specialist into a Global High-Tech platform targeting $4 billion in sales by 2030.",
+            "ZutaCore's $100 million Series C round in June 2026 included strategic investment from Mitsubishi Electric and Samsung Electronics' venture arm, alongside Carrier Ventures."
+          ]
+        },
+        "power": {
+          "public": [
+            "Vicor's stock jumped over 11% after the company disclosed purchases of a 334,000-square-foot building in Merrimack, New Hampshire and 54 acres in nearby Hooksett to house new ChiP Fab-2 and Fab-3 capacity as its Andover fab nears its limit.",
+            "Powell Industries booked a record $934 million of new orders in its most recent quarter, nearly triple the prior year, pushing backlog to a record $2.4 billion, driven partly by mega data center awards.",
+            "GE Vernova's Electrification segment logged more than $5 billion of data-center orders year-to-date in 2026, more than double all of 2025, while the company commits roughly $1.3 billion to expand US manufacturing.",
+            "Eaton's Electrical Americas orders rose 41% and its Electrical Global backlog jumped 103%, underscoring how sharply order intake is outrunning current shipment capacity across the sector.",
+            "ABB announced a collaboration with Nvidia on 800V DC power architecture and 1-megawatt server rack support, positioning itself across the grid-to-rack power delivery chain."
+          ],
+          "private": [
+            "Emerald AI: Raised $150 million in an oversubscribed Series A at a $1.05 billion valuation to scale software that lets AI data centers dynamically flex power consumption to ease grid interconnection, with Nvidia, Siemens, and GE Vernova among the strategic investors.",
+            "Amperon: Houston-based AI-powered electricity demand forecasting company that has raised roughly $30 million to date and counts National Grid Partners and Energize Capital among its backers, with no major new funding news in this cycle.",
+            "Verrus: Sidewalk Infrastructure Partners-backed, Mountain View-based startup working on systems/grid-information management for flexible power delivery; a small team (33 employees) with no fresh funding disclosed this cycle.",
+            "VoltaGrid: Closed a $1.0 billion strategic equity investment from Blackstone Tactical Opportunities and Halliburton to fund growth and the acquisition of Propell, on top of ordering 1.5 GW of gas-engine generation from INNIO and extending its ABB power infrastructure partnership.",
+            "EnerVenue: Nickel-hydrogen battery maker that closed a $300 million Series B extension and named a new CEO, and has since launched a 150kWh 'Energy Rack' plug-and-play DC storage system rated for up to 30,000 cycles and 20-30 year life."
+          ],
+          "collaboration": [
+            "VoltaGrid received a $1.0 billion strategic equity investment from Blackstone Tactical Opportunities and Halliburton to fund growth and its acquisition of Propell.",
+            "Nvidia, Siemens, and GE Vernova were among the strategic investors in Emerald AI's $150 million Series A round to scale power-flexible AI data center software.",
+            "ABB extended its collaboration with VoltaGrid, winning additional large orders for data center power infrastructure to support AI-driven growth."
+          ]
+        },
+        "silicon": {
+          "public": [
+            "TSMC and Samsung have both committed to purchasing ASML's newest chipmaking tools as AI-driven demand strains existing capacity.",
+            "TSMC's August 2026 revenue surged 53.3% year-over-year to a record NT$514.81 billion, underscoring how strong AI-driven wafer demand remains.",
+            "SK Hynix committed roughly $38.1 billion to two new Korean fabs (Yongin Y2 and Cheongju M17) for next-generation HBM and DRAM, alongside a $28.2 billion share buyback, and broke ground on a $4 billion Indiana packaging plant targeting U.S. HBM supply by 2029.",
+            "Nvidia disclosed that its supply and capacity commitments jumped from $119 billion to $279 billion, with $267 billion earmarked for memory procurement through fiscal 2029, split mainly among Micron, SK Hynix and Samsung.",
+            "SK Hynix shares jumped roughly 7% and Samsung climbed 4-5% after OpenAI's Astra model release reignited investor confidence that AI memory demand isn't slowing."
+          ],
+          "private": [
+            "Ayar Labs: Develops optical I/O chiplets to bypass copper interconnect bottlenecks between GPUs and memory; raised an additional $150 million in 2026 (bringing the year's primary capital to $650 million) with a new strategic investment from Taiwanese server maker Wiwynn.",
+            "Lightmatter: Photonic-compute and interconnect company whose Passage interposer targets supercomputer-scale GPU clusters; remains the highest-profile independent photonics platform alongside Ayar Labs, each having raised roughly $850 million to date.",
+            "Celestial AI: Built a 'Photonic Fabric' optical memory-interconnect platform aimed at expanding GPU memory bandwidth; agreed to be acquired by Marvell for $3.25 billion, folding its technology into a public chipmaker's roadmap rather than continuing independently.",
+            "Salience Labs: Uses silicon photonics to switch optical traffic between compute systems, operating one layer above pure interconnect chiplets in the optical stack.",
+            "EnCharge AI: Princeton spinout building charge-domain analog in-memory-computing chips claiming up to 20x the energy efficiency of digital AI accelerators; recently won an $18.6 million DARPA OPTIMA award with Princeton to advance compute-in-memory technology for edge inference."
+          ],
+          "collaboration": [
+            "Marvell agreed to acquire optical memory-interconnect startup Celestial AI for $3.25 billion, absorbing its Photonic Fabric technology into Marvell's data-center roadmap.",
+            "Taiwanese server maker Wiwynn made a strategic investment in optical-interconnect startup Ayar Labs as part of its latest $150 million funding tranche, aimed at reducing copper-interconnect power and complexity for rack-scale AI data centers."
+          ]
+        },
+        "compute": {
+          "public": [
+            "Broadcom said on its September 2 earnings call that it's deploying 1 gigawatt of Google's Ironwood TPU for Anthropic in 2026, with another 5 gigawatts of TPU v8i planned for 2027 and 10 more incremental gigawatts beyond that.",
+            "Marvell told Citi's TMT conference it raised its combined fiscal 2027-2028 revenue outlook to $30 billion from $20 billion a year earlier, with custom ASIC/XPU-attach revenue targeted to reach $10-11 billion by fiscal 2029.",
+            "AMD's disclosed MI450/Helios customer commitments now include Anthropic for up to 2 gigawatts, OpenAI for 6 gigawatts, and Meta for up to 6 gigawatts of custom MI450-based silicon.",
+            "Nvidia has shelved its RTX 50 Super refresh and pushed the next-gen RTX 60 series to 2028 as a global DRAM/HBM shortage forces it to funnel scarce memory toward its far more profitable AI accelerators instead of gaming cards.",
+            "Micron's HBM4 is already in high-volume production for Nvidia's upcoming Vera Rubin platform, delivering over 2.8 TB/s of bandwidth per stack, giving Micron unusual pricing power amid the ongoing memory crunch."
+          ],
+          "private": [
+            "SambaNova: Raised $1 billion at an $11 billion valuation in a General Atlantic-led Series F, with its new SN50 chip beginning shipments in the second half of 2026 with SoftBank as first deployment partner.",
+            "Tenstorrent: Reportedly in talks to be acquired by Qualcomm for $8-10 billion as of mid-2026, while continuing to expand its RISC-V AI accelerator lineup and Japan sovereign-AI partnerships.",
+            "Groq: Pivoted from building its own LPU chips to operating an Nvidia-powered inference neocloud, raising $350 million at a $3.5 billion valuation (roughly half its prior mark) after licensing its hardware IP to Nvidia in a $20 billion deal.",
+            "Lambda: In talks to raise up to $3 billion at a valuation as high as $12 billion to set up a 2027 IPO, backed by Nvidia among others, amid a rockier public market for neoclouds like CoreWeave and Oracle.",
+            "EnCharge AI: Continues scaling its charge-based analog in-memory accelerator business, growing headcount to 83 as of March 2026, though no new funding round has been disclosed since its $100 million Series B."
+          ],
+          "collaboration": [
+            "Nvidia participated as an investor in Groq's $350 million Series A round, deepening ties after its earlier IP-licensing and talent deal with the startup.",
+            "Qualcomm is reportedly in talks to acquire Tenstorrent for between $8 billion and $10 billion.",
+            "JPMorgan Chase became the latest major enterprise to select SambaNova's RDU chips for fast, on-premises AI inference as part of SambaNova's $1 billion Series F raise."
+          ]
+        },
+        "networking": {
+          "public": [
+            "Optical and photonics stocks including Corning, Coherent, Lumentum and Fabrinet sold off sharply on September 15, triggered by Corning's $2 billion at-the-market equity offering and weekend commentary about slowing frontier AI model development.",
+            "HPE reported networking revenue up 10% year-over-year and networking orders up 36% (cloud/AI orders up about 75%) in fiscal Q3 2026, guiding to 14-17% networking growth in fiscal 2027 as Juniper synergies build.",
+            "HPE announced an expanded collaboration with Oracle on September 2 to deploy HPE Juniper Networking across one of the industry's largest gigawatt-scale AI infrastructure buildouts.",
+            "Arista Networks is set to join the S&P 100 index effective September 21, 2026, alongside a week of gains tied to renewed investor confidence in AI capex exposure.",
+            "Now publicly traded Cerebras (Nasdaq: CBRS) launched its CS-4 system at its August Supernova event, claiming up to 30x faster inference than GPU-based solutions and reporting roughly 91% year-over-year revenue growth."
+          ],
+          "private": [
+            "Ayar Labs: Develops UCIe-compatible optical I/O chiplets (TeraPHY) and light sources (SuperNova) for GPU scale-up; disclosed on September 10 a further $150M raise bringing 2026 primary funding to $650M, with cloud infrastructure provider Wiwynn joining as a strategic investor alongside AMD and Nvidia.",
+            "Lightmatter: Builds photonic interposers and CPO chiplets (Passage L200/L200X, 32-64 Tb/s bandwidth) that are now entering customer chip integration in 2026 via packaging partners GlobalFoundries, ASE and Amkor.",
+            "Celestial AI: Former independent Photonic Fabric optical interconnect pioneer; no longer a private company after Marvell completed its roughly $3.25 billion acquisition in February 2026.",
+            "Xscape Photonics: Develops frequency-comb-based multi-wavelength lasers for AI data center fabrics; raised an additional $37M in March 2026 (Series A total $81M) and launched its FalconX eight-wavelength external laser module.",
+            "SEEQC: Builds digital superconducting control/readout chips designed to sit alongside qubits at millikelvin temperatures; signed an MoU with Taiwan's QITPO in September 2026 to build a cryo-chip manufacturing supply chain and continues integrating its digital interface with Nvidia's NVQLink."
+          ],
+          "collaboration": [
+            "Ayar Labs disclosed on September 10 that cloud infrastructure provider Wiwynn made a strategic investment as part of $650 million raised in 2026, joining public backers AMD and Nvidia.",
+            "Ayar Labs joined Nvidia's NVLink Fusion ecosystem in June 2026, making its co-packaged optics electrically and optically compatible with Nvidia's rack-scale AI platforms.",
+            "Marvell Technology completed its roughly $3.25 billion acquisition of Celestial AI in February 2026, bringing the startup's Photonic Fabric optical interconnect technology into Marvell's data infrastructure portfolio."
+          ]
+        },
+        "serversdc": {
+          "public": [
+            "Dell Technologies exited its fiscal Q2 2027 with a record $95 billion AI server backlog after booking $60.9 billion in new orders, and raised its full-year revenue outlook to roughly $192 billion.",
+            "HPE reported record fiscal Q3 revenue of $12.2 billion (+34% YoY), raised its outlook, and saw shares jump over 12% on an expanded Oracle AI data center collaboration alongside the launch of its Nvidia Vera CPU-based server line.",
+            "Equinix expanded its Nvidia collaboration and partnered with Together AI to launch Equinix Inference Exchange, plus unveiled Equinix Fabric One for multi-cloud/multi-model AI connectivity.",
+            "Supermicro's non-GAAP gross margin spiked to 17.6% in fiscal Q4 2026 versus 8% guidance, but management attributed most of the gain to one-time deferred contracts and guided next-quarter margin back down to roughly 10.5%.",
+            "Iron Mountain executives told the Goldman Sachs Communacopia conference the company is cross-selling data center and digital solutions to its base of 245,000 business clients, more than 95% of which are Fortune 1000 companies."
+          ],
+          "private": [
+            "Vantage Data Centers: Silver Lake/DigitalBridge-backed developer building a 1.4GW Texas 'Frontier' campus and exploring a roughly $100 billion IPO, and just closed a $2 billion North American development credit facility.",
+            "STACK Infrastructure: Denver-based global developer delivering Oracle's Stargate campus in New Mexico, though it recently had a \u20ac3 billion German (Hesse) project canceled amid local permitting resistance.",
+            "Compass Datacenters: Brookfield/KKR-backed developer that established a permanent capital partnership with KKR and has also raised hundreds of millions via ABS bonds backed by operational campuses.",
+            "Aligned Data Centers: North Texas-based developer with 51 campuses and 6.4GW of capacity, now owned by a BlackRock GIP/MGX-led consortium after a record $40 billion acquisition plus $5 billion of added growth capital.",
+            "QTS Data Centers: Blackstone-owned operator that formally abandoned its 2,100-acre 'Digital Gateway' Virginia mega-campus after years of litigation, while Blackstone explores a new publicly traded AI data center acquisition vehicle."
+          ],
+          "collaboration": [
+            "Equinix and Canada Pension Plan Investment Board completed a $4.1 billion joint acquisition of Nordic data center operator atNorth, with Equinix taking a roughly 34% stake.",
+            "BlackRock's Global Infrastructure Partners, together with MGX and the AI Infrastructure Partnership, closed their $40 billion acquisition of Aligned Data Centers and committed an additional $5 billion in growth capital.",
+            "Equinix and South Korean AI chip startup FuriosaAI announced a partnership to target Europe's sovereign AI demand, with plans to expand the collaboration into the Americas and Southeast Asia."
+          ]
+        },
+        "cloud": {
+          "public": [
+            "Oracle's fiscal Q1 2027 results showed cloud infrastructure revenue more than doubling to $7.4 billion, remaining performance obligations climbing to $664 billion, and quarterly capex surging to $28.5 billion as the company delivered 850 megawatts of new data center capacity.",
+            "Bloomberg reported Microsoft plans to more than triple its global data center capacity to over 38 gigawatts by 2032 after capacity bottlenecks caused it to lose clients like Temu and reroute GitHub's AI traffic to AWS.",
+            "CoreWeave's revenue backlog reached $104.2 billion at the end of its second quarter, up 246% year-over-year, with more than $25 billion of additional net new customer commitments signed in early Q3 not yet reflected in that figure.",
+            "Nvidia paused parts of its AI Compute Partnership revenue-sharing financing program for neoclouds, covering roughly $36 billion in commitments, sending CoreWeave, Nebius and IREN shares lower on renewed circular-financing concerns.",
+            "Alphabet raised its 2026 capex guidance to $195-205 billion after Google Cloud revenue grew 82% year-over-year to $24.8 billion and its contract backlog climbed to $514 billion."
+          ],
+          "private": [
+            "Lambda: GPU cloud provider in talks to raise $350 million in pre-IPO convertible notes led by Mubadala Capital ahead of a targeted second-half-2026 IPO, on top of a multi-billion-dollar Microsoft GPU deal and a $1.5 billion Nvidia lease-back agreement.",
+            "Crusoe: Vertically-integrated 'AI factory' company with contracted infrastructure capacity approaching 5 gigawatts, building Oracle's Abilene Stargate campus and a separate Abilene campus for Microsoft, and recently opened a second Tulsa manufacturing facility and a nuclear-power partnership with Aalo Atomics.",
+            "Nscale: UK-based AI data center developer preparing a US IPO as early as September targeting up to $3 billion, having disclosed roughly $51 billion in total contracted revenue and agreed to acquire distributed AI software firm Anyscale for about $1.65 billion.",
+            "FluidStack: GPU cloud provider reported to have secured borrowing capacity of up to $10 billion from Macquarie and other lenders to fund infrastructure expansion.",
+            "Groq: Pivoted from a Language Processing Unit chipmaker into a neocloud operator after Nvidia's roughly $20 billion non-exclusive licensing deal poached its founder and top executives, raising $350 million at a $3.5 billion valuation with Nvidia set to participate."
+          ],
+          "collaboration": [
+            "Microsoft signed a multi-billion-dollar contract with Lambda for GPU cloud access, while Lambda separately agreed to a $1.5 billion GPU capacity lease-back deal with Nvidia.",
+            "Oracle's flagship 1.2GW Abilene, Texas Stargate campus is being built by Crusoe as the developer, with Oracle as Crusoe's direct customer and OpenAI as Oracle's downstream customer; Crusoe also broke ground on a second, separate Abilene campus for Microsoft.",
+            "Nvidia is set to invest in Groq's new $350 million funding round as Groq transitions from chip licensing partner to Nvidia-powered neocloud operator."
+          ]
+        },
+        "applications": {
+          "public": [
+            "Salesforce introduced seven named, job-ready Agentforce agents spanning sales, service, commerce and back-office work, with Agentforce ARR having crossed $1.5 billion.",
+            "Alphabet opened September by launching Gemini 3.8 Flash alongside a new cybersecurity model for enterprise and government customers, while also winning a federal ruling against a DOJ push to force an ad-exchange breakup.",
+            "Microsoft began rolling out GPT-6 Astra as a selectable model inside Copilot Cowork and Copilot Studio in early September, continuing its multi-model strategy across Microsoft 365.",
+            "ServiceNow's Now Assist AI product crossed $1 billion in annual contract value in Q2 2026, prompting the company to raise its full-year AI revenue forecast toward $1.5 billion.",
+            "Meta released Muse Spark 1.3 on September 2, its latest model in the line that replaced Llama as Meta's flagship family, aimed at advancing 'personal superintelligence.'"
+          ],
+          "private": [
+            "OpenAI: Rolled out its GPT-6 Astra model across ChatGPT tiers and API in early September and completed a $7 billion employee share sale reaffirming an $852 billion valuation ahead of a possible IPO.",
+            "Anthropic: Reportedly chose Nasdaq for its anticipated IPO, expects an operating profit this quarter, and finalized a $15 billion pre-IPO credit facility while walking away from a $6 billion Decart acquisition.",
+            "xAI: Grok 4.7 slipped past its September 12 target even as xAI shipped Grok Bot sales connectors for Salesforce, HubSpot and Gong and closed its roughly $60 billion Cursor acquisition.",
+            "Mistral AI: Raised a \u20ac3 billion Series D at a post-money valuation above \u20ac21 billion, the largest European tech equity round on record, led by Samsung Electronics.",
+            "Harvey: Raised $550 million at a $15.5 billion valuation after launching its first post-trained open-weight legal model and a benchmarking product, and acquired AI-guardrails startup Guardrails AI."
+          ],
+          "collaboration": [
+            "Salesforce deepened its partnership with Anthropic through 'Claudeforce,' reaching general availability in September 2026 to push Salesforce customer data into Claude across Slack, Teams and ChatGPT.",
+            "Samsung Electronics led Mistral AI's \u20ac3 billion Series D funding round, valuing the French lab at more than \u20ac21 billion.",
+            "ServiceNow acquired Israeli AI startup Sweep, which builds an agentic governance layer connecting platforms including Salesforce and HubSpot, in a deal worth hundreds of millions of dollars."
+          ]
+        }
+      }
     }
   ]
 }
