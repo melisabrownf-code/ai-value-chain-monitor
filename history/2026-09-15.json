@@ -191,8 +191,8 @@
       "timeline": {
         "rows": [
           [
-            "Switchgear & Transformers (ABB, Siemens, Eaton, Schneider, GE Vernova, Powell Industries)",
-            "Medium-voltage switchgear runs 52-80 weeks and substation transformers 75-150+ weeks; large HV units can reach 3-5 years, prompting a federal Defense Production Act declaration on grid equipment",
+            "Switchgear & Transformers (ABB, Siemens, Eaton, Schneider, GE Vernova, Powell Industries, Forgent Power Solutions)",
+            "Medium-voltage switchgear runs 52-80 weeks and substation transformers 75-150+ weeks; large HV units can reach 3-5 years, prompting a federal Defense Production Act declaration on grid equipment. Newly-public Forgent Power Solutions (NYSE: FPS, IPO'd Feb 2026) posted a $1.98B backlog (+157% YoY) and $379M Q3 revenue (+103% YoY, 2.3x book-to-bill); Powell Industries (POWL) hit a record $2.4B backlog on +9% YoY revenue; GE Vernova's Electrification segment backlog reached $40.6B (+69% YoY).",
             "Capacity investments (Siemens' $185M Georgia plant, GE Vernova's Prolec integration, ABB and Hitachi Energy expansions) begin shipping incremental volume, trimming the worst outlier lead times but not the aggregate backlog",
             "Reshored/expanded manufacturing plus solid-state transformer pilots could compress typical lead times toward pre-2023 norms for standard classes, though GSU and HV units likely remain multi-year"
           ],
@@ -222,44 +222,6 @@
           "2030"
         ]
       },
-      "tables": [
-        {
-          "title": "Transformer & switchgear comps",
-          "refreshed": "snapshot",
-          "trendColumn": false,
-          "note": "Hand-pulled from Q1-Q3 FY2026 earnings releases and SEC filings (see per-row sourcing) around Forgent Power Solutions' Feb 2026 IPO. This is a dated snapshot, not a live feed -- these figures age fast in a market this hot, so revisit and refresh periodically rather than treating them as current.",
-          "columns": [
-            "Company",
-            "Ticker",
-            "Latest reported backlog",
-            "Latest reported growth",
-            "Note"
-          ],
-          "rows": [
-            [
-              "Forgent Power Solutions",
-              "NYSE: FPS",
-              "$1.98B (Q3 FY26, +157% YoY, +33% seq.)",
-              "Q3 FY26 revenue $379M (+103% YoY); book-to-bill 2.3x",
-              "Newest public pure-play -- IPO'd Feb 2026 (~$1.7B offering). FY26 guidance raised to $1.35-1.39B revenue."
-            ],
-            [
-              "Powell Industries",
-              "NASDAQ: POWL",
-              "$2.4B (Q3 FY26, record)",
-              "Q3 FY26 revenue +9% YoY; record orders of $934M in the quarter",
-              "Established mid-cap pure-play (medium-voltage switchgear, 480V-38kV circuit breakers). Backlog gives visibility through FY2028."
-            ],
-            [
-              "GE Vernova (Electrification segment)",
-              "NYSE: GEV",
-              "$40.6B segment backlog (Q2 FY26, +69% YoY)",
-              "Q2 FY26 segment revenue $3.6B (+68% YoY, +29% organic); book-to-bill ~1.7x",
-              "A segment of a much larger diversified company, not a pure play -- included for scale context against the two above."
-            ]
-          ]
-        }
-      ],
       "diagrams": []
     },
     {

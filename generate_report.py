@@ -92,7 +92,11 @@ SEGMENTS = [
                      "nodes). Frame the transformer bottleneck structurally, not just as one project's scale problem: "
                      "multiple gigawatt-scale hyperscaler campuses reaching operational readiness in the same window "
                      "is what actually overwhelms lead times that can run years for the largest EHV units -- capital "
-                     "availability doesn't fix a physics-and-manufacturing-capacity constraint"},
+                     "availability doesn't fix a physics-and-manufacturing-capacity constraint. In the switchgear/"
+                     "transformer timeline row specifically, name the latest reported backlog and revenue growth "
+                     "(with book-to-bill where available) for the pure-play names -- Forgent Power Solutions, Powell "
+                     "Industries, GE Vernova's Electrification segment -- not just qualitative lead-time commentary, "
+                     "since order books are the clearest signal of how tight this market actually is"},
     {"id": "silicon", "label": "Silicon (Fabs/Memory)", "prompt_focus": "leading-edge fabs (TSMC, Samsung, Intel Foundry) "
                      "and memory makers (SK Hynix, Samsung, Micron, Kioxia, SanDisk), process node roadmaps, and "
                      "the AI-driven DRAM/NAND/HBM supply-demand cycle (pricing, capacity allocation, and capex "
@@ -221,37 +225,6 @@ STATIC_TABLES = {
                 ["HBF (High Bandwidth Flash)", "Med", "High", "Med", "Low", "Below baseline", "Proposed 2025 (SanDisk/SK Hynix); NAND-based, targets AI-inference capacity at lower cost than HBM, not yet in production"],
                 ["Z-NAND", "Med", "High", "Med", "Med", "Below baseline (premium vs. standard NAND)", "Mainstream — Samsung's ultra-low-latency NAND, positioned between DRAM and standard NAND for latency-sensitive enterprise SSDs"],
                 ["PIM / CIM (processing-in-memory)", "High (for supported ops)", "Same as host medium", "High (cuts data movement)", "Depends on host medium", "Premium (added logic)", "Early R&D — mixes logic into DRAM/NAND, a break from Von Neumann architecture; requires processor/software/system redesign so adoption has been very limited despite years of exploration (e.g. Samsung)"],
-            ],
-        }
-    ],
-    "power": [
-        {
-            "title": "Transformer & switchgear comps",
-            "refreshed": "snapshot",
-            "trendColumn": False,
-            "note": (
-                "Hand-pulled from Q1-Q3 FY2026 earnings releases and SEC filings (see per-row "
-                "sourcing) around Forgent Power Solutions' Feb 2026 IPO. This is a dated snapshot, "
-                "not a live feed -- these figures age fast in a market this hot, so revisit and "
-                "refresh periodically rather than treating them as current."
-            ),
-            "columns": ["Company", "Ticker", "Latest reported backlog", "Latest reported growth", "Note"],
-            "rows": [
-                [
-                    "Forgent Power Solutions", "NYSE: FPS", "$1.98B (Q3 FY26, +157% YoY, +33% seq.)",
-                    "Q3 FY26 revenue $379M (+103% YoY); book-to-bill 2.3x",
-                    "Newest public pure-play -- IPO'd Feb 2026 (~$1.7B offering). FY26 guidance raised to $1.35-1.39B revenue.",
-                ],
-                [
-                    "Powell Industries", "NASDAQ: POWL", "$2.4B (Q3 FY26, record)",
-                    "Q3 FY26 revenue +9% YoY; record orders of $934M in the quarter",
-                    "Established mid-cap pure-play (medium-voltage switchgear, 480V-38kV circuit breakers). Backlog gives visibility through FY2028.",
-                ],
-                [
-                    "GE Vernova (Electrification segment)", "NYSE: GEV", "$40.6B segment backlog (Q2 FY26, +69% YoY)",
-                    "Q2 FY26 segment revenue $3.6B (+68% YoY, +29% organic); book-to-bill ~1.7x",
-                    "A segment of a much larger diversified company, not a pure play -- included for scale context against the two above.",
-                ],
             ],
         }
     ],
