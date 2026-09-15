@@ -292,7 +292,7 @@
           "title": "Memory technology comparison (vs. DRAM baseline)",
           "refreshed": "static",
           "trendColumn": false,
-          "note": "Technology characteristics, not company-specific \u2014 this reference table doesn't need to move every cycle the way the timeline does.",
+          "note": "Technology characteristics, not company-specific \u2014 this reference table doesn't need to move every cycle the way the timeline does. CXL (Compute Express Link) is a related but separate development worth tracking: an interconnect/pooling standard for treating external DRAM as expandable, shared capacity, not a new memory cell technology, so it doesn't get its own row here.",
           "columns": [
             "Memory type",
             "Speed",
@@ -383,8 +383,43 @@
               "High",
               "Low (in theory)",
               "Early R&D \u2014 neuromorphic angle"
+            ],
+            [
+              "HBF (High Bandwidth Flash)",
+              "Med",
+              "High",
+              "Med",
+              "Low",
+              "Below baseline",
+              "Proposed 2025 (SanDisk/SK Hynix); NAND-based, targets AI-inference capacity at lower cost than HBM, not yet in production"
+            ],
+            [
+              "Z-NAND",
+              "Med",
+              "High",
+              "Med",
+              "Med",
+              "Below baseline (premium vs. standard NAND)",
+              "Mainstream \u2014 Samsung's ultra-low-latency NAND, positioned between DRAM and standard NAND for latency-sensitive enterprise SSDs"
+            ],
+            [
+              "PIM / CIM (processing-in-memory)",
+              "High (for supported ops)",
+              "Same as host medium",
+              "High (cuts data movement)",
+              "Depends on host medium",
+              "Premium (added logic)",
+              "Early R&D \u2014 mixes logic into DRAM/NAND, a break from Von Neumann architecture; requires processor/software/system redesign so adoption has been very limited despite years of exploration (e.g. Samsung)"
             ]
           ]
+        }
+      ],
+      "diagrams": [
+        {
+          "title": "Memory hardware hierarchy",
+          "refreshed": "static",
+          "note": "Classic speed/cost memory pyramid, annotated with where the newer technologies in the table above sit. HBM/MRDIMM/SOCAMM2/LPCAMM2 are DRAM-tier form factors; MRAM/PCM/RRAM/Z-NAND sit in the 'storage class memory' tier bridging DRAM and NAND; HBF is NAND-tier.",
+          "svg": "<svg viewBox=\"0 0 760 460\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"inherit\">\n  <text x=\"380\" y=\"24\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"15\" font-weight=\"600\">Memory Hardware Hierarchy</text>\n\n  <!-- axis arrows -->\n  <line x1=\"40\" y1=\"385\" x2=\"40\" y2=\"45\" stroke=\"var(--text-faint)\" stroke-width=\"1.5\" marker-end=\"url(#mh-arrow)\"/>\n  <text x=\"28\" y=\"215\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\" transform=\"rotate(-90 28 215)\">Faster access time</text>\n  <line x1=\"70\" y1=\"45\" x2=\"70\" y2=\"385\" stroke=\"var(--text-faint)\" stroke-width=\"1.5\" marker-end=\"url(#mh-arrow)\"/>\n  <text x=\"82\" y=\"215\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\" transform=\"rotate(-90 82 215)\">Lower cost</text>\n  <defs>\n    <marker id=\"mh-arrow\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\">\n      <path d=\"M0,0 L8,4 L0,8 z\" fill=\"var(--text-faint)\"/>\n    </marker>\n  </defs>\n\n  <!-- volatile / non-volatile brackets -->\n  <path d=\"M 108,30 Q 96,90 108,150\" fill=\"none\" stroke=\"var(--text-faint)\" stroke-width=\"1.5\"/>\n  <text x=\"120\" y=\"90\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\" transform=\"rotate(-90 120 90)\">Volatile</text>\n  <path d=\"M 108,150 Q 96,270 108,390\" fill=\"none\" stroke=\"var(--text-faint)\" stroke-width=\"1.5\"/>\n  <text x=\"120\" y=\"270\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\" transform=\"rotate(-90 120 270)\">Non-volatile</text>\n\n  <!-- pyramid bands, apex (300,30) to base (120,390)-(480,390) -->\n  <polygon points=\"300,30 330,90 270,90\" fill=\"#c0392b\"/>\n  <polygon points=\"270,90 330,90 360,150 240,150\" fill=\"#d9702c\"/>\n  <polygon points=\"240,150 360,150 390,210 210,210\" fill=\"#d9a83a\"/>\n  <polygon points=\"210,210 390,210 420,270 180,270\" fill=\"#c9c23a\"/>\n  <polygon points=\"180,270 420,270 450,330 150,330\" fill=\"#7fae5a\"/>\n  <polygon points=\"150,330 450,330 480,390 120,390\" fill=\"#3f7a52\"/>\n\n  <text x=\"300\" y=\"72\" text-anchor=\"middle\" fill=\"#1a1f26\" font-size=\"10\" font-weight=\"600\">SRAM</text>\n  <text x=\"300\" y=\"125\" text-anchor=\"middle\" fill=\"#1a1f26\" font-size=\"12\" font-weight=\"600\">DRAM</text>\n  <text x=\"300\" y=\"180\" text-anchor=\"middle\" fill=\"#1a1f26\" font-size=\"11\" font-weight=\"600\">Storage Class Memory</text>\n  <text x=\"300\" y=\"245\" text-anchor=\"middle\" fill=\"#1a1f26\" font-size=\"12\" font-weight=\"600\">NAND</text>\n  <text x=\"300\" y=\"305\" text-anchor=\"middle\" fill=\"#1a1f26\" font-size=\"12\" font-weight=\"600\">HDD</text>\n  <text x=\"300\" y=\"365\" text-anchor=\"middle\" fill=\"#1a1f26\" font-size=\"12\" font-weight=\"600\">Tape</text>\n\n  <!-- annotations -->\n  <line x1=\"360\" y1=\"120\" x2=\"500\" y2=\"120\" stroke=\"var(--text-faint)\" stroke-width=\"1.25\"/>\n  <text x=\"508\" y=\"105\" fill=\"var(--text)\" font-size=\"11\">HBM, XBM, ZAM, HBC,</text>\n  <text x=\"508\" y=\"122\" fill=\"var(--text)\" font-size=\"11\">MRDIMM, SOCAMM2,</text>\n  <text x=\"508\" y=\"139\" fill=\"var(--text)\" font-size=\"11\">LPCAMM2</text>\n\n  <line x1=\"390\" y1=\"180\" x2=\"500\" y2=\"190\" stroke=\"var(--text-faint)\" stroke-width=\"1.25\"/>\n  <text x=\"508\" y=\"185\" fill=\"var(--text)\" font-size=\"11\">MRAM, PCM (inc. XPoint),</text>\n  <text x=\"508\" y=\"202\" fill=\"var(--text)\" font-size=\"11\">RRAM, Z-NAND, XL-FLASH</text>\n\n  <line x1=\"420\" y1=\"240\" x2=\"500\" y2=\"250\" stroke=\"var(--text-faint)\" stroke-width=\"1.25\"/>\n  <text x=\"508\" y=\"255\" fill=\"var(--text)\" font-size=\"11\">HBF</text>\n</svg>"
         }
       ]
     },

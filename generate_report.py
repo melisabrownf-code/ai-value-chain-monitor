@@ -76,7 +76,10 @@ MODEL = "claude-sonnet-5"
 SEGMENTS = [
     {"id": "energy", "label": "Energy", "prompt_focus": "renewables (NextEra, Duke, Enphase), nuclear restarts and PPAs, "
                      "small modular reactors (NuScale, Oklo, X-energy, Kairos, GE Vernova), fusion (Helion), "
-                     "and grid-scale storage (Form Energy, 4th Power) for AI data centers"},
+                     "grid-scale storage (Form Energy, 4th Power), and behind-the-meter power -- fuel cells "
+                     "(Bloom Energy's solid oxide fuel cells, Plug Power, FuelCell Energy) and other on-site "
+                     "generation that lets a data center add power without waiting in the grid interconnection "
+                     "queue -- for AI data centers"},
     {"id": "cooling", "label": "Cooling", "prompt_focus": "air/RDHX cooling (Vertiv, Schneider, Siemens), direct-to-chip "
                      "liquid cooling (JetCool, CoolIT), and immersion cooling (Iceotope, LiquidStack, Submer) adoption"},
     {"id": "power", "label": "Power (Grid/UPS)", "prompt_focus": "grid and UPS equipment (ABB, Eaton, Siemens, Schneider), "
@@ -211,6 +214,69 @@ STATIC_TABLES = {
                 ["Z-NAND", "Med", "High", "Med", "Med", "Below baseline (premium vs. standard NAND)", "Mainstream — Samsung's ultra-low-latency NAND, positioned between DRAM and standard NAND for latency-sensitive enterprise SSDs"],
                 ["PIM / CIM (processing-in-memory)", "High (for supported ops)", "Same as host medium", "High (cuts data movement)", "Depends on host medium", "Premium (added logic)", "Early R&D — mixes logic into DRAM/NAND, a break from Von Neumann architecture; requires processor/software/system redesign so adoption has been very limited despite years of exploration (e.g. Samsung)"],
             ],
+        }
+    ]
+}
+
+# Same "static, hand-maintained, doesn't move every cycle" contract as STATIC_TABLES above --
+# a diagram alongside the memory technology table. Recreated from a memory-hierarchy pyramid
+# in a Bernstein analyst survey (via a user-shared newsletter primer, Aug 2026): the classic
+# speed/cost memory pyramid (SRAM down to tape) annotated with where newer technologies from
+# that survey -- and the ones just added to the table above -- actually sit in the hierarchy.
+STATIC_DIAGRAMS = {
+    "silicon": [
+        {
+            "title": "Memory hardware hierarchy",
+            "refreshed": "static",
+            "note": "Classic speed/cost memory pyramid, annotated with where the newer technologies in the table above sit. HBM/MRDIMM/SOCAMM2/LPCAMM2 are DRAM-tier form factors; MRAM/PCM/RRAM/Z-NAND sit in the 'storage class memory' tier bridging DRAM and NAND; HBF is NAND-tier.",
+            "svg": """<svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" font-family="inherit">
+  <text x="380" y="24" text-anchor="middle" fill="var(--text)" font-size="15" font-weight="600">Memory Hardware Hierarchy</text>
+
+  <!-- axis arrows -->
+  <line x1="40" y1="385" x2="40" y2="45" stroke="var(--text-faint)" stroke-width="1.5" marker-end="url(#mh-arrow)"/>
+  <text x="28" y="215" text-anchor="middle" fill="var(--text-dim)" font-size="11" transform="rotate(-90 28 215)">Faster access time</text>
+  <line x1="70" y1="45" x2="70" y2="385" stroke="var(--text-faint)" stroke-width="1.5" marker-end="url(#mh-arrow)"/>
+  <text x="82" y="215" text-anchor="middle" fill="var(--text-dim)" font-size="11" transform="rotate(-90 82 215)">Lower cost</text>
+  <defs>
+    <marker id="mh-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="var(--text-faint)"/>
+    </marker>
+  </defs>
+
+  <!-- volatile / non-volatile brackets -->
+  <path d="M 108,30 Q 96,90 108,150" fill="none" stroke="var(--text-faint)" stroke-width="1.5"/>
+  <text x="120" y="90" text-anchor="middle" fill="var(--text-dim)" font-size="10" transform="rotate(-90 120 90)">Volatile</text>
+  <path d="M 108,150 Q 96,270 108,390" fill="none" stroke="var(--text-faint)" stroke-width="1.5"/>
+  <text x="120" y="270" text-anchor="middle" fill="var(--text-dim)" font-size="10" transform="rotate(-90 120 270)">Non-volatile</text>
+
+  <!-- pyramid bands, apex (300,30) to base (120,390)-(480,390) -->
+  <polygon points="300,30 330,90 270,90" fill="#c0392b"/>
+  <polygon points="270,90 330,90 360,150 240,150" fill="#d9702c"/>
+  <polygon points="240,150 360,150 390,210 210,210" fill="#d9a83a"/>
+  <polygon points="210,210 390,210 420,270 180,270" fill="#c9c23a"/>
+  <polygon points="180,270 420,270 450,330 150,330" fill="#7fae5a"/>
+  <polygon points="150,330 450,330 480,390 120,390" fill="#3f7a52"/>
+
+  <text x="300" y="72" text-anchor="middle" fill="#1a1f26" font-size="10" font-weight="600">SRAM</text>
+  <text x="300" y="125" text-anchor="middle" fill="#1a1f26" font-size="12" font-weight="600">DRAM</text>
+  <text x="300" y="180" text-anchor="middle" fill="#1a1f26" font-size="11" font-weight="600">Storage Class Memory</text>
+  <text x="300" y="245" text-anchor="middle" fill="#1a1f26" font-size="12" font-weight="600">NAND</text>
+  <text x="300" y="305" text-anchor="middle" fill="#1a1f26" font-size="12" font-weight="600">HDD</text>
+  <text x="300" y="365" text-anchor="middle" fill="#1a1f26" font-size="12" font-weight="600">Tape</text>
+
+  <!-- annotations -->
+  <line x1="360" y1="120" x2="500" y2="120" stroke="var(--text-faint)" stroke-width="1.25"/>
+  <text x="508" y="105" fill="var(--text)" font-size="11">HBM, XBM, ZAM, HBC,</text>
+  <text x="508" y="122" fill="var(--text)" font-size="11">MRDIMM, SOCAMM2,</text>
+  <text x="508" y="139" fill="var(--text)" font-size="11">LPCAMM2</text>
+
+  <line x1="390" y1="180" x2="500" y2="190" stroke="var(--text-faint)" stroke-width="1.25"/>
+  <text x="508" y="185" fill="var(--text)" font-size="11">MRAM, PCM (inc. XPoint),</text>
+  <text x="508" y="202" fill="var(--text)" font-size="11">RRAM, Z-NAND, XL-FLASH</text>
+
+  <line x1="420" y1="240" x2="500" y2="250" stroke="var(--text-faint)" stroke-width="1.25"/>
+  <text x="508" y="255" fill="var(--text)" font-size="11">HBF</text>
+</svg>""",
         }
     ]
 }
@@ -429,6 +495,7 @@ def generate_segment(client, seg):
         )
     data["timeline"] = timeline
     data["tables"] = STATIC_TABLES.get(seg["id"], [])
+    data["diagrams"] = STATIC_DIAGRAMS.get(seg["id"], [])
 
     # Private landscape doesn't belong in the public report_data.json -- pulled
     # out here and returned separately for its own merge/file. The public
