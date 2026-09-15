@@ -149,14 +149,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Nuclear Restarts & SMRs",
-          "companies": []
-        },
-        {
-          "category": "Behind-the-Meter Fuel Cells & On-Site Generation",
-          "companies": []
         }
       ]
     },
@@ -205,8 +197,8 @@
           "category": "Direct-to-chip liquid cooling",
           "companies": [
             {
-              "company": "JetCool/Flex",
-              "notes": "Public company operating in Direct-to-chip liquid cooling for Cooling.",
+              "company": "Flex (JetCool)",
+              "notes": "Public company operating in Direct-to-chip liquid cooling for Cooling. Flex Ltd (NASDAQ: FLEX) acquired JetCool.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -217,8 +209,8 @@
           "category": "Immersion cooling",
           "companies": [
             {
-              "company": "LiquidStack/Trane",
-              "notes": "Public company operating in Immersion Cooling for Cooling.",
+              "company": "Trane (LiquidStack)",
+              "notes": "Public company operating in Immersion Cooling for Cooling. Trane Technologies (NYSE: TT) acquired LiquidStack.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -226,12 +218,23 @@
           ]
         },
         {
-          "category": "Air Cooling & Rear-Door Heat Exchangers",
-          "companies": []
-        },
-        {
           "category": "Direct-to-Chip Liquid Cooling, single-phase",
-          "companies": []
+          "companies": [
+            {
+              "company": "Motivair",
+              "notes": "Cooling systems maker acquired by Schneider Electric.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Ecolab",
+              "notes": "NYSE: ECL. Acquired CoolIT Systems (\\.75B, closed July 2026).",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            }
+          ]
         }
       ]
     },
@@ -296,7 +299,7 @@
               "diligenced": false
             },
             {
-              "company": "GE Vernova/Prolec",
+              "company": "GE Vernova (Prolec GE)",
               "notes": "Public company operating in Switchgear & Transformers for Power (Grid/UPS).",
               "source": null,
               "url": null,
@@ -327,8 +330,15 @@
               "diligenced": false
             },
             {
-              "company": "TSMC/Intel backside PDN nodes",
-              "notes": "Public company operating in On-board / Backside Power Delivery Silicon for Power (Grid/UPS).",
+              "company": "TSMC",
+              "notes": "TSMC: developing backside power delivery network (PDN) nodes.",
+              "source": null,
+              "url": null,
+              "diligenced": false
+            },
+            {
+              "company": "Intel",
+              "notes": "Intel: developing backside power delivery network (PDN) nodes.",
               "source": null,
               "url": null,
               "diligenced": false
@@ -346,10 +356,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "UPS & Power Distribution",
-          "companies": []
         },
         {
           "category": "On-board/Vertical Power Delivery Silicon",
@@ -1100,22 +1106,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Leading-Edge Logic Fabs",
-          "companies": []
-        },
-        {
-          "category": "HBM",
-          "companies": []
-        },
-        {
-          "category": "Conventional DRAM, NAND & Enterprise SSD",
-          "companies": []
-        },
-        {
-          "category": "Memory-Centric Co-Design & Processing-in-Memory",
-          "companies": []
         }
       ]
     },
@@ -1258,31 +1248,8 @@
               "source": null,
               "url": null,
               "diligenced": false
-            },
-            {
-              "company": "OpenAI/Jalape\u00f1o",
-              "notes": "Public company operating in Frontier-Lab Co-design & ASIC Enablers for Compute (GPU/ASIC).",
-              "source": null,
-              "url": null,
-              "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Merchant GPUs",
-          "companies": []
-        },
-        {
-          "category": "Custom ASICs",
-          "companies": []
-        },
-        {
-          "category": "Inference-specialist chips",
-          "companies": []
-        },
-        {
-          "category": "Co-design & packaging partners",
-          "companies": []
         }
       ]
     },
@@ -1606,14 +1573,6 @@
               "diligenced": true
             }
           ]
-        },
-        {
-          "category": "OEM AI Servers",
-          "companies": []
-        },
-        {
-          "category": "Neutral Interconnection & Edge",
-          "companies": []
         }
       ]
     },
@@ -1685,14 +1644,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Hyperscaler core cloud",
-          "companies": []
-        },
-        {
-          "category": "AI-native GPU neoclouds",
-          "companies": []
         },
         {
           "category": "Custom silicon platforms",
@@ -1787,14 +1738,7 @@
           "category": "Consumer AI Apps",
           "companies": [
             {
-              "company": "ChatGPT/Gemini apps",
-              "notes": "Public company operating in Consumer AI apps for Applications.",
-              "source": null,
-              "url": null,
-              "diligenced": false
-            },
-            {
-              "company": "Grok",
+              "company": "Alphabet (Gemini apps)",
               "notes": "Public company operating in Consumer AI apps for Applications.",
               "source": null,
               "url": null,
@@ -1813,10 +1757,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Enterprise AI tools",
-          "companies": []
         }
       ]
     }

@@ -394,6 +394,31 @@ def tracked_company_names(path, layer_id):
     ]
 
 
+def all_tracked_private_names(path):
+    """Private company names across EVERY layer, not just one -- used for the
+    private-company exclusion check in derive_public_landscape(). A company already known
+    private in one layer (e.g. OpenAI, tracked under "applications") must not leak into a
+    DIFFERENT layer's derived public list either (e.g. a "compute" timeline label mentioning
+    OpenAI's custom silicon work) -- tracked_company_names() alone is layer-scoped and
+    misses that case, which is how "OpenAI/Jalapeño" ended up in market_map.json's public
+    compute category."""
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+    names = []
+    for layer in data.get("layers", {}).values():
+        if isinstance(layer, list):
+            continue
+        names.extend(
+            comp["company"]
+            for cat in layer.get("categories", [])
+            for comp in cat.get("companies", [])
+        )
+    return names
+
+
 def derive_public_landscape(data, private_names):
     """Build the Market Map public-side landscape by transforming data already
     pulled for Public Markets -- no separate model call or search. Only two
@@ -425,7 +450,10 @@ def derive_public_landscape(data, private_names):
         if not match:
             continue
         category_name, names_str = match.group(1).strip(), match.group(2)
-        names = [n.strip() for n in names_str.split(",") if n.strip()]
+        # The prompt asks for comma-separated names, but the model occasionally uses a
+        # slash instead (e.g. "GE Vernova/Prolec", "ChatGPT/Gemini apps") -- split on both
+        # so that doesn't collapse two distinct companies into one garbled entry.
+        names = [n.strip() for n in re.split(r"[,/]", names_str) if n.strip()]
         names = [n for n in names if not is_known_private(n)]
         if not names:
             continue
@@ -501,11 +529,12 @@ def generate_segment(client, seg):
     # out here and returned separately for its own merge/file. The public
     # landscape is derived (not pulled) from data that's about to go into
     # report_data.json anyway, using the timeline computed just above. Exclude
-    # both previously-tracked private companies AND anything newly found in
-    # this very cycle's private_landscape, so a company discovered for the
-    # first time this run can't still leak into the public column.
+    # previously-tracked private companies from EVERY layer (not just this one --
+    # see all_tracked_private_names()) AND anything newly found in this very cycle's
+    # private_landscape, so a company discovered for the first time this run can't
+    # still leak into the public column.
     private_landscape = data.pop("privateLandscape", None) or {"overview": "", "categories": []}
-    all_private_names = list(tracked_private) + [
+    all_private_names = all_tracked_private_names("private_markets.json") + [
         comp["company"]
         for cat in private_landscape.get("categories", [])
         for comp in cat.get("companies", [])
@@ -676,6 +705,15 @@ def merge_landscape_layer(existing_layer, fresh_landscape):
 
     if fresh_landscape.get("overview"):
         existing_layer["overview"] = fresh_landscape["overview"]
+
+    # A new category gets created above whenever this cycle's category name doesn't
+    # exact-match an existing one -- but find_existing() matches companies fuzzily
+    # and GLOBALLY across every category, so a "new" category's companies routinely
+    # turn out to already exist elsewhere and get updated there instead, leaving the
+    # new category empty. Left alone this compounds every cycle (one real run added
+    # 42 empty shells in a single pass) into a pile of dead "No entries yet" rows in
+    # the UI. Drop anything that ended up with zero companies, new or pre-existing.
+    existing_layer["categories"] = [c for c in existing_categories if c.get("companies")]
 
     return existing_layer
 

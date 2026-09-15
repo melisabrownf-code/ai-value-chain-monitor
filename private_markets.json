@@ -116,14 +116,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Small Modular & Advanced Fission",
-          "companies": []
-        },
-        {
-          "category": "Utility-Scale Nuclear & State Champions",
-          "companies": []
         }
       ]
     },
@@ -216,14 +208,6 @@
           ]
         },
         {
-          "category": "Two-Phase & Microfluidic Direct-to-Chip",
-          "companies": []
-        },
-        {
-          "category": "Immersion & Chassis-Level Cooling",
-          "companies": []
-        },
-        {
           "category": "Full-Portfolio & Precision-Air Manufacturers",
           "companies": [
             {
@@ -301,18 +285,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Grid & Load Flexibility Software",
-          "companies": []
-        },
-        {
-          "category": "Behind-the-Meter Generation",
-          "companies": []
-        },
-        {
-          "category": "Non-Lithium/Long-Duration Storage",
-          "companies": []
         }
       ]
     },
@@ -656,22 +628,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Optical Interconnect & Memory Fabric",
-          "companies": []
-        },
-        {
-          "category": "Processing-in-Memory & Analog Compute",
-          "companies": []
-        },
-        {
-          "category": "NAND/SSD Specialists & Alternative Foundries",
-          "companies": []
-        },
-        {
-          "category": "Advanced Packaging & Materials Equipment",
-          "companies": []
         }
       ]
     },
@@ -727,18 +683,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Dataflow & Wafer-Scale Inference Chips",
-          "companies": []
-        },
-        {
-          "category": "Neocloud / GPU-as-a-Service Pivots",
-          "companies": []
-        },
-        {
-          "category": "Analog & In-Memory Compute",
-          "companies": []
         }
       ]
     },
@@ -749,7 +693,7 @@
           "category": "Network & application security/delivery",
           "companies": [
             {
-              "company": "Juniper (HPE)",
+              "company": "Juniper",
               "notes": "Acquired by HPE (public parent: NYSE HPE), deal closed 2025",
               "source": null,
               "url": null,
@@ -808,22 +752,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Co-packaged Optics / Photonic Interconnect",
-          "companies": []
-        },
-        {
-          "category": "Multi-Wavelength Laser Sources",
-          "companies": []
-        },
-        {
-          "category": "Quantum-Classical Control Chips",
-          "companies": []
-        },
-        {
-          "category": "AI Inference / Edge Compute Pivots",
-          "companies": []
         }
       ]
     },
@@ -914,18 +842,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Hyperscale Wholesale Developers",
-          "companies": []
-        },
-        {
-          "category": "PE/Sovereign-Backed Colocation Platforms",
-          "companies": []
-        },
-        {
-          "category": "Nordic/European Colocation",
-          "companies": []
         }
       ]
     },
@@ -991,10 +907,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Inference-Specialized Neoclouds",
-          "companies": []
         },
         {
           "category": "Nvidia-Backed Emerging Neoclouds",
@@ -1095,18 +1007,6 @@
               "diligenced": false
             }
           ]
-        },
-        {
-          "category": "Frontier general-purpose labs",
-          "companies": []
-        },
-        {
-          "category": "Enterprise AI tools",
-          "companies": []
-        },
-        {
-          "category": "Consumer AI apps",
-          "companies": []
         }
       ]
     }
